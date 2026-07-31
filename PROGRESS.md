@@ -16,3 +16,6 @@ NextAuth v4 + Prisma adapter, Google OAuth provider (placeholder credentials) + 
 
 ## 2026-07-31 — שלב 5: חנות בסיסית (בית, מוצר, עגלה)
 דף בית עם "הגעות חדשות", דף קטגוריה, דף מוצר (גלריה לפי צבע, בורר מידות עם מלאי בזמן אמת, "נשארו רק X!"), עגלה (Zustand + localStorage). Header/Footer קבועים ב-route group `(storefront)` חדש. נוסף `prisma/seed.ts` עם נתוני דמו (2 קטגוריות, 3 מוצרים, תמונות placeholder) לצורך פיתוח ובדיקות. כל הזרימה נבדקה בפועל (עברית ואנגלית) מול Postgres זמני עם seed. החלטה עסקית פתוחה (מטבע יחיד ₪ בלי המרה) מתועדת ב-DECISIONS.md לבדיקתך.
+
+## 2026-07-31 — שלב 6: Checkout + הזמנות + לוגיקת מלאי
+עמוד checkout מלא (פרטי קשר, משלוח/איסוף עצמי, סיכום הזמנה), שכבת תשלומים מודולרית (`src/lib/payments`) עם `PaymentProvider` interface, placeholder ברור ל-U-PAY/Summit (זורק שגיאה עם TODO מפורט - לא בודה API), ו-`MockPaymentProvider` לבדיקות מקומיות. לוגיקת המלאי הקריטית (ירידת מלאי אטומית רק במעבר ל-PAID, מניעת Overselling) מומשה ונבדקה בפועל בתנאי race אמיתי - שתי הזמנות מקבילות על יחידת המלאי האחרונה: אחת PAID, השנייה בוטלה אוטומטית, מלאי לא ירד מתחת לאפס. גם עמוד אישור הזמנה + מייל אישור. **חסימה מרכזית לפני production:** צריך מסמכי API אמיתיים של U-PAY (ר' DECISIONS.md).

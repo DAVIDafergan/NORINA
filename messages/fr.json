@@ -38,6 +38,55 @@
     "subtotal": "Sous-total",
     "checkout": "Passer la commande"
   },
+  "checkout": {
+    "title": "Commande",
+    "contactSection": "Coordonnées",
+    "nameLabel": "Nom complet",
+    "emailLabel": "E-mail",
+    "phoneLabel": "Téléphone",
+    "deliveryType": "Mode de livraison",
+    "shippingOption": "Livraison à domicile",
+    "pickupOption": "Point de retrait",
+    "addressSection": "Adresse de livraison",
+    "cityLabel": "Ville",
+    "streetLabel": "Rue et numéro",
+    "zipLabel": "Code postal",
+    "notesLabel": "Notes de livraison (optionnel)",
+    "pickupLocationLabel": "Point de retrait",
+    "selectPickupLocation": "Choisissez un point de retrait",
+    "orderSummary": "Récapitulatif de la commande",
+    "subtotal": "Sous-total",
+    "shipping": "Livraison",
+    "freeShipping": "Gratuite",
+    "total": "Total",
+    "placeOrder": "Valider la commande",
+    "placingOrder": "Validation en cours...",
+    "errors": {
+      "empty_cart": "Votre panier est vide.",
+      "insufficient_stock": "Un des articles de votre panier n'est plus disponible dans la quantité demandée.",
+      "missing_address": "Veuillez renseigner une adresse de livraison.",
+      "missing_pickup_location": "Veuillez choisir un point de retrait.",
+      "generic": "Une erreur est survenue lors de la commande. Veuillez réessayer."
+    }
+  },
+  "orderConfirmation": {
+    "title": "Merci pour votre commande !",
+    "orderNumber": "Numéro de commande",
+    "statusPaid": "Paiement reçu. Nous vous contacterons pour la livraison.",
+    "statusPending": "Nous attendons la confirmation du paiement.",
+    "statusCancelled": "Cette commande n'a pas pu être finalisée - veuillez nous contacter.",
+    "continueShopping": "Continuer mes achats"
+  },
+  "order": {
+    "emails": {
+      "confirmation": {
+        "subject": "Votre commande NORINA est confirmée",
+        "heading": "Merci pour votre commande",
+        "body": "Votre commande n°{orderId} a été reçue et payée.",
+        "total": "Total"
+      }
+    }
+  },
   "auth": {
     "signOut": "Déconnexion",
     "signIn": {

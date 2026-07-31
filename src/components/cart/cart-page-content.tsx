@@ -83,9 +83,9 @@ export function CartPageContent({ locale }: { locale: Locale }) {
         <span className="text-lg font-semibold">{formatPrice(subtotal, locale)}</span>
       </div>
 
-      <Button className="mt-6 w-full" disabled>
-        {t("checkout")}
-      </Button>
+      <Link href="/checkout" className="mt-6 block">
+        <Button className="w-full">{t("checkout")}</Button>
+      </Link>
     </div>
   );
 }

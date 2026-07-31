@@ -173,15 +173,19 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+/// userId is nullable so a guest checkout order (stage 6) can have a one-off
+/// address that isn't attached to any saved account.
 model Address {
   id     String  @id @default(cuid())
-  userId String
-  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
   city   String
   street String
   zip    String?
   phone  String
   notes  String?
+
+  orders Order[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -213,9 +217,25 @@ model Order {
   user         User?        @relation(fields: [userId], references: [id])
   status       OrderStatus  @default(PENDING)
   deliveryType DeliveryType
-  shippingCity String?
-  shippingCost Decimal      @db.Decimal(10, 2)
-  totalAmount  Decimal      @db.Decimal(10, 2)
+
+  /// Snapshotted at checkout time - always present, for both guest and
+  /// logged-in orders (the recipient/contact may differ from the account).
+  contactName  String
+  contactEmail String
+  contactPhone String
+  notes        String?
+
+  /// Used when deliveryType is SHIPPING.
+  addressId String?
+  address   Address? @relation(fields: [addressId], references: [id])
+
+  /// Used when deliveryType is PICKUP - a real FK to the admin-managed list
+  /// (see spec section 4.5), not a free-text city.
+  pickupLocationId String?
+  pickupLocation   PickupLocation? @relation(fields: [pickupLocationId], references: [id])
+
+  shippingCost Decimal @db.Decimal(10, 2)
+  totalAmount  Decimal @db.Decimal(10, 2)
 
   /// Set by the payment adapter (see src/lib/payments) - which provider handled
   /// this order and its reference so we can look it up on the provider's side.
@@ -261,6 +281,8 @@ model PickupLocation {
   cityName Json
   address  String
   isActive Boolean @default(true)
+
+  orders Order[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -38,6 +38,55 @@
     "subtotal": "Subtotal",
     "checkout": "Checkout"
   },
+  "checkout": {
+    "title": "Checkout",
+    "contactSection": "Contact details",
+    "nameLabel": "Full name",
+    "emailLabel": "Email",
+    "phoneLabel": "Phone",
+    "deliveryType": "Delivery method",
+    "shippingOption": "Home delivery",
+    "pickupOption": "Pickup point",
+    "addressSection": "Delivery address",
+    "cityLabel": "City",
+    "streetLabel": "Street and number",
+    "zipLabel": "ZIP code",
+    "notesLabel": "Delivery notes (optional)",
+    "pickupLocationLabel": "Pickup point",
+    "selectPickupLocation": "Select a pickup point",
+    "orderSummary": "Order summary",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "freeShipping": "Free",
+    "total": "Total",
+    "placeOrder": "Place order",
+    "placingOrder": "Placing order...",
+    "errors": {
+      "empty_cart": "Your cart is empty.",
+      "insufficient_stock": "One of the items in your cart is no longer available in the requested quantity.",
+      "missing_address": "Please fill in a delivery address.",
+      "missing_pickup_location": "Please select a pickup point.",
+      "generic": "Something went wrong placing your order. Please try again."
+    }
+  },
+  "orderConfirmation": {
+    "title": "Thank you for your order!",
+    "orderNumber": "Order number",
+    "statusPaid": "Payment received. We'll be in touch about delivery.",
+    "statusPending": "We're waiting for payment confirmation.",
+    "statusCancelled": "This order couldn't be completed - please contact us.",
+    "continueShopping": "Continue shopping"
+  },
+  "order": {
+    "emails": {
+      "confirmation": {
+        "subject": "Your NORINA order is confirmed",
+        "heading": "Thank you for your order",
+        "body": "Your order #{orderId} has been received and paid.",
+        "total": "Total"
+      }
+    }
+  },
   "auth": {
     "signOut": "Sign out",
     "signIn": {

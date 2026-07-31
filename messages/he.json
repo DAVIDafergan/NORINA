@@ -38,6 +38,55 @@
     "subtotal": "סכום ביניים",
     "checkout": "לתשלום"
   },
+  "checkout": {
+    "title": "תשלום",
+    "contactSection": "פרטי קשר",
+    "nameLabel": "שם מלא",
+    "emailLabel": "דוא\"ל",
+    "phoneLabel": "טלפון",
+    "deliveryType": "אופן מסירה",
+    "shippingOption": "משלוח עד הבית",
+    "pickupOption": "איסוף עצמי",
+    "addressSection": "כתובת למשלוח",
+    "cityLabel": "עיר",
+    "streetLabel": "רחוב ומספר",
+    "zipLabel": "מיקוד",
+    "notesLabel": "הערות למשלוח (אופציונלי)",
+    "pickupLocationLabel": "נקודת איסוף",
+    "selectPickupLocation": "בחרי נקודת איסוף",
+    "orderSummary": "סיכום הזמנה",
+    "subtotal": "סכום ביניים",
+    "shipping": "משלוח",
+    "freeShipping": "חינם",
+    "total": "סה\"כ לתשלום",
+    "placeOrder": "ביצוע הזמנה",
+    "placingOrder": "מבצעת הזמנה...",
+    "errors": {
+      "empty_cart": "העגלה שלך ריקה.",
+      "insufficient_stock": "אחד הפריטים בעגלה כבר לא זמין בכמות המבוקשת.",
+      "missing_address": "נא למלא כתובת למשלוח.",
+      "missing_pickup_location": "נא לבחור נקודת איסוף.",
+      "generic": "משהו השתבש בביצוע ההזמנה. נסי שוב."
+    }
+  },
+  "orderConfirmation": {
+    "title": "תודה על ההזמנה!",
+    "orderNumber": "מספר הזמנה",
+    "statusPaid": "התשלום התקבל. ניצור קשר לגבי המשלוח.",
+    "statusPending": "אנחנו ממתינים לאישור התשלום.",
+    "statusCancelled": "לא הצלחנו להשלים את ההזמנה - נא ליצור איתנו קשר.",
+    "continueShopping": "המשך בקנייה"
+  },
+  "order": {
+    "emails": {
+      "confirmation": {
+        "subject": "ההזמנה שלך מ-NORINA אושרה",
+        "heading": "תודה על ההזמנה",
+        "body": "ההזמנה שלך מספר {orderId} התקבלה ושולמה.",
+        "total": "סה\"כ"
+      }
+    }
+  },
   "auth": {
     "signOut": "התנתקות",
     "signIn": {

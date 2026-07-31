@@ -81,3 +81,21 @@
   - "sticky add to cart" למובייל ופוליש עיצובי כללי - שלב 10.
 - **בדיקת קצה-לקצה אמיתית:** דף בית, דף קטגוריה, דף מוצר (כולל בחירת צבע/מידה) ועגלה נבדקו בפועל מול Postgres זמני עם נתוני seed, בעברית ואנגלית. תוך כדי התגלתה ותוקנה תקלה של cache ישן בין `next build` ל-`next dev` (`.next` דורש ניקוי בין השניים ב-Turbopack) - לא קשור לקוד עצמו, נרשם כאן ליתר ביטחון להמשך.
 
+---
+
+## Stage 6 — Checkout, orders & inventory logic (הכי קריטי - תשלומים + מלאי)
+
+- **סכמה הורחבה (migration שנייה, `checkout_order_fields`):** גיליתי תוך כדי בנייה שהסכמה המקורית של `Order` (שלב 2) לא תמכה ב-checkout בפועל: `Address.userId` היה חובה (בלתי אפשרי ל-guest checkout בלי חשבון), ול-`Order` לא היה שדה כתובת/נקודת איסוף אמיתי (`shippingCity` היה string חופשי, לא FK). תיקנתי: `Address.userId` נהיה אופציונלי (כתובת חד-פעמית ל-guest), ול-`Order` נוספו `contactName/contactEmail/contactPhone` (snapshot תמיד, גם למשתמש מחובר - הנמען יכול להיות שונה מבעל החשבון), `addressId` (FK אמיתי ל-Address, לא רק ל-shipping), ו-`pickupLocationId` (FK אמיתי ל-PickupLocation במקום מחרוזת עיר חופשית - תואם יותר לדרישת "בחירת עיר מרשימה שהמנהלת הגדירה" בסעיף 6). נוצרה עם `prisma migrate dev` מול Postgres זמני (שוב - container חד-פעמי, נהרס בסוף), לא squash של המיגרציה הראשונה, כדי לשמור היסטוריה אמיתית.
+- **תשלומים - U-PAY/Summit:** בהתאם להנחיה שלך, נבנתה שכבת adapter מלאה (`src/lib/payments/`): `PaymentProvider` interface (`createPayment`, `parseWebhook`), ו-`UPaySummitProvider` הוא **placeholder טהור** - שתי המתודות שלו זורקות שגיאה מפורשת עם TODO מפורט (מה בדיוק חסר: endpoint ליצירת עסקה, סכמת webhook signature, האם Bit נתמך כאמצעי נפרד או כשורה באותו hosted page). לא ניחשתי שום endpoint או פורמט - כי המשמעות היתה קוד שנראה כאילו עובד אבל לא באמת מתקשר עם U-PAY.
+- **MockPaymentProvider - כלי פיתוח, לא הטמעה אמיתית:** כדי שאפשר יהיה לבנות ולבדוק את כל שרשרת ה-checkout (כולל הלוגיקה הקריטית של מלאי) בלי credentials אמיתיים של U-PAY, נוסף ספק "מדומה" שמדמה הצלחת תשלום מיידית דרך redirect ל-`/api/payments/mock/complete` - שמפעיל בדיוק את אותה פונקציית אישור תשלום (`confirmOrderPayment`) שגם webhook אמיתי יפעיל. ברירת המחדל (`PAYMENT_PROVIDER=mock` ב-`.env.example`) - **חובה לשנות ל-`upay` ולהשלים את המימוש לפני production**, אחרת ה-checkout לא באמת גובה כסף.
+- **לוגיקת המלאי - בדיוק לפי "כלל הזהב" בסעיף 8 של המסמך:** המלאי **לא** יורד ביצירת ההזמנה (סטטוס PENDING) - רק במעבר ל-PAID, בטרנזקציה אטומית אחת (`src/lib/orders/confirm-payment.ts`) שמשתמשת ב-`updateMany` עם תנאי `stockQuantity: { gte: quantity }`. אם התנאי נכשל (המלאי כבר נלקח על ידי מישהו אחר) - הטרנזקציה כולה נכשלת וההזמנה עוברת ל-`CANCELLED` אוטומטית. **נבדק בפועל בתנאי race אמיתי**: הרצתי שתי בקשות checkout+תשלום *במקביל* על אותה יחידת מלאי אחרונה (stock=1) - התוצאה: הזמנה אחת PAID, השנייה CANCELLED אוטומטית, מלאי סופי = 0 (לא שלילי). זו בדיוק הדרישה מהמסמך למניעת Overselling.
+- **מחירים תמיד מהשרת, לא מהלקוח:** ה-API של `/api/checkout` מקבל מהלקוח רק `variantId` + `quantity` - המחיר נגזר תמיד מה-DB (`priceOverride ?? basePrice`) בזמן יצירת ההזמנה, כדי שלא יהיה אפשר לזייף מחיר מהדפדפן.
+- **Guest checkout נתמך** (`userId: null` על ה-Order) - תואם לדרישת "Guest checkout אופציונלי" בסעיף 6.
+- **מה עדיין TODO בכוונה:**
+  - כל מימוש U-PAY בפועל (endpoints, חתימת webhook, Bit) - ממתין למסמכי API.
+  - החזר כספי אוטומטי כשהזמנה מתבטלת מחוסר מלאי אחרי תשלום - כרגע רק מסומנת `CANCELLED`, טיפול ידני דרך פאנל הניהול (שלב 8) + חוסר יכולת להחזיר כסף בלי API אמיתי של U-PAY.
+  - עמוד "checkout נכשל/בוטל" (cancelUrl כבר מוגדר וזורם ל-`/checkout`, אבל אין הודעת שגיאה ייעודית עדיין).
+
+**מה עוד צריך ממך:** מסמכי API של U-PAY/Summit (endpoints, אימות, webhook signature) כדי להשלים את `src/lib/payments/upay-summit-provider.ts` ואת `PAYMENT_PROVIDER=upay` ב-env - **בלי זה החנות לא יכולה לגבות תשלום אמיתי**, זו החסימה המרכזית להשקה.
+
+

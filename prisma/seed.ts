@@ -127,6 +127,30 @@ async function main() {
     }
   }
 
+  const existingShippingSetting = await prisma.shippingSetting.findFirst();
+  if (!existingShippingSetting) {
+    await prisma.shippingSetting.create({
+      data: { flatRatePrice: "35.00", freeShippingAbove: "500.00" },
+    });
+  }
+
+  await Promise.all(
+    [
+      { city: { he: "תל אביב", fr: "Tel Aviv", en: "Tel Aviv" }, address: "רוטשילד 1" },
+      { city: { he: "ירושלים", fr: "Jérusalem", en: "Jerusalem" }, address: "יפו 1" },
+    ].map((location) =>
+      prisma.pickupLocation.upsert({
+        where: { id: `seed-${location.city.en.toLowerCase().replace(/\s/g, "-")}` },
+        update: {},
+        create: {
+          id: `seed-${location.city.en.toLowerCase().replace(/\s/g, "-")}`,
+          cityName: location.city,
+          address: location.address,
+        },
+      }),
+    ),
+  );
+
   console.log("Seed complete.");
 }
 
