@@ -1,0 +1,17 @@
+{
+  "common": {
+    "siteName": "NORINA"
+  },
+  "nav": {
+    "language": "Langue",
+    "locale": {
+      "he": "Hébreu",
+      "fr": "Français",
+      "en": "Anglais"
+    }
+  },
+  "home": {
+    "title": "NORINA",
+    "subtitle": "Le squelette du projet est prêt. Les pages de la boutique arrivent à l'étape suivante."
+  }
+}

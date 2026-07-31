@@ -1,0 +1,17 @@
+{
+  "common": {
+    "siteName": "NORINA"
+  },
+  "nav": {
+    "language": "Language",
+    "locale": {
+      "he": "Hebrew",
+      "fr": "French",
+      "en": "English"
+    }
+  },
+  "home": {
+    "title": "NORINA",
+    "subtitle": "Project scaffold ready. Storefront pages come in a later stage."
+  }
+}

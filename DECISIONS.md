@@ -32,3 +32,14 @@
 - **ולידציה של הסכמה:** הרצתי `prisma migrate dev` מול קונטיינר Postgres זמני (docker, לא שירות אמיתי) רק כדי ליצור ולבדוק migration אמיתי, ואז הרסתי את הקונטיינר. זה לא "credentials מזויפים" - זה תשתית dev חד-פעמית שלא נשארת בשום מקום. ה-migration שנוצר (`prisma/migrations/20260731150958_init/`) מחכה עכשיו ל-`DATABASE_URL` אמיתי כדי שתריצי `prisma migrate deploy` (או `migrate dev`) מולו.
 
 **מה עוד צריך ממך:** DATABASE_URL אמיתי (Supabase/Neon) כדי להריץ את ה-migration הזה בפועל מול DB אמיתי.
+
+---
+
+## Stage 3 — i18n (HE/FR/EN, RTL/LTR)
+
+- **ספריית i18n: `next-intl`** (ולא `next-i18next`) - זו הבחירה הסטנדרטית והמומלצת היום לפרויקטי App Router (תומכת Server Components, `generateStaticParams` לכל שפה, וניתוב מבוסס `[locale]` מובנה). המסמך הציע את שתיהן; `next-i18next` מיועדת בעיקר ל-Pages Router הישן.
+- **מבנה ניתוב:** `src/app/[locale]/...` עם `localePrefix: "as-needed"` - עברית (ברירת המחדל) מוגשת ב-`/` בלי prefix, וצרפתית/אנגלית ב-`/fr` ו-`/en`. גישה מפורשת ל-`/he` מפנה (307) לנתיב הקנוני `/`. זו ההתנהגות הסטנדרטית של next-intl ומתאימה לדרישת "עברית כברירת מחדל" מהמסמך.
+- **RTL/LTR אוטומטי:** `src/i18n/routing.ts` מגדיר מיפוי `localeDirections` (he=rtl, fr/en=ltr), וה-layout (`src/app/[locale]/layout.tsx`) שם את זה על `<html dir="...">` לפי השפה הנוכחית - מתחלף אוטומטית עם ניווט/בורר שפה, בלי JS צד לקוח נוסף.
+- **Next.js 16 breaking change שגילינו תוך כדי:** קובץ ה-middleware הישן (`middleware.ts`) הוחלף רשמית ב-`proxy.ts` (הפונקציה נקראת `proxy` במקום `middleware`) - זה תועד ב-`node_modules/next/dist/docs/.../file-conventions/proxy.md` ובמדריך השדרוג לגרסה 16. next-intl עדיין מספק `createMiddleware`, אבל קראנו לקובץ `src/proxy.ts` ולפונקציה `proxy` כדי להתאים למוסכמה החדשה (הישנה עדיין עובדת אך מוצגת כ-deprecated).
+- **קבצי תרגום:** `messages/{he,fr,en}.json` עם namespaces לפי תחום (`common`, `nav`, `home` בשלב הזה). בהמשך כל שלב שמוסיף פיצ'ר יוסיף namespace תואם (למשל `product`, `cart`, `checkout`, `admin`) - כדי לעמוד בדרישת המסמך שכל טקסט (כולל הודעות שגיאה ומיילים) יהיה בשלוש שפות.
+- **בורר שפה:** קומפוננטת `LanguageSwitcher` (`src/components/layout/language-switcher.tsx`) - `<select>` פשוט שמנווט עם `next-intl`'s `useRouter`/`usePathname` שמכבד את ה-locale prefix. זה placeholder פונקציונלי; העיצוב הסופי (שלב 10) יחליף אותו ברכיב מותאם למיתוג היוקרתי.
