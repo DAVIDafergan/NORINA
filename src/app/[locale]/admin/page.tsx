@@ -1,13 +1,45 @@
 import NextLink from "next/link";
+import { getDashboardData } from "@/lib/admin/dashboard";
+import { formatPrice } from "@/lib/format";
+import { KpiCard } from "@/components/admin/kpi-card";
+import { SalesChart } from "@/components/admin/sales-chart";
 
-export default function AdminHomePage() {
+export default async function AdminHomePage() {
+  const data = await getDashboardData();
+
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-8">
       <h1 className="text-2xl font-semibold">דשבורד</h1>
-      <p className="text-zinc-500">הדשבורד המלא (KPIs, גרפים) יתווסף בשלב הבא.</p>
-      <NextLink href="/admin/products" className="font-medium hover:underline">
-        ניהול מוצרים
-      </NextLink>
+
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+        <KpiCard label="הזמנות היום" value={data.todayOrdersCount.toString()} />
+        <KpiCard label="מכירות החודש" value={formatPrice(data.monthSales, "he")} />
+        <KpiCard label="מלאי נמוך" value={data.lowStockCount.toString()} />
+        <KpiCard label="ממתינות לטיפול (שולמו, טרם נארזו)" value={data.pendingCount.toString()} />
+      </div>
+
+      <div>
+        <h2 className="mb-4 text-lg font-medium">מכירות - 14 יום אחרונים</h2>
+        <SalesChart data={data.salesChart} />
+      </div>
+
+      <div>
+        <h2 className="mb-4 text-lg font-medium">מוצרים חמים</h2>
+        {data.hotProducts.length === 0 ? (
+          <p className="text-zinc-500">אין עדיין מספיק נתוני מכירה.</p>
+        ) : (
+          <ul className="flex flex-col gap-2">
+            {data.hotProducts.map((product) => (
+              <li key={product.slug} className="flex items-center justify-between text-sm">
+                <NextLink href={`/product/${product.slug}`} className="hover:underline" target="_blank">
+                  {product.name}
+                </NextLink>
+                <span className="text-zinc-500">{product.quantity} נמכרו</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }
