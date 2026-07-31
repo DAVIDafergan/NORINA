@@ -26,3 +26,14 @@ export const variantUpdateSchema = z.object({
   stockQuantity: z.number().int().min(0).optional(),
   priceOverride: z.number().positive().nullable().optional(),
 });
+
+export const shippingSettingSchema = z.object({
+  flatRatePrice: z.number().min(0),
+  freeShippingAbove: z.number().min(0).nullable(),
+});
+
+export const pickupLocationInputSchema = z.object({
+  cityName: localizedText,
+  address: z.string().min(1),
+  isActive: z.boolean(),
+});
