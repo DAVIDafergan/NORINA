@@ -13,5 +13,68 @@
   "home": {
     "title": "NORINA",
     "subtitle": "Le squelette du projet est prêt. Les pages de la boutique arrivent à l'étape suivante."
+  },
+  "auth": {
+    "signOut": "Déconnexion",
+    "signIn": {
+      "title": "Connexion",
+      "emailLabel": "E-mail",
+      "passwordLabel": "Mot de passe",
+      "submit": "Se connecter",
+      "googleButton": "Continuer avec Google",
+      "or": "ou",
+      "noAccount": "Vous n'avez pas de compte ?",
+      "signUpLink": "Créer un compte",
+      "forgotPasswordLink": "Mot de passe oublié ?"
+    },
+    "signUp": {
+      "title": "Créer un compte",
+      "nameLabel": "Nom complet",
+      "emailLabel": "E-mail",
+      "passwordLabel": "Mot de passe",
+      "confirmPasswordLabel": "Confirmer le mot de passe",
+      "submit": "S'inscrire",
+      "googleButton": "Continuer avec Google",
+      "or": "ou",
+      "haveAccount": "Vous avez déjà un compte ?",
+      "signInLink": "Se connecter",
+      "success": "Compte créé avec succès. Vous pouvez maintenant vous connecter."
+    },
+    "forgotPassword": {
+      "title": "Mot de passe oublié ?",
+      "description": "Entrez votre e-mail et nous vous enverrons un lien de réinitialisation.",
+      "emailLabel": "E-mail",
+      "submit": "Envoyer le lien",
+      "success": "Si un compte existe pour cet e-mail, un lien de réinitialisation a été envoyé."
+    },
+    "resetPassword": {
+      "title": "Réinitialiser le mot de passe",
+      "passwordLabel": "Nouveau mot de passe",
+      "confirmPasswordLabel": "Confirmer le nouveau mot de passe",
+      "submit": "Réinitialiser",
+      "success": "Votre mot de passe a été réinitialisé. Vous pouvez maintenant vous connecter.",
+      "invalidToken": "Ce lien de réinitialisation est invalide ou a expiré."
+    },
+    "errors": {
+      "invalidCredentials": "E-mail ou mot de passe incorrect.",
+      "emailInUse": "Un compte avec cet e-mail existe déjà.",
+      "passwordMismatch": "Les mots de passe ne correspondent pas.",
+      "weakPassword": "Le mot de passe doit contenir au moins 8 caractères.",
+      "genericError": "Une erreur est survenue. Veuillez réessayer."
+    },
+    "emails": {
+      "verify": {
+        "subject": "Vérifiez votre e-mail pour NORINA",
+        "heading": "Bienvenue chez NORINA",
+        "body": "Veuillez confirmer votre adresse e-mail pour finaliser votre inscription.",
+        "cta": "Vérifier l'e-mail"
+      },
+      "reset": {
+        "subject": "Réinitialisation du mot de passe NORINA",
+        "heading": "Demande de réinitialisation",
+        "body": "Nous avons reçu une demande de réinitialisation de votre mot de passe. Si ce n'était pas vous, ignorez simplement cet e-mail.",
+        "cta": "Réinitialiser le mot de passe"
+      }
+    }
   }
 }

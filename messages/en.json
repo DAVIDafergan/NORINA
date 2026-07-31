@@ -13,5 +13,68 @@
   "home": {
     "title": "NORINA",
     "subtitle": "Project scaffold ready. Storefront pages come in a later stage."
+  },
+  "auth": {
+    "signOut": "Sign out",
+    "signIn": {
+      "title": "Sign in",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "submit": "Sign in",
+      "googleButton": "Continue with Google",
+      "or": "or",
+      "noAccount": "Don't have an account?",
+      "signUpLink": "Sign up",
+      "forgotPasswordLink": "Forgot your password?"
+    },
+    "signUp": {
+      "title": "Create an account",
+      "nameLabel": "Full name",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "confirmPasswordLabel": "Confirm password",
+      "submit": "Sign up",
+      "googleButton": "Continue with Google",
+      "or": "or",
+      "haveAccount": "Already have an account?",
+      "signInLink": "Sign in",
+      "success": "Account created. You can now sign in."
+    },
+    "forgotPassword": {
+      "title": "Forgot your password?",
+      "description": "Enter your email and we'll send you a reset link.",
+      "emailLabel": "Email",
+      "submit": "Send reset link",
+      "success": "If an account exists for this email, a reset link has been sent."
+    },
+    "resetPassword": {
+      "title": "Reset your password",
+      "passwordLabel": "New password",
+      "confirmPasswordLabel": "Confirm new password",
+      "submit": "Reset password",
+      "success": "Your password has been reset. You can now sign in.",
+      "invalidToken": "This reset link is invalid or has expired."
+    },
+    "errors": {
+      "invalidCredentials": "Incorrect email or password.",
+      "emailInUse": "An account with this email already exists.",
+      "passwordMismatch": "Passwords do not match.",
+      "weakPassword": "Password must be at least 8 characters.",
+      "genericError": "Something went wrong. Please try again."
+    },
+    "emails": {
+      "verify": {
+        "subject": "Verify your email for NORINA",
+        "heading": "Welcome to NORINA",
+        "body": "Please confirm your email address to complete your registration.",
+        "cta": "Verify email"
+      },
+      "reset": {
+        "subject": "Reset your NORINA password",
+        "heading": "Password reset request",
+        "body": "We received a request to reset your password. If this wasn't you, you can ignore this email.",
+        "cta": "Reset password"
+      }
+    }
   }
 }

@@ -13,5 +13,68 @@
   "home": {
     "title": "NORINA",
     "subtitle": "שלד הפרויקט מוכן. עמודי החנות יתווספו בשלב הבא."
+  },
+  "auth": {
+    "signOut": "התנתקות",
+    "signIn": {
+      "title": "התחברות",
+      "emailLabel": "דוא\"ל",
+      "passwordLabel": "סיסמה",
+      "submit": "התחברות",
+      "googleButton": "המשך עם Google",
+      "or": "או",
+      "noAccount": "אין לך חשבון?",
+      "signUpLink": "הרשמה",
+      "forgotPasswordLink": "שכחת סיסמה?"
+    },
+    "signUp": {
+      "title": "יצירת חשבון",
+      "nameLabel": "שם מלא",
+      "emailLabel": "דוא\"ל",
+      "passwordLabel": "סיסמה",
+      "confirmPasswordLabel": "אימות סיסמה",
+      "submit": "הרשמה",
+      "googleButton": "המשך עם Google",
+      "or": "או",
+      "haveAccount": "כבר יש לך חשבון?",
+      "signInLink": "התחברות",
+      "success": "החשבון נוצר בהצלחה. עכשיו אפשר להתחבר."
+    },
+    "forgotPassword": {
+      "title": "שכחת סיסמה?",
+      "description": "הזיני את הדוא\"ל שלך ונשלח לך קישור לאיפוס סיסמה.",
+      "emailLabel": "דוא\"ל",
+      "submit": "שליחת קישור לאיפוס",
+      "success": "אם קיים חשבון עם הדוא\"ל הזה, נשלח אליו קישור לאיפוס סיסמה."
+    },
+    "resetPassword": {
+      "title": "איפוס סיסמה",
+      "passwordLabel": "סיסמה חדשה",
+      "confirmPasswordLabel": "אימות סיסמה חדשה",
+      "submit": "איפוס סיסמה",
+      "success": "הסיסמה אופסה בהצלחה. עכשיו אפשר להתחבר.",
+      "invalidToken": "קישור האיפוס לא תקין או שפג תוקפו."
+    },
+    "errors": {
+      "invalidCredentials": "דוא\"ל או סיסמה שגויים.",
+      "emailInUse": "כבר קיים חשבון עם הדוא\"ל הזה.",
+      "passwordMismatch": "הסיסמאות אינן תואמות.",
+      "weakPassword": "הסיסמה חייבת להכיל לפחות 8 תווים.",
+      "genericError": "משהו השתבש. נסי שוב."
+    },
+    "emails": {
+      "verify": {
+        "subject": "אימות דוא\"ל ל-NORINA",
+        "heading": "ברוכה הבאה ל-NORINA",
+        "body": "נא לאמת את כתובת הדוא\"ל שלך כדי להשלים את ההרשמה.",
+        "cta": "אימות דוא\"ל"
+      },
+      "reset": {
+        "subject": "איפוס סיסמה ל-NORINA",
+        "heading": "בקשת איפוס סיסמה",
+        "body": "קיבלנו בקשה לאיפוס הסיסמה שלך. אם זו לא הייתה את, אפשר להתעלם מהמייל הזה.",
+        "cta": "איפוס סיסמה"
+      }
+    }
   }
 }

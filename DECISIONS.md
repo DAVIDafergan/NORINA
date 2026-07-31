@@ -43,3 +43,24 @@
 - **Next.js 16 breaking change שגילינו תוך כדי:** קובץ ה-middleware הישן (`middleware.ts`) הוחלף רשמית ב-`proxy.ts` (הפונקציה נקראת `proxy` במקום `middleware`) - זה תועד ב-`node_modules/next/dist/docs/.../file-conventions/proxy.md` ובמדריך השדרוג לגרסה 16. next-intl עדיין מספק `createMiddleware`, אבל קראנו לקובץ `src/proxy.ts` ולפונקציה `proxy` כדי להתאים למוסכמה החדשה (הישנה עדיין עובדת אך מוצגת כ-deprecated).
 - **קבצי תרגום:** `messages/{he,fr,en}.json` עם namespaces לפי תחום (`common`, `nav`, `home` בשלב הזה). בהמשך כל שלב שמוסיף פיצ'ר יוסיף namespace תואם (למשל `product`, `cart`, `checkout`, `admin`) - כדי לעמוד בדרישת המסמך שכל טקסט (כולל הודעות שגיאה ומיילים) יהיה בשלוש שפות.
 - **בורר שפה:** קומפוננטת `LanguageSwitcher` (`src/components/layout/language-switcher.tsx`) - `<select>` פשוט שמנווט עם `next-intl`'s `useRouter`/`usePathname` שמכבד את ה-locale prefix. זה placeholder פונקציונלי; העיצוב הסופי (שלב 10) יחליף אותו ברכיב מותאם למיתוג היוקרתי.
+
+---
+
+## Stage 4 — Auth (NextAuth Google + Email)
+
+- **NextAuth.js גרסה 4 (יציבה), לא v5/Auth.js:** נכון לזמן הכתיבה v5 עדיין ב-beta (`5.0.0-beta.32` ב-npm, אחרי עשרות iterations בלי GA). לפי כלל "לבחור את הפתרון הכי בטוח/סטנדרטי" - v4.24.15 (יציבה, GA) עדיפה לאתר איקומרס בפרודקשן על פני beta ארוך-טווח. v4 עובדת מצוין עם App Router (route handler ב-`src/app/api/auth/[...nextauth]/route.ts`, `getServerSession` בקומפוננטות שרת).
+- **Adapter:** `@next-auth/prisma-adapter` (המקביל היציב ל-v4; לא `@auth/prisma-adapter` שמיועד ל-v5).
+- **Session strategy: JWT** (לא database sessions) - חובה כש-CredentialsProvider בשימוש (מגבלה של NextAuth עצמו).
+- **סיסמאות:** `bcryptjs` (מימוש JS טהור) ולא `bcrypt` (שדורש קומפילציית native/node-gyp) - נמנע מבעיות build בפריסה ל-serverless/Vercel. 12 salt rounds.
+- **אימות מייל + איפוס סיסמה - זרימה עצמאית, לא חלק מ-NextAuth:** בנינו את זה ידנית מעל טבלת `VerificationToken` הקיימת (טוקן רנדומלי 32-byte, נשמר ב-DB רק בתור hash של SHA-256, עם תפוגה של שעה) - כי NextAuth v4 עם CredentialsProvider לא כולל flow כזה מובנה (ה-EmailProvider המובנה הוא magic-link, לא מתאים לדרישת "התחברות עם סיסמה + אימות מייל" מהמסמך). ה-identifier בטבלה מבחין בין `verify-email:<email>` ל-`reset-password:<email>` כדי שלא יתנגשו.
+- **אימות מייל לא חוסם התחברות:** נרשם `emailVerified=null` בהרשמה, ונשלח מייל אימות, אבל `authorize()` לא בודק `emailVerified` לפני התחברות. המסמך מבקש "הרשמה... כולל אימות מייל" כפיצ'ר, לא במפורש חסימת כניסה - שמרתי על UX פשוט יותר. אפשר להקשיח בעתיד אם תרצי לחייב אימות לפני קנייה.
+- **מניעת user enumeration:** `/api/auth/forgot-password` תמיד מחזיר תשובה זהה בין אם המייל קיים או לא, ושולח מייל רק אם המשתמש קיים וכן יש לו סיסמה (משתמש Google-only לא מקבל מייל reset). practice סטנדרטי לאבטחה.
+- **שכבת מייל מודולרית (`src/lib/email/`):** בדיוק כמו שביקשת לגבי תשלומים - `EmailSender` interface, מימוש אמיתי מול **Resend** (ה-provider הראשון שהמסמך מציע, וה-API שלו מתועד פומבית כך שאפשר לממש נכון בלי לנחש), ומימוש `ConsoleSender` שרץ אוטומטית כש-`RESEND_API_KEY` לא מוגדר - כך שסביבת הפיתוח לא נתקעת בלי credentials אמיתיים. כתובת השולח (`FROM_ADDRESS`) היא placeholder עם TODO - צריך דומיין שולח מאומת ב-Resend.
+- **עמודי Auth (`sign-in`, `sign-up`, `forgot-password`, `reset-password`):** נבנו תחת route group `(auth)` בתוך `[locale]`, עם כל הטקסטים דרך namespace `auth` בקבצי התרגום (שלוש שפות מלאות, כולל תוכן המיילים).
+- **מגבלה ידועה - `pages.signIn` הסטטי מול locale:** NextAuth v4 מגדיר `pages.signIn: "/sign-in"` כמחרוזת קבועה בלי גישה ל-locale של הבקשה. זה עובד נכון לעברית (ברירת המחדל, בלי prefix), אבל אם NextAuth עצמו יפנה (redirect) משתמש לא-מחובר לעמוד ההתחברות, זה יקרה תמיד ל-`/sign-in` (עברית) גם למשתמשי FR/EN. כרגע אין עדיין נתיבים מוגנים (Admin מגיע בשלבים 7-8), אז זה לא משפיע בפועל. **TODO לשלב 7/8:** לבנות guard ל-locale-aware redirect בעצמנו (ב-`proxy.ts` או ב-layout של ה-admin) במקום להסתמך על `pages.signIn` הגלובלי.
+- **בדיקת קצה-לקצה:** כל ה-flow (הרשמה → אימות מייל → התחברות → שכחתי סיסמה → איפוס → התחברות עם הסיסמה החדשה) נבדק בפועל מול Postgres זמני ב-docker ו-`npm run dev` אמיתי, כולל בדיקת ה-DB וה-session cookies. הקונטיינר נהרס בסיום.
+
+**מה עוד צריך ממך:**
+1. **Google OAuth:** ליצור פרויקט ב-Google Cloud Console, להגדיר OAuth consent screen, וליצור OAuth Client ID (Web application) עם Authorized redirect URI: `https://<הדומיין-שלך>/api/auth/callback/google` (ולסביבת פיתוח: `http://localhost:3000/api/auth/callback/google`). את ה-Client ID וה-Client Secret יש להכניס ל-`.env` כ-`GOOGLE_CLIENT_ID`/`GOOGLE_CLIENT_SECRET`.
+2. **NEXTAUTH_SECRET אמיתי:** לייצר ערך רנדומלי חזק (למשל `openssl rand -base64 32`) ל-production - זה לא credential חיצוני אלא סוד שנוצר מקומית, אבל חייב להיות שונה מכל ערך פיתוח/דוגמה.
+3. **Resend:** ליצור חשבון, לאמת דומיין שולח, ולהחליף את `FROM_ADDRESS` הפלייסהולדר ב-`src/lib/email/resend-sender.ts` בכתובת אמיתית מהדומיין המאומת, ולהכניס `RESEND_API_KEY` אמיתי.
