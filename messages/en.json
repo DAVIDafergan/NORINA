@@ -12,7 +12,31 @@
   },
   "home": {
     "title": "NORINA",
-    "subtitle": "Project scaffold ready. Storefront pages come in a later stage."
+    "subtitle": "Timeless pieces, made to last.",
+    "newArrivals": "New arrivals"
+  },
+  "category": {
+    "empty": "No products in this category yet."
+  },
+  "product": {
+    "color": "Color",
+    "size": "Size",
+    "selectSize": "Select a size",
+    "addToCart": "Add to cart",
+    "addedToCart": "Added to cart",
+    "onlyLeft": "Only {count} left!",
+    "outOfStock": "Out of stock",
+    "description": "Description",
+    "sizeGuide": "Size guide"
+  },
+  "cart": {
+    "title": "Cart",
+    "empty": "Your cart is empty.",
+    "continueShopping": "Continue shopping",
+    "remove": "Remove",
+    "quantity": "Quantity",
+    "subtotal": "Subtotal",
+    "checkout": "Checkout"
   },
   "auth": {
     "signOut": "Sign out",

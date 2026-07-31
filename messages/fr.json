@@ -12,7 +12,31 @@
   },
   "home": {
     "title": "NORINA",
-    "subtitle": "Le squelette du projet est prêt. Les pages de la boutique arrivent à l'étape suivante."
+    "subtitle": "Des pièces intemporelles, faites pour durer.",
+    "newArrivals": "Nouveautés"
+  },
+  "category": {
+    "empty": "Aucun produit dans cette catégorie pour le moment."
+  },
+  "product": {
+    "color": "Couleur",
+    "size": "Taille",
+    "selectSize": "Choisissez une taille",
+    "addToCart": "Ajouter au panier",
+    "addedToCart": "Ajouté au panier",
+    "onlyLeft": "Plus que {count} en stock !",
+    "outOfStock": "Rupture de stock",
+    "description": "Description",
+    "sizeGuide": "Guide des tailles"
+  },
+  "cart": {
+    "title": "Panier",
+    "empty": "Votre panier est vide.",
+    "continueShopping": "Continuer mes achats",
+    "remove": "Retirer",
+    "quantity": "Quantité",
+    "subtotal": "Sous-total",
+    "checkout": "Passer la commande"
   },
   "auth": {
     "signOut": "Déconnexion",

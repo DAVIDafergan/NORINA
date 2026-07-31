@@ -12,7 +12,31 @@
   },
   "home": {
     "title": "NORINA",
-    "subtitle": "שלד הפרויקט מוכן. עמודי החנות יתווספו בשלב הבא."
+    "subtitle": "פריטים נצחיים, עשויים להישאר.",
+    "newArrivals": "הגעות חדשות"
+  },
+  "category": {
+    "empty": "עדיין אין מוצרים בקטגוריה הזו."
+  },
+  "product": {
+    "color": "צבע",
+    "size": "מידה",
+    "selectSize": "בחרי מידה",
+    "addToCart": "הוספה לעגלה",
+    "addedToCart": "נוסף לעגלה",
+    "onlyLeft": "נשארו רק {count}!",
+    "outOfStock": "אזל מהמלאי",
+    "description": "תיאור",
+    "sizeGuide": "מדריך מידות"
+  },
+  "cart": {
+    "title": "עגלה",
+    "empty": "העגלה שלך ריקה.",
+    "continueShopping": "המשך בקנייה",
+    "remove": "הסרה",
+    "quantity": "כמות",
+    "subtotal": "סכום ביניים",
+    "checkout": "לתשלום"
   },
   "auth": {
     "signOut": "התנתקות",

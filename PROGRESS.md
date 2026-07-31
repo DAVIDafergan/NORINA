@@ -13,3 +13,6 @@ next-intl עם ניתוב `[locale]`, עברית כברירת מחדל ב-`/` (�
 
 ## 2026-07-31 — שלב 4: Auth (Google + Email)
 NextAuth v4 + Prisma adapter, Google OAuth provider (placeholder credentials) + Credentials provider (email+password, bcryptjs). זרימות אימות מייל ואיפוס סיסמה מלאות מעל `VerificationToken`, שכבת מייל מודולרית (`src/lib/email`) עם Resend + fallback ל-console בפיתוח. עמודי sign-in/sign-up/forgot/reset עם תרגום מלא לשלוש שפות. כל ה-flow נבדק קצה-לקצה מול Postgres זמני. הנמקות ו-TODOs (Google OAuth app, Resend domain, NEXTAUTH_SECRET אמיתי) ב-DECISIONS.md.
+
+## 2026-07-31 — שלב 5: חנות בסיסית (בית, מוצר, עגלה)
+דף בית עם "הגעות חדשות", דף קטגוריה, דף מוצר (גלריה לפי צבע, בורר מידות עם מלאי בזמן אמת, "נשארו רק X!"), עגלה (Zustand + localStorage). Header/Footer קבועים ב-route group `(storefront)` חדש. נוסף `prisma/seed.ts` עם נתוני דמו (2 קטגוריות, 3 מוצרים, תמונות placeholder) לצורך פיתוח ובדיקות. כל הזרימה נבדקה בפועל (עברית ואנגלית) מול Postgres זמני עם seed. החלטה עסקית פתוחה (מטבע יחיד ₪ בלי המרה) מתועדת ב-DECISIONS.md לבדיקתך.
