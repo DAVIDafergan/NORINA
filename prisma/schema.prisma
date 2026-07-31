@@ -1,8 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// NORINA - Prisma schema
+// See DECISIONS.md for design notes on fields that go beyond the literal spec
+// (slugs, i18n JSON shape, Decimal money fields, NextAuth-required models, etc).
 
 generator client {
   provider = "prisma-client"
@@ -12,4 +10,258 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Catalog
+// ---------------------------------------------------------------------------
+
+/// Localized text is stored as JSON: { "he": "...", "fr": "...", "en": "..." }
+model Category {
+  id        String    @id @default(cuid())
+  slug      String    @unique
+  name      Json
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        Json
+  description Json
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+  basePrice   Decimal  @db.Decimal(10, 2)
+  isActive    Boolean  @default(true)
+
+  colors   Color[]
+  variants ProductVariant[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([categoryId])
+}
+
+/// A color belongs to a single product and owns its own image gallery.
+model Color {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  name      Json
+  hexCode   String
+
+  images   ColorImage[]
+  variants ProductVariant[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([productId])
+}
+
+/// One image in a color's gallery. `order` controls display order in the admin/storefront.
+model ColorImage {
+  id      String @id @default(cuid())
+  colorId String
+  color   Color  @relation(fields: [colorId], references: [id], onDelete: Cascade)
+  url     String
+  order   Int    @default(0)
+
+  @@index([colorId])
+}
+
+/// Shared size labels (S, M, L, 38, 40, ...), reused across products via ProductVariant.
+model Size {
+  id         String @id @default(cuid())
+  label      String @unique
+  orderIndex Int    @default(0)
+
+  variants ProductVariant[]
+}
+
+/// The actual sellable unit: one product + one color + one size.
+/// stock_quantity lives here on purpose - see spec section 8 ("כלל הזהב").
+model ProductVariant {
+  id            String   @id @default(cuid())
+  productId     String
+  product       Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  colorId       String
+  color         Color    @relation(fields: [colorId], references: [id], onDelete: Cascade)
+  sizeId        String
+  size          Size     @relation(fields: [sizeId], references: [id])
+  sku           String   @unique
+  stockQuantity Int      @default(0)
+  priceOverride Decimal? @db.Decimal(10, 2)
+
+  orderItems OrderItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([colorId, sizeId])
+  @@index([productId])
+}
+
+// ---------------------------------------------------------------------------
+// Users & Auth
+// (Account / Session / VerificationToken follow the NextAuth.js Prisma
+// adapter's required shape - field names must stay as-is for the adapter
+// to work without a custom mapping. See DECISIONS.md.)
+// ---------------------------------------------------------------------------
+
+enum Role {
+  CUSTOMER
+  ADMIN
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  /// Hashed password for the email/password provider. Null for OAuth-only users.
+  password      String?
+  role          Role      @default(CUSTOMER)
+  isBlocked     Boolean   @default(false)
+
+  accounts  Account[]
+  sessions  Session[]
+  addresses Address[]
+  orders    Order[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+/// Used by NextAuth for email magic links, and reused for password-reset tokens.
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Address {
+  id     String  @id @default(cuid())
+  userId String
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  city   String
+  street String
+  zip    String?
+  phone  String
+  notes  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+// ---------------------------------------------------------------------------
+// Orders
+// ---------------------------------------------------------------------------
+
+enum OrderStatus {
+  PENDING
+  PAID
+  PACKED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum DeliveryType {
+  SHIPPING
+  PICKUP
+}
+
+model Order {
+  id           String       @id @default(cuid())
+  userId       String?
+  user         User?        @relation(fields: [userId], references: [id])
+  status       OrderStatus  @default(PENDING)
+  deliveryType DeliveryType
+  shippingCity String?
+  shippingCost Decimal      @db.Decimal(10, 2)
+  totalAmount  Decimal      @db.Decimal(10, 2)
+
+  /// Set by the payment adapter (see src/lib/payments) - which provider handled
+  /// this order and its reference so we can look it up on the provider's side.
+  paymentProvider  String?
+  paymentReference String?
+  paidAt           DateTime?
+
+  items OrderItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([status])
+}
+
+model OrderItem {
+  id               String         @id @default(cuid())
+  orderId          String
+  order            Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productVariantId String
+  productVariant   ProductVariant @relation(fields: [productVariantId], references: [id])
+  quantity         Int
+  priceAtPurchase  Decimal        @db.Decimal(10, 2)
+
+  @@index([orderId])
+}
+
+// ---------------------------------------------------------------------------
+// Shipping
+// ---------------------------------------------------------------------------
+
+/// Singleton config row (app layer always reads/writes the first row).
+model ShippingSetting {
+  id                String   @id @default(cuid())
+  flatRatePrice     Decimal  @db.Decimal(10, 2)
+  freeShippingAbove Decimal? @db.Decimal(10, 2)
+  updatedAt         DateTime @updatedAt
+}
+
+model PickupLocation {
+  id       String  @id @default(cuid())
+  cityName Json
+  address  String
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
