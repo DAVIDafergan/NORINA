@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useCartStore } from "@/lib/cart-store";
 import { formatPrice } from "@/lib/format";
+import { Button } from "@/components/ui/button";
 import type { Locale } from "@/lib/types";
 
 export interface ProductDetailColor {
@@ -79,11 +80,14 @@ export function ProductDetail({ product, locale }: { product: ProductDetailData;
     setJustAdded(true);
   }
 
+  const addToCartLabel = !selectedSizeId ? t("selectSize") : justAdded ? t("addedToCart") : t("addToCart");
+  const addToCartDisabled = !selectedVariant || selectedVariant.stockQuantity === 0;
+
   return (
-    <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 md:grid-cols-2">
+    <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 pb-28 md:grid-cols-2 md:pb-12">
       <div className="grid grid-cols-2 gap-2">
         {(selectedColor?.images ?? []).map((url) => (
-          <div key={url} className="relative aspect-[3/4] overflow-hidden bg-zinc-100">
+          <div key={url} className="relative aspect-[3/4] overflow-hidden bg-cream">
             <Image src={url} alt={product.name} fill className="object-cover" sizes="50vw" />
           </div>
         ))}
@@ -91,8 +95,8 @@ export function ProductDetail({ product, locale }: { product: ProductDetailData;
 
       <div className="flex flex-col gap-6">
         <div>
-          <h1 className="text-2xl font-semibold">{product.name}</h1>
-          <p className="mt-1 text-lg text-zinc-600">{formatPrice(price, locale)}</p>
+          <h1 className="font-serif text-3xl">{product.name}</h1>
+          <p className="mt-1 text-lg text-ink/70">{formatPrice(price, locale)}</p>
         </div>
 
         <div>
@@ -105,8 +109,8 @@ export function ProductDetail({ product, locale }: { product: ProductDetailData;
                 onClick={() => handleSelectColor(color.id)}
                 title={color.name}
                 aria-pressed={color.id === selectedColorId}
-                className={`h-8 w-8 rounded-full border-2 ${
-                  color.id === selectedColorId ? "border-zinc-900" : "border-transparent"
+                className={`h-9 w-9 rounded-full border-2 ${
+                  color.id === selectedColorId ? "border-gold" : "border-transparent"
                 }`}
                 style={{ backgroundColor: color.hexCode }}
               />
@@ -123,10 +127,8 @@ export function ProductDetail({ product, locale }: { product: ProductDetailData;
                 type="button"
                 disabled={variant.stockQuantity === 0}
                 onClick={() => setSelectedSizeId(variant.sizeId)}
-                className={`rounded border px-3 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-40 ${
-                  variant.sizeId === selectedSizeId
-                    ? "border-zinc-900 bg-zinc-900 text-white"
-                    : "border-zinc-300"
+                className={`min-h-11 min-w-11 rounded border px-3 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-40 ${
+                  variant.sizeId === selectedSizeId ? "border-ink bg-ink text-cream" : "border-ink/20"
                 }`}
               >
                 {variant.sizeLabel}
@@ -134,29 +136,28 @@ export function ProductDetail({ product, locale }: { product: ProductDetailData;
             ))}
           </div>
           {selectedVariant && selectedVariant.stockQuantity > 0 && selectedVariant.stockQuantity <= LOW_STOCK_THRESHOLD && (
-            <p className="mt-2 text-sm text-amber-600">{t("onlyLeft", { count: selectedVariant.stockQuantity })}</p>
+            <p className="mt-2 text-sm text-amber-700">{t("onlyLeft", { count: selectedVariant.stockQuantity })}</p>
           )}
         </div>
 
-        <button
-          type="button"
-          onClick={handleAddToCart}
-          disabled={!selectedVariant || selectedVariant.stockQuantity === 0}
-          className="rounded bg-zinc-900 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-40"
-        >
-          {!selectedSizeId
-            ? t("selectSize")
-            : justAdded
-              ? t("addedToCart")
-              : t("addToCart")}
-        </button>
+        <Button type="button" onClick={handleAddToCart} disabled={addToCartDisabled} className="hidden w-full md:block">
+          {addToCartLabel}
+        </Button>
 
         {product.description && (
           <div>
             <p className="mb-1 text-sm font-medium">{t("description")}</p>
-            <p className="text-sm text-zinc-600">{product.description}</p>
+            <p className="text-sm text-ink/70">{product.description}</p>
           </div>
         )}
+      </div>
+
+      {/* Sticky add-to-cart bar for mobile (spec section 6: "sticky add to cart") */}
+      <div className="fixed inset-x-0 bottom-0 z-10 flex items-center justify-between gap-4 border-t border-gold/30 bg-cream px-4 py-3 md:hidden">
+        <span className="font-medium">{formatPrice(price, locale)}</span>
+        <Button type="button" onClick={handleAddToCart} disabled={addToCartDisabled} className="flex-1">
+          {addToCartLabel}
+        </Button>
       </div>
     </div>
   );

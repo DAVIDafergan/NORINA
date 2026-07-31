@@ -5,10 +5,11 @@ export function Button({
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: "primary" | "secondary";
 }) {
-  const base = "rounded px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50";
+  const base =
+    "min-h-11 rounded px-5 py-2.5 text-sm font-medium tracking-wide transition-colors disabled:opacity-50";
   const variants = {
-    primary: "bg-zinc-900 text-white hover:bg-zinc-700",
-    secondary: "border border-zinc-300 bg-white hover:bg-zinc-50",
+    primary: "bg-ink text-cream hover:bg-gold",
+    secondary: "border border-ink/20 bg-white hover:border-gold hover:text-gold",
   };
   return <button {...props} className={`${base} ${variants[variant]} ${className}`} />;
 }

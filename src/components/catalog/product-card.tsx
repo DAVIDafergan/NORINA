@@ -35,8 +35,8 @@ export function ProductCard({
         ) : null}
       </div>
       <div className="flex flex-col gap-1 text-sm">
-        <span className="font-medium">{name}</span>
-        <span className="text-zinc-500">{formatPrice(Number(product.basePrice), locale)}</span>
+        <span className="font-serif text-base">{name}</span>
+        <span className="text-ink/60">{formatPrice(Number(product.basePrice), locale)}</span>
       </div>
     </Link>
   );
