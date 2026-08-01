@@ -17,10 +17,13 @@ export default async function EditProductPage({
     prisma.product.findUnique({
       where: { id },
       include: {
-        colors: { include: { images: { orderBy: { order: "asc" } }, variants: { include: { size: true } } } },
+        colors: {
+          orderBy: { orderIndex: "asc" },
+          include: { images: { orderBy: { order: "asc" } }, variants: { include: { size: true } } },
+        },
       },
     }),
-    prisma.category.findMany({ orderBy: { createdAt: "asc" } }),
+    prisma.category.findMany({ orderBy: { orderIndex: "asc" } }),
     prisma.size.findMany({ orderBy: { orderIndex: "asc" } }),
   ]);
 
@@ -39,6 +42,9 @@ export default async function EditProductPage({
         initial={{
           name: product.name as LocalizedText,
           description: product.description as LocalizedText,
+          materials: (product.materials as LocalizedText | null) ?? undefined,
+          careInstructions: (product.careInstructions as LocalizedText | null) ?? undefined,
+          additionalInfo: (product.additionalInfo as LocalizedText | null) ?? undefined,
           categoryId: product.categoryId,
           basePrice: Number(product.basePrice),
           isActive: product.isActive,
@@ -46,15 +52,16 @@ export default async function EditProductPage({
       />
 
       <div>
-        <h2 className="mb-4 text-xl font-semibold">צבעים ומידות</h2>
+        <h2 className="mb-4 text-xl font-semibold">צבעים, תמונות ומידות</h2>
         <ColorManager
           productId={product.id}
-          sizes={sizes.map((s) => ({ id: s.id, label: s.label }))}
+          sizes={sizes.map((s) => ({ id: s.id, label: s.label, orderIndex: s.orderIndex }))}
           colors={product.colors.map((color) => ({
             id: color.id,
             name: color.name as LocalizedText,
             hexCode: color.hexCode,
-            images: color.images.map((image) => image.url),
+            orderIndex: color.orderIndex,
+            images: color.images.map((image) => ({ id: image.id, url: image.url, isPrimary: image.isPrimary })),
             variants: color.variants.map((variant) => ({
               id: variant.id,
               sizeId: variant.sizeId,

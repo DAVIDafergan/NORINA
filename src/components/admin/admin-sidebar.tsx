@@ -3,6 +3,7 @@ import NextLink from "next/link";
 const links = [
   { href: "/admin", label: "דשבורד" },
   { href: "/admin/products", label: "מוצרים" },
+  { href: "/admin/categories", label: "קטגוריות" },
   { href: "/admin/orders", label: "הזמנות" },
   { href: "/admin/users", label: "משתמשים" },
   { href: "/admin/shipping", label: "משלוחים ואיסוף" },

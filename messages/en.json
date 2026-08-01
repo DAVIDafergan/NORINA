@@ -27,7 +27,10 @@
     "onlyLeft": "Only {count} left!",
     "outOfStock": "Out of stock",
     "description": "Description",
-    "sizeGuide": "Size guide"
+    "sizeGuide": "Size guide",
+    "materials": "Materials & composition",
+    "careInstructions": "Care & washing instructions",
+    "additionalInfo": "Additional information"
   },
   "cart": {
     "title": "Cart",

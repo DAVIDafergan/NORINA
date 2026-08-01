@@ -18,12 +18,13 @@ datasource db {
 
 /// Localized text is stored as JSON: { "he": "...", "fr": "...", "en": "..." }
 model Category {
-  id        String    @id @default(cuid())
-  slug      String    @unique
-  name      Json
-  products  Product[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id         String    @id @default(cuid())
+  slug       String    @unique
+  name       Json
+  orderIndex Int       @default(0)
+  products   Product[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 }
 
 model Product {
@@ -36,6 +37,12 @@ model Product {
   basePrice   Decimal  @db.Decimal(10, 2)
   isActive    Boolean  @default(true)
 
+  /// Optional richer catalog copy, all localized `{ he, fr, en }` JSON like `name`/`description`.
+  /// Nullable because they were added after stage 2 - older rows just don't have them yet.
+  materials         Json?
+  careInstructions  Json?
+  additionalInfo    Json?
+
   colors   Color[]
   variants ProductVariant[]
 
@@ -47,11 +54,12 @@ model Product {
 
 /// A color belongs to a single product and owns its own image gallery.
 model Color {
-  id        String  @id @default(cuid())
-  productId String
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  name      Json
-  hexCode   String
+  id         String  @id @default(cuid())
+  productId  String
+  product    Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  name       Json
+  hexCode    String
+  orderIndex Int     @default(0)
 
   images   ColorImage[]
   variants ProductVariant[]
@@ -63,12 +71,18 @@ model Color {
 }
 
 /// One image in a color's gallery. `order` controls display order in the admin/storefront.
+/// `isPrimary` marks the cover thumbnail shown wherever only one image fits (product
+/// cards, order line items) - independent of display order in the full gallery.
+/// `url` is currently a base64 data: URL stored directly in Postgres (no object storage
+/// provider configured yet - see DECISIONS.md). Fine for a boutique catalog's volume;
+/// swap for real storage (S3/R2/Supabase) later without changing this shape.
 model ColorImage {
-  id      String @id @default(cuid())
-  colorId String
-  color   Color  @relation(fields: [colorId], references: [id], onDelete: Cascade)
-  url     String
-  order   Int    @default(0)
+  id        String  @id @default(cuid())
+  colorId   String
+  color     Color   @relation(fields: [colorId], references: [id], onDelete: Cascade)
+  url       String  @db.Text
+  order     Int     @default(0)
+  isPrimary Boolean @default(false)
 
   @@index([colorId])
 }

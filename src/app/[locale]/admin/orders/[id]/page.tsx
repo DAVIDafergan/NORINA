@@ -24,7 +24,11 @@ export default async function AdminOrderDetailPage({
           productVariant: {
             include: {
               product: true,
-              color: { include: { images: { take: 1, orderBy: { order: "asc" } } } },
+              color: {
+                include: {
+                  images: { take: 1, orderBy: [{ isPrimary: "desc" }, { order: "asc" }] },
+                },
+              },
               size: true,
             },
           },
@@ -79,6 +83,7 @@ export default async function AdminOrderDetailPage({
                     src={item.productVariant.color.images[0].url}
                     alt=""
                     fill
+                    unoptimized
                     className="object-cover"
                     sizes="48px"
                   />

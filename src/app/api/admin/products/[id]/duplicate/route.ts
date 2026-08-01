@@ -25,6 +25,9 @@ export const POST = withAdmin(async (_request, context: { params: Promise<{ id: 
       slug,
       name: source.name as object,
       description: source.description as object,
+      materials: source.materials ?? undefined,
+      careInstructions: source.careInstructions ?? undefined,
+      additionalInfo: source.additionalInfo ?? undefined,
       categoryId: source.categoryId,
       basePrice: source.basePrice,
       isActive: false,
@@ -37,8 +40,13 @@ export const POST = withAdmin(async (_request, context: { params: Promise<{ id: 
         productId: clone.id,
         name: color.name as object,
         hexCode: color.hexCode,
+        orderIndex: color.orderIndex,
         images: {
-          create: color.images.map((image) => ({ url: image.url, order: image.order })),
+          create: color.images.map((image) => ({
+            url: image.url,
+            order: image.order,
+            isPrimary: image.isPrimary,
+          })),
         },
       },
     });

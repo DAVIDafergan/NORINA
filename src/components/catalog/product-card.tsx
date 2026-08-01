@@ -29,6 +29,7 @@ export function ProductCard({
             src={image}
             alt={name}
             fill
+            unoptimized
             className="object-cover transition-transform group-hover:scale-105"
             sizes="(min-width: 768px) 25vw, 50vw"
           />

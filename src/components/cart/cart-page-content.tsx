@@ -39,7 +39,7 @@ export function CartPageContent({ locale }: { locale: Locale }) {
           <li key={item.variantId} className="flex gap-4 border-b border-zinc-200 pb-6">
             <div className="relative h-28 w-20 shrink-0 overflow-hidden bg-zinc-100">
               {item.image && (
-                <Image src={item.image} alt={item.productName} fill className="object-cover" sizes="80px" />
+                <Image src={item.image} alt={item.productName} fill unoptimized className="object-cover" sizes="80px" />
               )}
             </div>
             <div className="flex flex-1 flex-col gap-1 text-sm">

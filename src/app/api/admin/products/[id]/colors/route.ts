@@ -12,13 +12,24 @@ export const POST = withAdmin(async (request, context: { params: Promise<{ id: s
   }
   const input = parsed.data;
 
+  const lastColor = await prisma.color.findFirst({
+    where: { productId },
+    orderBy: { orderIndex: "desc" },
+    select: { orderIndex: true },
+  });
+
   const color = await prisma.color.create({
     data: {
       productId,
       name: input.name,
       hexCode: input.hexCode,
+      orderIndex: (lastColor?.orderIndex ?? -1) + 1,
       images: {
-        create: input.imageUrls.map((url, index) => ({ url, order: index })),
+        create: input.images.map((image, index) => ({
+          url: image.url,
+          order: index,
+          isPrimary: image.isPrimary,
+        })),
       },
     },
   });

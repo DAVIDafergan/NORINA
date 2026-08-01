@@ -12,7 +12,7 @@ export default async function AdminProductsPage({
 }) {
   const { q, categoryId, status } = await searchParams;
 
-  const categories = await prisma.category.findMany({ orderBy: { createdAt: "asc" } });
+  const categories = await prisma.category.findMany({ orderBy: { orderIndex: "asc" } });
 
   const products = await prisma.product.findMany({
     where: {

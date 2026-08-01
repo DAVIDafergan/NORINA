@@ -27,7 +27,10 @@
     "onlyLeft": "נשארו רק {count}!",
     "outOfStock": "אזל מהמלאי",
     "description": "תיאור",
-    "sizeGuide": "מדריך מידות"
+    "sizeGuide": "מדריך מידות",
+    "materials": "חומרים והרכב",
+    "careInstructions": "הוראות טיפוח וכביסה",
+    "additionalInfo": "מידע נוסף"
   },
   "cart": {
     "title": "עגלה",

@@ -27,7 +27,10 @@
     "onlyLeft": "Plus que {count} en stock !",
     "outOfStock": "Rupture de stock",
     "description": "Description",
-    "sizeGuide": "Guide des tailles"
+    "sizeGuide": "Guide des tailles",
+    "materials": "Matières et composition",
+    "careInstructions": "Entretien et lavage",
+    "additionalInfo": "Informations complémentaires"
   },
   "cart": {
     "title": "Panier",

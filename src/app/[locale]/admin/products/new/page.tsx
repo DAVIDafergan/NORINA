@@ -3,7 +3,7 @@ import { getLocalizedText } from "@/lib/i18n-text";
 import { ProductForm } from "@/components/admin/product-form";
 
 export default async function NewProductPage() {
-  const categories = await prisma.category.findMany({ orderBy: { createdAt: "asc" } });
+  const categories = await prisma.category.findMany({ orderBy: { orderIndex: "asc" } });
 
   return (
     <div className="flex flex-col gap-6">

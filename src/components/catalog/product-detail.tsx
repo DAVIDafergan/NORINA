@@ -12,7 +12,7 @@ export interface ProductDetailColor {
   id: string;
   name: string;
   hexCode: string;
-  images: string[];
+  images: { id: string; url: string }[];
 }
 
 export interface ProductDetailVariant {
@@ -30,6 +30,9 @@ export interface ProductDetailData {
   slug: string;
   name: string;
   description: string;
+  materials: string;
+  careInstructions: string;
+  additionalInfo: string;
   colors: ProductDetailColor[];
   variants: ProductDetailVariant[];
 }
@@ -72,7 +75,7 @@ export function ProductDetail({ product, locale }: { product: ProductDetailData;
       colorName: selectedColor.name,
       hexCode: selectedColor.hexCode,
       sizeLabel: selectedVariant.sizeLabel,
-      image: selectedColor.images[0] ?? null,
+      image: selectedColor.images[0]?.url ?? null,
       unitPrice: selectedVariant.price,
       quantity: 1,
       maxStock: selectedVariant.stockQuantity,
@@ -86,9 +89,9 @@ export function ProductDetail({ product, locale }: { product: ProductDetailData;
   return (
     <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 pb-28 md:grid-cols-2 md:pb-12">
       <div className="grid grid-cols-2 gap-2">
-        {(selectedColor?.images ?? []).map((url) => (
-          <div key={url} className="relative aspect-[3/4] overflow-hidden bg-cream">
-            <Image src={url} alt={product.name} fill className="object-cover" sizes="50vw" />
+        {(selectedColor?.images ?? []).map((image) => (
+          <div key={image.id} className="relative aspect-[3/4] overflow-hidden bg-cream">
+            <Image src={image.url} alt={product.name} fill unoptimized className="object-cover" sizes="50vw" />
           </div>
         ))}
       </div>
@@ -147,7 +150,28 @@ export function ProductDetail({ product, locale }: { product: ProductDetailData;
         {product.description && (
           <div>
             <p className="mb-1 text-sm font-medium">{t("description")}</p>
-            <p className="text-sm text-ink/70">{product.description}</p>
+            <p className="whitespace-pre-line text-sm text-ink/70">{product.description}</p>
+          </div>
+        )}
+
+        {product.materials && (
+          <div>
+            <p className="mb-1 text-sm font-medium">{t("materials")}</p>
+            <p className="whitespace-pre-line text-sm text-ink/70">{product.materials}</p>
+          </div>
+        )}
+
+        {product.careInstructions && (
+          <div>
+            <p className="mb-1 text-sm font-medium">{t("careInstructions")}</p>
+            <p className="whitespace-pre-line text-sm text-ink/70">{product.careInstructions}</p>
+          </div>
+        )}
+
+        {product.additionalInfo && (
+          <div>
+            <p className="mb-1 text-sm font-medium">{t("additionalInfo")}</p>
+            <p className="whitespace-pre-line text-sm text-ink/70">{product.additionalInfo}</p>
           </div>
         )}
       </div>

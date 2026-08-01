@@ -22,11 +22,14 @@ export default async function ProductPage({
     slug: product.slug,
     name: getLocalizedText(product.name, loc),
     description: getLocalizedText(product.description, loc),
+    materials: getLocalizedText(product.materials, loc),
+    careInstructions: getLocalizedText(product.careInstructions, loc),
+    additionalInfo: getLocalizedText(product.additionalInfo, loc),
     colors: product.colors.map((color) => ({
       id: color.id,
       name: getLocalizedText(color.name, loc),
       hexCode: color.hexCode,
-      images: color.images.map((image) => image.url),
+      images: color.images.map((image) => ({ id: image.id, url: image.url })),
     })),
     variants: product.variants.map((variant) => ({
       variantId: variant.id,

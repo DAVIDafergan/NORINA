@@ -1,8 +1,13 @@
 import { prisma } from "@/lib/prisma";
 
+// Cover-image ordering for contexts that show a single thumbnail (product
+// cards, order line items): the color's marked-primary image first, falling
+// back to manual gallery order if none is marked.
+const coverImageOrderBy = [{ isPrimary: "desc" as const }, { order: "asc" as const }];
+
 export function getActiveCategories() {
   return prisma.category.findMany({
-    orderBy: { createdAt: "asc" },
+    orderBy: { orderIndex: "asc" },
   });
 }
 
@@ -14,7 +19,8 @@ export function getCategoryWithProducts(slug: string) {
         where: { isActive: true },
         include: {
           colors: {
-            include: { images: { orderBy: { order: "asc" }, take: 1 } },
+            orderBy: { orderIndex: "asc" },
+            include: { images: { orderBy: coverImageOrderBy, take: 1 } },
             take: 1,
           },
         },
@@ -30,6 +36,7 @@ export function getProductBySlug(slug: string) {
     include: {
       category: true,
       colors: {
+        orderBy: { orderIndex: "asc" },
         include: { images: { orderBy: { order: "asc" } } },
       },
       variants: {
@@ -46,7 +53,8 @@ export function getNewArrivals(take = 8) {
     take,
     include: {
       colors: {
-        include: { images: { orderBy: { order: "asc" }, take: 1 } },
+        orderBy: { orderIndex: "asc" },
+        include: { images: { orderBy: coverImageOrderBy, take: 1 } },
         take: 1,
       },
     },
