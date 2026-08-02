@@ -61,7 +61,7 @@ export function MobileNav({
             type="button"
             onClick={() => setOpen(false)}
             aria-label="סגירה"
-            className="flex h-9 w-9 items-center justify-center text-ink/70 hover:text-gold"
+            className="flex h-11 w-11 items-center justify-center text-ink/70 hover:text-gold"
           >
             <CloseIcon className="h-5 w-5" />
           </button>
@@ -106,7 +106,7 @@ export function MobileNav({
         onClick={() => setOpen(true)}
         aria-label="תפריט"
         aria-expanded={open}
-        className="flex h-10 w-10 flex-col items-center justify-center gap-1.5"
+        className="flex h-11 w-11 flex-col items-center justify-center gap-1.5"
       >
         <span className="block h-px w-6 bg-ink" />
         <span className="block h-px w-6 bg-ink" />

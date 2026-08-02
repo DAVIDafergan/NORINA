@@ -16,7 +16,7 @@ export function CartButton() {
     <Link
       href="/cart"
       aria-label={t("title")}
-      className="relative flex h-10 w-10 items-center justify-center text-ink/80 transition-colors hover:text-gold"
+      className="relative flex h-11 w-11 items-center justify-center text-ink/80 transition-colors hover:text-gold"
     >
       <BagIcon className="h-5 w-5" />
       {count > 0 && (

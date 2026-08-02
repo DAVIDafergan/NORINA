@@ -30,7 +30,7 @@ export default async function SearchPage({
         <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4">
           {products.map((product, index) => (
             <div key={product.id} className="animate-fade-up" style={{ animationDelay: `${index * 40}ms` }}>
-              <ProductCard product={product} locale={loc} />
+              <ProductCard product={product} locale={loc} priority={index < 4} />
             </div>
           ))}
         </div>

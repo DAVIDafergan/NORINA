@@ -1,13 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useCartStore } from "@/lib/cart-store";
 import { formatPrice } from "@/lib/format";
 import { Button } from "@/components/ui/button";
 import { SizeGuideModal, type SizeGuideEntry } from "@/components/catalog/size-guide-modal";
 import { ShareButton } from "@/components/ui/share-button";
+import { ProductGallery } from "@/components/catalog/product-gallery";
 import type { Locale } from "@/lib/types";
 
 export interface ProductDetailColor {
@@ -119,13 +119,7 @@ export function ProductDetail({ product, locale }: { product: ProductDetailData;
 
   return (
     <div className="mx-auto grid max-w-6xl gap-12 px-4 py-10 pb-32 md:grid-cols-2 md:gap-14 md:px-6 md:py-16 md:pb-16">
-      <div className="flex animate-fade-up flex-col gap-3">
-        {(selectedColor?.images ?? []).map((image) => (
-          <div key={image.id} className="relative aspect-[4/5] w-full overflow-hidden bg-cream-deep">
-            <Image src={image.url} alt={product.name} fill unoptimized className="object-cover" sizes="(min-width: 768px) 50vw, 100vw" />
-          </div>
-        ))}
-      </div>
+      <ProductGallery images={selectedColor?.images ?? []} alt={product.name} />
 
       <div className="flex animate-fade-up flex-col gap-7" style={{ animationDelay: "100ms" }}>
         <div className="flex items-start justify-between gap-4">

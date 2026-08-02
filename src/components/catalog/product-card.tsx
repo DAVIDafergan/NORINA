@@ -17,9 +17,12 @@ interface ProductCardProduct {
 export function ProductCard({
   product,
   locale,
+  priority = false,
 }: {
   product: ProductCardProduct;
   locale: Locale;
+  /** Set for the first row of cards so they load eagerly (better LCP) instead of lazily. */
+  priority?: boolean;
 }) {
   const image = product.colors[0]?.images[0]?.url;
   const name = getLocalizedText(product.name, locale);
@@ -33,7 +36,8 @@ export function ProductCard({
             alt={name}
             fill
             unoptimized
-            loading="lazy"
+            priority={priority}
+            loading={priority ? undefined : "lazy"}
             className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
             sizes="(min-width: 768px) 25vw, 50vw"
           />

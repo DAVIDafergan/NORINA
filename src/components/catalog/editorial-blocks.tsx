@@ -34,6 +34,8 @@ export function EditorialBlocks({
                   alt={name}
                   fill
                   unoptimized
+                  priority={index === 0}
+                  loading={index === 0 ? undefined : "lazy"}
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                   sizes="(min-width: 640px) 50vw, 100vw"
                 />

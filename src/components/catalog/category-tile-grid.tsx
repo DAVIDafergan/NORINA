@@ -25,6 +25,8 @@ export function CategoryTileGrid({ categories, locale }: { categories: CategoryT
               alt={category.name}
               fill
               unoptimized
+              priority={index === 0}
+              loading={index === 0 ? undefined : "lazy"}
               className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
               sizes="(min-width: 768px) 25vw, 70vw"
             />

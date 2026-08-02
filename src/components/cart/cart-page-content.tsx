@@ -56,7 +56,7 @@ export function CartPageContent({ locale }: { locale: Locale }) {
                   <select
                     value={item.quantity}
                     onChange={(e) => updateQuantity(item.variantId, Number(e.target.value))}
-                    className="rounded-sm border border-ink/20 bg-transparent px-2 py-1 focus:border-gold focus:outline-none"
+                    className="min-h-11 rounded-sm border border-ink/20 bg-transparent px-2 py-2 focus:border-gold focus:outline-none"
                   >
                     {Array.from({ length: item.maxStock }, (_, i) => i + 1).map((n) => (
                       <option key={n} value={n}>

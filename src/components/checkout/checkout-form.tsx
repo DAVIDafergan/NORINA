@@ -123,23 +123,23 @@ export function CheckoutForm({
         <section className="flex flex-col gap-4">
           <h2 className="text-xs font-medium uppercase tracking-widest text-ink-soft">{t("deliveryType")}</h2>
           <div className="flex gap-6 text-sm">
-            <label className="flex items-center gap-2">
+            <label className="flex min-h-11 items-center gap-2">
               <input
                 type="radio"
                 name="deliveryType"
                 checked={deliveryType === "SHIPPING"}
                 onChange={() => setDeliveryType("SHIPPING")}
-                className="accent-gold"
+                className="h-4 w-4 accent-gold"
               />
               {t("shippingOption")}
             </label>
-            <label className="flex items-center gap-2">
+            <label className="flex min-h-11 items-center gap-2">
               <input
                 type="radio"
                 name="deliveryType"
                 checked={deliveryType === "PICKUP"}
                 onChange={() => setDeliveryType("PICKUP")}
-                className="accent-gold"
+                className="h-4 w-4 accent-gold"
               />
               {t("pickupOption")}
             </label>
@@ -159,7 +159,7 @@ export function CheckoutForm({
                 required
                 value={pickupLocationId}
                 onChange={(e) => setPickupLocationId(e.target.value)}
-                className="rounded-sm border border-ink/20 bg-transparent px-3.5 py-2.5 focus:border-gold focus:outline-none"
+                className="min-h-11 rounded-sm border border-ink/20 bg-transparent px-3.5 py-2.5 focus:border-gold focus:outline-none"
               >
                 <option value="" disabled>
                   {t("selectPickupLocation")}

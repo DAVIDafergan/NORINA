@@ -47,7 +47,7 @@ export default async function CategoryPage({
         <div className="grid grid-cols-2 gap-x-6 gap-y-14 md:grid-cols-3 md:gap-x-10 md:gap-y-16">
           {category.products.map((product, index) => (
             <div key={product.id} className="animate-fade-up" style={{ animationDelay: `${index * 60}ms` }}>
-              <ProductCard product={product} locale={loc} />
+              <ProductCard product={product} locale={loc} priority={index < 4} />
             </div>
           ))}
         </div>
