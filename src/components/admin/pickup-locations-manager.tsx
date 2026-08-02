@@ -49,7 +49,7 @@ function LocationRow({ location, onChanged }: { location: PickupLocationData; on
   }
 
   return (
-    <div className="flex items-center justify-between rounded border border-ink/12 p-3 text-sm">
+    <div className="flex items-center justify-between rounded-md border border-line bg-white shadow-sm p-3 text-sm">
       <div>
         <p className="font-medium">{location.cityName.he}</p>
         <p className="text-ink-soft">{location.address}</p>
@@ -89,7 +89,7 @@ function NewLocationForm({ onCreated }: { onCreated: () => void }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-3 rounded border border-dashed border-ink/20 p-4">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-3 rounded-md border-dashed border-ink/25 bg-cream-deep/30 p-4">
       <h3 className="text-sm font-medium">הוספת נקודת איסוף</h3>
       <LocaleTabsInput label="עיר" value={cityName} onChange={setCityName} />
       <label className="flex flex-col gap-1 text-sm">

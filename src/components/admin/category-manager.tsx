@@ -105,7 +105,7 @@ function CategoryCard({
   }
 
   return (
-    <div className="rounded border border-ink/12 p-4">
+    <div className="rounded-md border border-line bg-white shadow-sm p-4">
       <div className="flex items-start justify-between gap-4">
         <div className="flex flex-1 items-start gap-3">
           <button
@@ -179,7 +179,7 @@ function NewCategoryForm({ onCreated }: { onCreated: () => void }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-3 rounded border border-dashed border-ink/20 p-4">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-3 rounded-md border-dashed border-ink/25 bg-cream-deep/30 p-4">
       <h3 className="text-sm font-medium">קטגוריה חדשה</h3>
       <LocaleTabsInput label="שם הקטגוריה" value={name} onChange={handleNameChange} />
       <TextField

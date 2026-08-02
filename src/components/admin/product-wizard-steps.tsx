@@ -6,6 +6,7 @@ import Image from "next/image";
 import { ColorManager } from "@/components/admin/color-manager";
 import { Button } from "@/components/ui/button";
 import { WizardStepper } from "@/components/admin/wizard-stepper";
+import { AdminPageHeader } from "@/components/admin/admin-page-header";
 import { formatPrice } from "@/lib/format";
 import type { ManagedImage } from "@/components/admin/image-manager";
 
@@ -69,8 +70,10 @@ export function ProductWizardSteps({
   return (
     <div className="flex flex-col gap-8">
       <div>
-        <h1 className="mb-4 text-2xl font-semibold">{productName}</h1>
-        <WizardStepper current={step} />
+        <AdminPageHeader title={productName} />
+        <div className="mt-6">
+          <WizardStepper current={step} />
+        </div>
       </div>
 
       {step === 2 && (
@@ -107,7 +110,7 @@ export function ProductWizardSteps({
 
       {step === 4 && (
         <div className="flex flex-col gap-6">
-          <div className="rounded border border-ink/12 p-5">
+          <div className="rounded-md border border-line bg-white shadow-sm p-5">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <h2 className="font-serif text-xl">{productName}</h2>
               <span className="text-lg">{formatPrice(basePrice, "he")}</span>

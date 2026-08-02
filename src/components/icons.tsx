@@ -53,3 +53,64 @@ export function ChevronDownIcon(props: IconProps) {
     </svg>
   );
 }
+
+export function GridIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <rect x="3.5" y="3.5" width="7" height="7" rx="1" />
+      <rect x="13.5" y="3.5" width="7" height="7" rx="1" />
+      <rect x="3.5" y="13.5" width="7" height="7" rx="1" />
+      <rect x="13.5" y="13.5" width="7" height="7" rx="1" />
+    </svg>
+  );
+}
+
+export function HangerIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M12 4.5a1.6 1.6 0 1 1 1.9 1.58" />
+      <path d="M12 6.5v2" />
+      <path d="M12 8.5 3.5 15c-1 .75-.45 2.3.8 2.3h15.4c1.25 0 1.8-1.55.8-2.3L12 8.5Z" />
+      <path d="M6 15.5h12" />
+    </svg>
+  );
+}
+
+export function TagIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M11.5 3.5H5a1.5 1.5 0 0 0-1.5 1.5v6.5c0 .4.16.78.44 1.06l9 9c.6.6 1.55.6 2.12 0l6.5-6.5c.6-.6.6-1.55 0-2.12l-9-9a1.5 1.5 0 0 0-1.06-.44Z" />
+      <circle cx="8" cy="8" r="1.4" />
+    </svg>
+  );
+}
+
+export function RulerIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <rect x="3" y="8.5" width="18" height="7" rx="1.2" transform="rotate(-8 12 12)" />
+      <path d="M7 9.5 6.4 12M11 9 10.4 11.5M15 8.5 14.4 11" />
+    </svg>
+  );
+}
+
+export function ClipboardIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <rect x="5" y="4.5" width="14" height="17" rx="1.6" />
+      <path d="M9 4.5a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 4.5V6H9V4.5Z" />
+      <path d="M8.5 11h7M8.5 14.5h7M8.5 18h4.5" />
+    </svg>
+  );
+}
+
+export function TruckIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M3 6.5h10.5v9H3z" />
+      <path d="M13.5 10h3.7l3.3 3v2.5h-7V10Z" />
+      <circle cx="7" cy="17.5" r="1.6" />
+      <circle cx="17" cy="17.5" r="1.6" />
+    </svg>
+  );
+}

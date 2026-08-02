@@ -1,6 +1,7 @@
 import NextLink from "next/link";
 import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/lib/format";
+import { AdminPageHeader } from "@/components/admin/admin-page-header";
 
 const COUNTED_STATUSES = ["PAID", "PACKED", "SHIPPED", "DELIVERED"];
 
@@ -13,9 +14,9 @@ export default async function AdminUsersPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-semibold">משתמשים</h1>
+      <AdminPageHeader title="משתמשים" description={`${users.length} משתמשים`} />
 
-      <div className="hidden overflow-x-auto md:block">
+      <div className="hidden overflow-x-auto rounded-md border border-line bg-white p-2 shadow-sm md:block">
         <table className="w-full text-start text-sm">
           <thead>
             <tr className="border-b border-ink/12 text-ink-soft">
@@ -60,7 +61,7 @@ export default async function AdminUsersPage() {
             <NextLink
               key={user.id}
               href={`/admin/users/${user.id}`}
-              className="block rounded border border-ink/12 p-4 hover:bg-cream"
+              className="block rounded-md border border-line bg-white shadow-sm transition-shadow hover:shadow-md p-4"
             >
               <div className="flex items-center justify-between gap-3">
                 <span className="font-medium">{user.name ?? "—"}</span>

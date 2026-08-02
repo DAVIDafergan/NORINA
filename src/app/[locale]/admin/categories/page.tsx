@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { CategoryManager } from "@/components/admin/category-manager";
+import { AdminPageHeader } from "@/components/admin/admin-page-header";
 import type { LocalizedText } from "@/lib/types";
 
 export default async function AdminCategoriesPage() {
@@ -10,10 +11,7 @@ export default async function AdminCategoriesPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div>
-        <h1 className="text-2xl font-semibold">קטגוריות</h1>
-        <p className="mt-1 text-sm text-ink-soft">גררי לפי הידית כדי לשנות את סדר ההצגה בחנות.</p>
-      </div>
+      <AdminPageHeader title="קטגוריות" description="גררי לפי הידית כדי לשנות את סדר ההצגה בחנות." />
       <CategoryManager
         categories={categories.map((c) => ({
           id: c.id,

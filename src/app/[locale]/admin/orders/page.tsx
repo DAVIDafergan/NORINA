@@ -2,6 +2,7 @@ import NextLink from "next/link";
 import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/lib/format";
 import { ORDER_STATUS_LABELS, ORDER_STATUS_COLORS, ORDER_STATUS_ORDER } from "@/lib/admin/order-status";
+import { AdminPageHeader } from "@/components/admin/admin-page-header";
 import type { OrderStatus } from "@/generated/prisma/enums";
 
 export default async function AdminOrdersPage({
@@ -19,10 +20,14 @@ export default async function AdminOrdersPage({
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-semibold">הזמנות</h1>
+      <AdminPageHeader title="הזמנות" description={`${orders.length} הזמנות`} />
 
-      <form className="flex flex-col gap-3 text-sm sm:flex-row">
-        <select name="status" defaultValue={status ?? ""} className="w-full rounded border border-ink/20 px-3 py-2.5 sm:w-auto">
+      <form className="flex flex-col gap-3 rounded-md border border-line bg-white p-4 text-sm shadow-sm sm:flex-row sm:items-center">
+        <select
+          name="status"
+          defaultValue={status ?? ""}
+          className="w-full rounded border border-ink/20 px-3 py-2.5 focus:border-gold focus:outline-none sm:w-auto"
+        >
           <option value="">כל הסטטוסים</option>
           {ORDER_STATUS_ORDER.map((s) => (
             <option key={s} value={s}>
@@ -30,12 +35,12 @@ export default async function AdminOrdersPage({
             </option>
           ))}
         </select>
-        <button type="submit" className="min-h-11 w-full rounded border border-ink/20 px-4 py-2.5 hover:bg-cream sm:w-auto">
+        <button type="submit" className="min-h-11 w-full rounded-sm bg-ink px-4 py-2.5 text-cream transition-colors hover:bg-gold sm:w-auto">
           סינון
         </button>
       </form>
 
-      <div className="hidden overflow-x-auto md:block">
+      <div className="hidden overflow-x-auto rounded-md border border-line bg-white p-2 shadow-sm md:block">
         <table className="w-full text-start text-sm">
           <thead>
             <tr className="border-b border-ink/12 text-ink-soft">
@@ -75,7 +80,7 @@ export default async function AdminOrdersPage({
           <NextLink
             key={order.id}
             href={`/admin/orders/${order.id}`}
-            className="block rounded border border-ink/12 p-4 hover:bg-cream"
+            className="block rounded-md border border-line bg-white shadow-sm transition-shadow hover:shadow-md p-4"
           >
             <div className="flex items-center justify-between gap-3">
               <span className="font-mono text-xs text-ink-soft">#{order.id.slice(-8)}</span>

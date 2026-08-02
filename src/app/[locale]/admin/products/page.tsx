@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { getLocalizedText } from "@/lib/i18n-text";
 import { formatPrice } from "@/lib/format";
 import { QuickStockButton } from "@/components/admin/quick-stock-button";
+import { AdminPageHeader } from "@/components/admin/admin-page-header";
 
 const LOW_STOCK_THRESHOLD = 3;
 
@@ -39,23 +40,26 @@ export default async function AdminProductsPage({
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">מוצרים</h1>
-        <NextLink
-          href="/admin/products/new"
-          className="rounded-sm bg-ink px-4 py-2 text-sm font-medium text-cream transition-colors hover:bg-gold"
-        >
-          מוצר חדש
-        </NextLink>
-      </div>
+      <AdminPageHeader
+        title="מוצרים"
+        description={`${visible.length} מוצרים`}
+        action={
+          <NextLink
+            href="/admin/products/new"
+            className="block min-h-11 rounded-sm bg-ink px-5 py-2.5 text-center text-sm font-medium text-cream transition-colors hover:bg-gold"
+          >
+            מוצר חדש
+          </NextLink>
+        }
+      />
 
-      <form className="flex flex-col gap-3 text-sm sm:flex-row sm:flex-wrap">
+      <form className="flex flex-col gap-3 rounded-md border border-line bg-white p-4 text-sm shadow-sm sm:flex-row sm:flex-wrap sm:items-center">
         <input
           type="text"
           name="q"
           defaultValue={q}
           placeholder="חיפוש לפי שם..."
-          className="w-full rounded border border-ink/20 px-3 py-2.5 sm:w-auto"
+          className="w-full rounded border border-ink/20 px-3 py-2.5 focus:border-gold focus:outline-none sm:w-auto"
         />
         <select name="categoryId" defaultValue={categoryId ?? ""} className="w-full rounded border border-ink/20 px-3 py-2.5 sm:w-auto">
           <option value="">כל הקטגוריות</option>
@@ -71,12 +75,12 @@ export default async function AdminProductsPage({
           <option value="inactive">לא פעיל</option>
           <option value="lowStock">מלאי נמוך</option>
         </select>
-        <button type="submit" className="min-h-11 w-full rounded border border-ink/20 px-4 py-2.5 hover:bg-cream sm:w-auto">
+        <button type="submit" className="min-h-11 w-full rounded-sm bg-ink px-4 py-2.5 text-cream transition-colors hover:bg-gold sm:w-auto">
           סינון
         </button>
       </form>
 
-      <div className="hidden overflow-x-auto md:block">
+      <div className="hidden overflow-x-auto rounded-md border border-line bg-white p-2 shadow-sm md:block">
         <table className="w-full text-start text-sm">
           <thead>
             <tr className="border-b border-ink/12 text-ink-soft">
@@ -130,7 +134,7 @@ export default async function AdminProductsPage({
           const totalStock = product.variants.reduce((sum, v) => sum + v.stockQuantity, 0);
           const lowStock = product.variants.some((v) => v.stockQuantity <= LOW_STOCK_THRESHOLD);
           return (
-            <div key={product.id} className="rounded border border-ink/12 p-4">
+            <div key={product.id} className="rounded-md border border-line bg-white shadow-sm p-4">
               <div className="flex items-start justify-between gap-3">
                 <NextLink href={`/admin/products/${product.id}`} className="font-medium hover:underline">
                   {getLocalizedText(product.name, "he")}

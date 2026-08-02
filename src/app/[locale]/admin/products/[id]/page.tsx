@@ -6,6 +6,7 @@ import { ColorManager } from "@/components/admin/color-manager";
 import { DuplicateButton } from "@/components/admin/duplicate-button";
 import { DeleteProductButton } from "@/components/admin/delete-product-button";
 import { ProductWizardSteps } from "@/components/admin/product-wizard-steps";
+import { AdminPageHeader } from "@/components/admin/admin-page-header";
 import type { LocalizedText } from "@/lib/types";
 
 export default async function EditProductPage({
@@ -67,13 +68,15 @@ export default async function EditProductPage({
 
   return (
     <div className="flex flex-col gap-10">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">{getLocalizedText(product.name, "he")}</h1>
-        <div className="flex items-center gap-4">
-          <DuplicateButton productId={product.id} />
-          <DeleteProductButton productId={product.id} productName={getLocalizedText(product.name, "he")} />
-        </div>
-      </div>
+      <AdminPageHeader
+        title={getLocalizedText(product.name, "he")}
+        action={
+          <div className="flex items-center gap-4">
+            <DuplicateButton productId={product.id} />
+            <DeleteProductButton productId={product.id} productName={getLocalizedText(product.name, "he")} />
+          </div>
+        }
+      />
 
       <ProductForm
         productId={product.id}
@@ -91,7 +94,7 @@ export default async function EditProductPage({
       />
 
       <div>
-        <h2 className="mb-4 text-xl font-semibold">צבעים, תמונות ומידות</h2>
+        <h2 className="mb-4 text-xs font-medium uppercase tracking-widest text-ink-soft">צבעים, תמונות ומידות</h2>
         <ColorManager productId={product.id} sizes={sizesForManager} colors={colorsForManager} stage="full" />
       </div>
     </div>

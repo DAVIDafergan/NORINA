@@ -1,8 +1,12 @@
-export function KpiCard({ label, value }: { label: string; value: string }) {
+export function KpiCard({ label, value, accent = false }: { label: string; value: string; accent?: boolean }) {
   return (
-    <div className="rounded border border-ink/12 p-5">
-      <p className="text-sm text-ink-soft">{label}</p>
-      <p className="mt-1 text-2xl font-semibold">{value}</p>
+    <div
+      className={`rounded-md border border-line bg-white p-5 shadow-sm transition-shadow hover:shadow-md ${
+        accent ? "border-t-2 border-t-gold" : ""
+      }`}
+    >
+      <p className="text-xs font-medium uppercase tracking-widest text-ink-soft">{label}</p>
+      <p className="mt-2 font-serif text-3xl text-ink">{value}</p>
     </div>
   );
 }

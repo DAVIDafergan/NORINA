@@ -5,6 +5,7 @@ import { getLocalizedText } from "@/lib/i18n-text";
 import { formatPrice } from "@/lib/format";
 import { OrderStatusSelect } from "@/components/admin/order-status-select";
 import { PrintButton } from "@/components/admin/print-button";
+import { AdminPageHeader } from "@/components/admin/admin-page-header";
 
 export default async function AdminOrderDetailPage({
   params,
@@ -40,26 +41,23 @@ export default async function AdminOrderDetailPage({
 
   return (
     <div className="flex max-w-2xl flex-col gap-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">הזמנה #{order.id.slice(-8)}</h1>
-        <PrintButton />
-      </div>
+      <AdminPageHeader title={`הזמנה #${order.id.slice(-8)}`} action={<PrintButton />} />
 
-      <div className="flex items-center justify-between rounded border border-ink/12 p-4">
+      <div className="flex items-center justify-between rounded-md border border-line bg-white shadow-sm p-4">
         <OrderStatusSelect orderId={order.id} status={order.status} />
         <span className="text-sm text-ink-soft">{order.createdAt.toLocaleString("he-IL")}</span>
       </div>
 
-      <section className="rounded border border-ink/12 p-4 text-sm">
-        <h2 className="mb-2 font-medium">פרטי לקוח</h2>
+      <section className="rounded-md border border-line bg-white shadow-sm p-4 text-sm">
+        <h2 className="mb-2 text-xs font-medium uppercase tracking-widest text-ink-soft">פרטי לקוח</h2>
         <p>{order.contactName}</p>
         <p>{order.contactEmail}</p>
         <p>{order.contactPhone}</p>
         {order.user && <p className="text-ink-soft">משתמש רשום: {order.user.email}</p>}
       </section>
 
-      <section className="rounded border border-ink/12 p-4 text-sm">
-        <h2 className="mb-2 font-medium">מסירה</h2>
+      <section className="rounded-md border border-line bg-white shadow-sm p-4 text-sm">
+        <h2 className="mb-2 text-xs font-medium uppercase tracking-widest text-ink-soft">מסירה</h2>
         {order.deliveryType === "SHIPPING" && order.address ? (
           <p>
             {order.address.street}, {order.address.city} {order.address.zip ?? ""}
@@ -72,8 +70,8 @@ export default async function AdminOrderDetailPage({
         {order.notes && <p className="mt-1 text-ink-soft">הערות: {order.notes}</p>}
       </section>
 
-      <section className="rounded border border-ink/12 p-4">
-        <h2 className="mb-3 text-sm font-medium">פריטים</h2>
+      <section className="rounded-md border border-line bg-white shadow-sm p-4">
+        <h2 className="mb-3 text-xs font-medium uppercase tracking-widest text-ink-soft">פריטים</h2>
         <ul className="flex flex-col gap-3">
           {order.items.map((item) => (
             <li key={item.id} className="flex gap-3 text-sm">

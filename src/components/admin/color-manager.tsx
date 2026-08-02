@@ -147,7 +147,7 @@ function ColorCard({
 
   if (stage === "sizes") {
     return (
-      <div className="rounded border border-ink/12 p-4">
+      <div className="rounded-md border border-line bg-white shadow-sm p-4">
         <div className="mb-4 flex items-center gap-3">
           <span className="h-6 w-6 shrink-0 rounded-full border border-ink/20" style={{ backgroundColor: hexCode }} />
           <span className="font-medium">{name.he}</span>
@@ -158,7 +158,7 @@ function ColorCard({
   }
 
   return (
-    <div className="rounded border border-ink/12 p-4">
+    <div className="rounded-md border border-line bg-white shadow-sm p-4">
       <div className="flex items-start justify-between gap-4">
         <div className="flex flex-1 items-start gap-3">
           <button
@@ -251,7 +251,7 @@ function NewColorForm({ productId, onCreated }: { productId: string; onCreated: 
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-3 rounded border border-dashed border-ink/20 p-4">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-3 rounded-md border-dashed border-ink/25 bg-cream-deep/30 p-4">
       <h3 className="text-sm font-medium">הוספת צבע חדש</h3>
       <LocaleTabsInput label="שם הצבע" value={name} onChange={setName} />
       <label className="flex w-40 flex-col gap-1 text-sm">

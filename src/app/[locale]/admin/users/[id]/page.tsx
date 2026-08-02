@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/lib/format";
 import { ORDER_STATUS_LABELS, ORDER_STATUS_COLORS } from "@/lib/admin/order-status";
 import { BlockUserButton } from "@/components/admin/block-user-button";
+import { AdminPageHeader } from "@/components/admin/admin-page-header";
 
 export default async function AdminUserDetailPage({
   params,
@@ -20,18 +21,16 @@ export default async function AdminUserDetailPage({
 
   return (
     <div className="flex max-w-2xl flex-col gap-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-semibold">{user.name ?? user.email}</h1>
-          <p className="text-sm text-ink-soft">{user.email}</p>
-        </div>
-        <BlockUserButton userId={user.id} isBlocked={user.isBlocked} />
-      </div>
+      <AdminPageHeader
+        title={user.name ?? user.email}
+        description={user.name ? user.email : undefined}
+        action={<BlockUserButton userId={user.id} isBlocked={user.isBlocked} />}
+      />
 
       <section>
-        <h2 className="mb-3 text-sm font-medium">היסטוריית הזמנות</h2>
+        <h2 className="mb-3 text-xs font-medium uppercase tracking-widest text-ink-soft">היסטוריית הזמנות</h2>
 
-        <div className="hidden overflow-x-auto sm:block">
+        <div className="hidden overflow-x-auto rounded-md border border-line bg-white p-2 shadow-sm sm:block">
           <table className="w-full text-start text-sm">
             <thead>
               <tr className="border-b border-ink/12 text-ink-soft">
@@ -67,7 +66,7 @@ export default async function AdminUserDetailPage({
             <NextLink
               key={order.id}
               href={`/admin/orders/${order.id}`}
-              className="flex items-center justify-between rounded border border-ink/12 p-3 text-sm hover:bg-cream"
+              className="flex items-center justify-between rounded-md border border-line bg-white shadow-sm p-3 text-sm transition-shadow hover:shadow-md"
             >
               <div>
                 <p className="font-mono text-xs text-ink-soft">#{order.id.slice(-8)}</p>

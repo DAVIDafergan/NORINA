@@ -4,20 +4,20 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
-import { CloseIcon } from "@/components/icons";
+import { CloseIcon, GridIcon, HangerIcon, TagIcon, RulerIcon, ClipboardIcon, UserIcon, TruckIcon } from "@/components/icons";
 
 const links = [
-  { href: "/admin", label: "דשבורד" },
-  { href: "/admin/products", label: "מוצרים" },
-  { href: "/admin/categories", label: "קטגוריות" },
-  { href: "/admin/sizes", label: "מידות" },
-  { href: "/admin/orders", label: "הזמנות" },
-  { href: "/admin/users", label: "משתמשים" },
-  { href: "/admin/shipping", label: "משלוחים ואיסוף" },
+  { href: "/admin", label: "דשבורד", icon: GridIcon },
+  { href: "/admin/products", label: "מוצרים", icon: HangerIcon },
+  { href: "/admin/categories", label: "קטגוריות", icon: TagIcon },
+  { href: "/admin/sizes", label: "מידות", icon: RulerIcon },
+  { href: "/admin/orders", label: "הזמנות", icon: ClipboardIcon },
+  { href: "/admin/users", label: "משתמשים", icon: UserIcon },
+  { href: "/admin/shipping", label: "משלוחים ואיסוף", icon: TruckIcon },
 ];
 
 function linkClasses(active: boolean) {
-  return `block rounded-sm border-s-2 px-3 py-3 text-sm transition-colors ${
+  return `flex items-center gap-3 rounded-sm border-s-2 px-3 py-3 text-sm transition-colors ${
     active
       ? "border-gold bg-cream-deep font-medium text-ink"
       : "border-transparent text-ink/70 hover:bg-cream-deep hover:text-ink"
@@ -85,6 +85,7 @@ export function AdminSidebar() {
                   onClick={() => setOpen(false)}
                   className={linkClasses(isActive(link.href))}
                 >
+                  <link.icon className="h-[18px] w-[18px] shrink-0" />
                   {link.label}
                 </NextLink>
               ))}
@@ -100,6 +101,7 @@ export function AdminSidebar() {
           {links.map((link) => (
             <li key={link.href}>
               <NextLink href={link.href} className={linkClasses(isActive(link.href))}>
+                <link.icon className="h-[18px] w-[18px] shrink-0" />
                 {link.label}
               </NextLink>
             </li>
