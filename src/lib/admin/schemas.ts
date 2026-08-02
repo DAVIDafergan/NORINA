@@ -102,3 +102,24 @@ export const sizeUpdateSchema = sizeFields.partial();
 export const sizeReorderSchema = z.object({
   orderedIds: z.array(z.string().min(1)),
 });
+
+// Hero media is decoded from these data: URLs and re-validated (mime type,
+// byte size) server-side in the route handler, where the limit differs by
+// heroMediaType - the length caps here are just a generous upper bound
+// (base64 inflates ~4/3) to reject obviously-oversized payloads early.
+const heroMediaPayload = z.object({
+  dataUrl: z.string().min(1).max(30_000_000).startsWith("data:"),
+  mimeType: z.string().min(1),
+});
+
+export const homepageSettingSchema = z.object({
+  heroMediaType: z.enum(["IMAGE", "VIDEO"]),
+  heroEyebrow: localizedTextOptional,
+  heroHeadline: localizedTextOptional,
+  heroSubheadline: localizedTextOptional,
+  // Omitted = keep existing media. Desktop can only be replaced, not cleared
+  // (the hero always needs a background once configured). Mobile can be
+  // explicitly cleared by sending null (falls back to desktop + auto-crop).
+  heroDesktopMedia: heroMediaPayload.optional(),
+  heroMobileMedia: heroMediaPayload.nullable().optional(),
+});

@@ -326,3 +326,49 @@ model NewsletterSubscriber {
   locale    String
   createdAt DateTime @default(now())
 }
+
+// ---------------------------------------------------------------------------
+// Homepage hero
+// ---------------------------------------------------------------------------
+
+enum HeroMediaType {
+  IMAGE
+  VIDEO
+}
+
+/// Raw bytes for site-level media (hero background image/video) - unlike
+/// ColorImage.url (a base64 data: URL embedded directly in the page), this is
+/// served through a streaming route (/api/media/[id]) so a ~20MB hero video
+/// never gets inlined into the homepage's HTML. Still lives in Postgres for
+/// the same reason ColorImage does (no object storage provider set up yet,
+/// see DECISIONS.md) - referencing it by URL instead of inlining it just
+/// makes the eventual move to real object storage a smaller change.
+model SiteMedia {
+  id        String   @id @default(cuid())
+  mimeType  String
+  data      Bytes
+  createdAt DateTime @default(now())
+
+  heroDesktopOf HomepageSetting? @relation("HeroDesktopMedia")
+  heroMobileOf  HomepageSetting? @relation("HeroMobileMedia")
+}
+
+/// Singleton config row (app layer always reads/writes the first row, same
+/// pattern as ShippingSetting).
+model HomepageSetting {
+  id            String        @id @default(cuid())
+  heroMediaType HeroMediaType @default(IMAGE)
+
+  heroDesktopMediaId String?    @unique
+  heroDesktopMedia   SiteMedia? @relation("HeroDesktopMedia", fields: [heroDesktopMediaId], references: [id])
+  /// Optional vertical crop for mobile - only used when heroMediaType is IMAGE.
+  /// Falls back to heroDesktopMedia with a centered object-cover crop if unset.
+  heroMobileMediaId String?    @unique
+  heroMobileMedia   SiteMedia? @relation("HeroMobileMedia", fields: [heroMobileMediaId], references: [id])
+
+  heroEyebrow     Json
+  heroHeadline    Json
+  heroSubheadline Json
+
+  updatedAt DateTime @updatedAt
+}

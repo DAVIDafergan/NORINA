@@ -114,3 +114,43 @@ export function TruckIcon(props: IconProps) {
     </svg>
   );
 }
+
+export function LandscapeIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <rect x="3" y="4.5" width="18" height="15" rx="1.6" />
+      <circle cx="8.5" cy="9.5" r="1.6" />
+      <path d="m4 17 5.5-6 4 4.2L16 12l4 5" />
+    </svg>
+  );
+}
+
+export function PlayIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M7 5.5v13l11-6.5-11-6.5Z" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+export function ShareIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <circle cx="18" cy="6" r="2.2" />
+      <circle cx="6" cy="12" r="2.2" />
+      <circle cx="18" cy="18" r="2.2" />
+      <path d="m8 10.8 8-4.4M8 13.2l8 4.4" />
+    </svg>
+  );
+}
+
+export function CartAddIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M3 4h1.7l1.9 10.5a1.6 1.6 0 0 0 1.58 1.3h7.6a1.6 1.6 0 0 0 1.57-1.28L19 8H6.1" />
+      <circle cx="9.5" cy="19.5" r="1.3" />
+      <circle cx="16" cy="19.5" r="1.3" />
+      <path d="M15 6.5h4M17 4.5v4" />
+    </svg>
+  );
+}

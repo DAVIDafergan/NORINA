@@ -4,10 +4,21 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
-import { CloseIcon, GridIcon, HangerIcon, TagIcon, RulerIcon, ClipboardIcon, UserIcon, TruckIcon } from "@/components/icons";
+import {
+  CloseIcon,
+  GridIcon,
+  HangerIcon,
+  TagIcon,
+  RulerIcon,
+  ClipboardIcon,
+  UserIcon,
+  TruckIcon,
+  LandscapeIcon,
+} from "@/components/icons";
 
 const links = [
   { href: "/admin", label: "דשבורד", icon: GridIcon },
+  { href: "/admin/homepage", label: "עיצוב דף הבית", icon: LandscapeIcon },
   { href: "/admin/products", label: "מוצרים", icon: HangerIcon },
   { href: "/admin/categories", label: "קטגוריות", icon: TagIcon },
   { href: "/admin/sizes", label: "מידות", icon: RulerIcon },
