@@ -7,6 +7,7 @@ const links = [
   { href: "/admin", label: "דשבורד" },
   { href: "/admin/products", label: "מוצרים" },
   { href: "/admin/categories", label: "קטגוריות" },
+  { href: "/admin/sizes", label: "מידות" },
   { href: "/admin/orders", label: "הזמנות" },
   { href: "/admin/users", label: "משתמשים" },
   { href: "/admin/shipping", label: "משלוחים ואיסוף" },

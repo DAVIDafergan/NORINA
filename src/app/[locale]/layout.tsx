@@ -5,7 +5,6 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Assistant, Frank_Ruhl_Libre, Playfair_Display } from "next/font/google";
 import { routing, localeDirections, type AppLocale } from "@/i18n/routing";
 import { Providers } from "@/components/providers";
-import { IntroAnimation } from "@/components/intro/intro-animation";
 import "../globals.css";
 
 const bodyFont = Assistant({
@@ -70,7 +69,6 @@ export default async function LocaleLayout({
       className={`${bodyFont.variable} ${headingFontHe.variable} ${headingFontLatin.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <IntroAnimation />
         <NextIntlClientProvider>
           <Providers>{children}</Providers>
         </NextIntlClientProvider>

@@ -72,3 +72,33 @@ export const pickupLocationInputSchema = z.object({
   address: z.string().min(1),
   isActive: z.boolean(),
 });
+
+const cmMeasurement = z.number().int().positive().max(300).nullable().optional();
+
+const sizeFields = z.object({
+  label: z.string().min(1),
+  bustMin: cmMeasurement,
+  bustMax: cmMeasurement,
+  waistMin: cmMeasurement,
+  waistMax: cmMeasurement,
+  hipsMin: cmMeasurement,
+  hipsMax: cmMeasurement,
+});
+
+function rangeIsValid(min: number | null | undefined, max: number | null | undefined) {
+  return !min || !max || min <= max;
+}
+
+// Create requires all 6 measurement fields to be internally consistent (min <= max);
+// update (sizeUpdateSchema below) is a plain .partial() without this cross-check since
+// the admin UI always submits the full row together, so it's redundant there.
+export const sizeInputSchema = sizeFields.refine(
+  (v) => rangeIsValid(v.bustMin, v.bustMax) && rangeIsValid(v.waistMin, v.waistMax) && rangeIsValid(v.hipsMin, v.hipsMax),
+  { message: "measurement_range_invalid" },
+);
+
+export const sizeUpdateSchema = sizeFields.partial();
+
+export const sizeReorderSchema = z.object({
+  orderedIds: z.array(z.string().min(1)),
+});

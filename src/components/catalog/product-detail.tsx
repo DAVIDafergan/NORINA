@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { useCartStore } from "@/lib/cart-store";
 import { formatPrice } from "@/lib/format";
 import { Button } from "@/components/ui/button";
+import { SizeGuideModal, type SizeGuideEntry } from "@/components/catalog/size-guide-modal";
 import type { Locale } from "@/lib/types";
 
 export interface ProductDetailColor {
@@ -23,6 +24,12 @@ export interface ProductDetailVariant {
   sizeOrder: number;
   stockQuantity: number;
   price: number;
+  bustMin: number | null;
+  bustMax: number | null;
+  waistMin: number | null;
+  waistMax: number | null;
+  hipsMin: number | null;
+  hipsMax: number | null;
 }
 
 export interface ProductDetailData {
@@ -46,6 +53,7 @@ export function ProductDetail({ product, locale }: { product: ProductDetailData;
   const [selectedColorId, setSelectedColorId] = useState(product.colors[0]?.id);
   const [selectedSizeId, setSelectedSizeId] = useState<string | null>(null);
   const [justAdded, setJustAdded] = useState(false);
+  const [showSizeGuide, setShowSizeGuide] = useState(false);
 
   const selectedColor = product.colors.find((c) => c.id === selectedColorId) ?? product.colors[0];
 
@@ -55,6 +63,21 @@ export function ProductDetail({ product, locale }: { product: ProductDetailData;
         .filter((v) => v.colorId === selectedColorId)
         .sort((a, b) => a.sizeOrder - b.sizeOrder),
     [product.variants, selectedColorId],
+  );
+
+  const sizeGuideEntries: SizeGuideEntry[] = useMemo(
+    () =>
+      sizesForColor.map((v) => ({
+        sizeId: v.sizeId,
+        label: v.sizeLabel,
+        bustMin: v.bustMin,
+        bustMax: v.bustMax,
+        waistMin: v.waistMin,
+        waistMax: v.waistMax,
+        hipsMin: v.hipsMin,
+        hipsMax: v.hipsMax,
+      })),
+    [sizesForColor],
   );
 
   const selectedVariant = sizesForColor.find((v) => v.sizeId === selectedSizeId);
@@ -134,7 +157,16 @@ export function ProductDetail({ product, locale }: { product: ProductDetailData;
         </div>
 
         <div>
-          <p className="mb-3 text-xs font-medium uppercase tracking-widest text-ink-soft">{t("size")}</p>
+          <div className="mb-3 flex items-center justify-between">
+            <p className="text-xs font-medium uppercase tracking-widest text-ink-soft">{t("size")}</p>
+            <button
+              type="button"
+              onClick={() => setShowSizeGuide(true)}
+              className="text-xs text-ink-soft underline transition-colors hover:text-gold"
+            >
+              {t("sizeGuide")}
+            </button>
+          </div>
           <div className="flex flex-wrap gap-2">
             {sizesForColor.map((variant) => (
               <button
@@ -180,6 +212,17 @@ export function ProductDetail({ product, locale }: { product: ProductDetailData;
           {addToCartLabel}
         </Button>
       </div>
+
+      {showSizeGuide && (
+        <SizeGuideModal
+          sizes={sizeGuideEntries}
+          onClose={() => setShowSizeGuide(false)}
+          onSelectSize={(sizeId) => {
+            setSelectedSizeId(sizeId);
+            setShowSizeGuide(false);
+          }}
+        />
+      )}
     </div>
   );
 }

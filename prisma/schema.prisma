@@ -88,10 +88,20 @@ model ColorImage {
 }
 
 /// Shared size labels (S, M, L, 38, 40, ...), reused across products via ProductVariant.
+/// Measurement ranges (cm) are optional and global to the size, not per-product/category -
+/// consistent with sizes already being a global pool (see DECISIONS.md stage 2). Powers the
+/// customer-facing size recommender; a size with no ranges set is simply skipped by it.
 model Size {
   id         String @id @default(cuid())
   label      String @unique
   orderIndex Int    @default(0)
+
+  bustMin  Int?
+  bustMax  Int?
+  waistMin Int?
+  waistMax Int?
+  hipsMin  Int?
+  hipsMax  Int?
 
   variants ProductVariant[]
 }

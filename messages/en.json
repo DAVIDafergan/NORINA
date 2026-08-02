@@ -37,7 +37,23 @@
     "sizeGuide": "Size guide",
     "materials": "Materials & composition",
     "careInstructions": "Care & washing instructions",
-    "additionalInfo": "Additional information"
+    "additionalInfo": "Additional information",
+    "sizeGuideModal": {
+      "title": "Size guide",
+      "intro": "Enter your measurements (in cm) to find your best-fitting size.",
+      "bust": "Bust",
+      "waist": "Waist",
+      "hips": "Hips",
+      "findButton": "Find my size",
+      "recommended": "Your recommended size: {size}",
+      "closeMatch": "No exact match found - closest fit: {size}",
+      "noMeasurements": "Please enter at least one measurement.",
+      "noData": "No size information is available for this product yet.",
+      "selectButton": "Select this size",
+      "tableTitle": "Size chart",
+      "tableSize": "Size",
+      "close": "Close"
+    }
   },
   "cart": {
     "title": "Cart",

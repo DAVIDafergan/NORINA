@@ -37,7 +37,23 @@
     "sizeGuide": "מדריך מידות",
     "materials": "חומרים והרכב",
     "careInstructions": "הוראות טיפוח וכביסה",
-    "additionalInfo": "מידע נוסף"
+    "additionalInfo": "מידע נוסף",
+    "sizeGuideModal": {
+      "title": "מדריך מידות",
+      "intro": "הזיני את המידות שלך (בס\"מ) ונמצא את המידה המתאימה ביותר עבורך.",
+      "bust": "חזה",
+      "waist": "מותן",
+      "hips": "ירכיים",
+      "findButton": "מצאי את המידה שלי",
+      "recommended": "המידה המומלצת עבורך: {size}",
+      "closeMatch": "לא נמצאה התאמה מדויקת - הקרובה ביותר: {size}",
+      "noMeasurements": "נא להזין לפחות מידה אחת.",
+      "noData": "אין עדיין מידע מידות זמין למוצר הזה.",
+      "selectButton": "בחרי מידה זו",
+      "tableTitle": "טבלת מידות",
+      "tableSize": "מידה",
+      "close": "סגירה"
+    }
   },
   "cart": {
     "title": "עגלה",

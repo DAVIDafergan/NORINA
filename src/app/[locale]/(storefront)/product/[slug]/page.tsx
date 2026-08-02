@@ -39,6 +39,12 @@ export default async function ProductPage({
       sizeOrder: variant.size.orderIndex,
       stockQuantity: variant.stockQuantity,
       price: Number(variant.priceOverride ?? product.basePrice),
+      bustMin: variant.size.bustMin,
+      bustMax: variant.size.bustMax,
+      waistMin: variant.size.waistMin,
+      waistMax: variant.size.waistMax,
+      hipsMin: variant.size.hipsMin,
+      hipsMax: variant.size.hipsMax,
     })),
   };
 

@@ -37,7 +37,23 @@
     "sizeGuide": "Guide des tailles",
     "materials": "Matières et composition",
     "careInstructions": "Entretien et lavage",
-    "additionalInfo": "Informations complémentaires"
+    "additionalInfo": "Informations complémentaires",
+    "sizeGuideModal": {
+      "title": "Guide des tailles",
+      "intro": "Entrez vos mensurations (en cm) pour trouver votre taille idéale.",
+      "bust": "Poitrine",
+      "waist": "Taille",
+      "hips": "Hanches",
+      "findButton": "Trouver ma taille",
+      "recommended": "Taille recommandée : {size}",
+      "closeMatch": "Pas de correspondance exacte - la plus proche : {size}",
+      "noMeasurements": "Merci de saisir au moins une mesure.",
+      "noData": "Aucune information de taille n'est encore disponible pour ce produit.",
+      "selectButton": "Choisir cette taille",
+      "tableTitle": "Tableau des tailles",
+      "tableSize": "Taille",
+      "close": "Fermer"
+    }
   },
   "cart": {
     "title": "Panier",
