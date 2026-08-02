@@ -11,7 +11,21 @@ export function getActiveCategories() {
   });
 }
 
-export function getCategoryWithProducts(slug: string) {
+// Next.js route params for [slug] segments arrive percent-encoded as-is in
+// this environment (they are NOT auto-decoded - see AGENTS.md re: breaking
+// changes), so a Hebrew-only product/category name (a very normal admin
+// input) 404s unless decoded here. Safe no-op for already-decoded/ASCII
+// slugs - slugify() never lets a slug contain a literal "%".
+function decodeSlug(slug: string): string {
+  try {
+    return decodeURIComponent(slug);
+  } catch {
+    return slug;
+  }
+}
+
+export function getCategoryWithProducts(rawSlug: string) {
+  const slug = decodeSlug(rawSlug);
   return prisma.category.findUnique({
     where: { slug },
     include: {
@@ -30,7 +44,8 @@ export function getCategoryWithProducts(slug: string) {
   });
 }
 
-export function getProductBySlug(slug: string) {
+export function getProductBySlug(rawSlug: string) {
+  const slug = decodeSlug(rawSlug);
   return prisma.product.findUnique({
     where: { slug, isActive: true },
     include: {
