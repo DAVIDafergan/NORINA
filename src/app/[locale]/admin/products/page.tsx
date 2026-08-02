@@ -49,15 +49,15 @@ export default async function AdminProductsPage({
         </NextLink>
       </div>
 
-      <form className="flex flex-wrap gap-3 text-sm">
+      <form className="flex flex-col gap-3 text-sm sm:flex-row sm:flex-wrap">
         <input
           type="text"
           name="q"
           defaultValue={q}
           placeholder="חיפוש לפי שם..."
-          className="rounded border border-ink/20 px-3 py-2"
+          className="w-full rounded border border-ink/20 px-3 py-2.5 sm:w-auto"
         />
-        <select name="categoryId" defaultValue={categoryId ?? ""} className="rounded border border-ink/20 px-3 py-2">
+        <select name="categoryId" defaultValue={categoryId ?? ""} className="w-full rounded border border-ink/20 px-3 py-2.5 sm:w-auto">
           <option value="">כל הקטגוריות</option>
           {categories.map((category) => (
             <option key={category.id} value={category.id}>
@@ -65,63 +65,101 @@ export default async function AdminProductsPage({
             </option>
           ))}
         </select>
-        <select name="status" defaultValue={status ?? ""} className="rounded border border-ink/20 px-3 py-2">
+        <select name="status" defaultValue={status ?? ""} className="w-full rounded border border-ink/20 px-3 py-2.5 sm:w-auto">
           <option value="">כל הסטטוסים</option>
           <option value="active">פעיל</option>
           <option value="inactive">לא פעיל</option>
           <option value="lowStock">מלאי נמוך</option>
         </select>
-        <button type="submit" className="rounded border border-ink/20 px-4 py-2 hover:bg-cream">
+        <button type="submit" className="min-h-11 w-full rounded border border-ink/20 px-4 py-2.5 hover:bg-cream sm:w-auto">
           סינון
         </button>
       </form>
 
-      <table className="w-full text-start text-sm">
-        <thead>
-          <tr className="border-b border-ink/12 text-ink-soft">
-            <th className="py-2 text-start">שם</th>
-            <th className="py-2 text-start">קטגוריה</th>
-            <th className="py-2 text-start">מחיר</th>
-            <th className="py-2 text-start">סטטוס</th>
-            <th className="py-2 text-start">מלאי</th>
-          </tr>
-        </thead>
-        <tbody>
-          {visible.map((product) => {
-            const totalStock = product.variants.reduce((sum, v) => sum + v.stockQuantity, 0);
-            const lowStock = product.variants.some((v) => v.stockQuantity <= LOW_STOCK_THRESHOLD);
-            return (
-              <tr key={product.id} className="border-b border-cream-deep hover:bg-cream">
-                <td className="py-3">
-                  <NextLink href={`/admin/products/${product.id}`} className="font-medium hover:underline">
-                    {getLocalizedText(product.name, "he")}
-                  </NextLink>
-                </td>
-                <td className="py-3">{getLocalizedText(product.category.name, "he")}</td>
-                <td className="py-3">{formatPrice(Number(product.basePrice), "he")}</td>
-                <td className="py-3">
-                  <span className={product.isActive ? "text-green-700" : "text-ink/45"}>
-                    {product.isActive ? "פעיל" : "לא פעיל"}
-                  </span>
-                </td>
-                <td className="py-3">
-                  <QuickStockButton
-                    productName={getLocalizedText(product.name, "he")}
-                    totalStock={totalStock}
-                    lowStock={lowStock}
-                    variants={product.variants.map((v) => ({
-                      id: v.id,
-                      sizeLabel: v.size.label,
-                      colorName: getLocalizedText(v.color.name, "he"),
-                      stockQuantity: v.stockQuantity,
-                    }))}
-                  />
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <div className="hidden overflow-x-auto md:block">
+        <table className="w-full text-start text-sm">
+          <thead>
+            <tr className="border-b border-ink/12 text-ink-soft">
+              <th className="py-2 text-start">שם</th>
+              <th className="py-2 text-start">קטגוריה</th>
+              <th className="py-2 text-start">מחיר</th>
+              <th className="py-2 text-start">סטטוס</th>
+              <th className="py-2 text-start">מלאי</th>
+            </tr>
+          </thead>
+          <tbody>
+            {visible.map((product) => {
+              const totalStock = product.variants.reduce((sum, v) => sum + v.stockQuantity, 0);
+              const lowStock = product.variants.some((v) => v.stockQuantity <= LOW_STOCK_THRESHOLD);
+              return (
+                <tr key={product.id} className="border-b border-cream-deep hover:bg-cream">
+                  <td className="py-3">
+                    <NextLink href={`/admin/products/${product.id}`} className="font-medium hover:underline">
+                      {getLocalizedText(product.name, "he")}
+                    </NextLink>
+                  </td>
+                  <td className="py-3">{getLocalizedText(product.category.name, "he")}</td>
+                  <td className="py-3">{formatPrice(Number(product.basePrice), "he")}</td>
+                  <td className="py-3">
+                    <span className={product.isActive ? "text-green-700" : "text-ink/45"}>
+                      {product.isActive ? "פעיל" : "לא פעיל"}
+                    </span>
+                  </td>
+                  <td className="py-3">
+                    <QuickStockButton
+                      productName={getLocalizedText(product.name, "he")}
+                      totalStock={totalStock}
+                      lowStock={lowStock}
+                      variants={product.variants.map((v) => ({
+                        id: v.id,
+                        sizeLabel: v.size.label,
+                        colorName: getLocalizedText(v.color.name, "he"),
+                        stockQuantity: v.stockQuantity,
+                      }))}
+                    />
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="flex flex-col gap-3 md:hidden">
+        {visible.map((product) => {
+          const totalStock = product.variants.reduce((sum, v) => sum + v.stockQuantity, 0);
+          const lowStock = product.variants.some((v) => v.stockQuantity <= LOW_STOCK_THRESHOLD);
+          return (
+            <div key={product.id} className="rounded border border-ink/12 p-4">
+              <div className="flex items-start justify-between gap-3">
+                <NextLink href={`/admin/products/${product.id}`} className="font-medium hover:underline">
+                  {getLocalizedText(product.name, "he")}
+                </NextLink>
+                <span className={`shrink-0 text-xs ${product.isActive ? "text-green-700" : "text-ink/45"}`}>
+                  {product.isActive ? "פעיל" : "לא פעיל"}
+                </span>
+              </div>
+              <p className="mt-1 text-sm text-ink-soft">
+                {getLocalizedText(product.category.name, "he")} · {formatPrice(Number(product.basePrice), "he")}
+              </p>
+              <div className="mt-3 flex items-center gap-2 text-sm">
+                <span className="text-ink-soft">מלאי:</span>
+                <QuickStockButton
+                  productName={getLocalizedText(product.name, "he")}
+                  totalStock={totalStock}
+                  lowStock={lowStock}
+                  variants={product.variants.map((v) => ({
+                    id: v.id,
+                    sizeLabel: v.size.label,
+                    colorName: getLocalizedText(v.color.name, "he"),
+                    stockQuantity: v.stockQuantity,
+                  }))}
+                />
+              </div>
+            </div>
+          );
+        })}
+      </div>
 
       {visible.length === 0 && <p className="text-ink-soft">לא נמצאו מוצרים.</p>}
     </div>

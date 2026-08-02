@@ -30,34 +30,59 @@ export default async function AdminUserDetailPage({
 
       <section>
         <h2 className="mb-3 text-sm font-medium">היסטוריית הזמנות</h2>
-        <table className="w-full text-start text-sm">
-          <thead>
-            <tr className="border-b border-ink/12 text-ink-soft">
-              <th className="py-2 text-start">מס&apos;</th>
-              <th className="py-2 text-start">תאריך</th>
-              <th className="py-2 text-start">סה&quot;כ</th>
-              <th className="py-2 text-start">סטטוס</th>
-            </tr>
-          </thead>
-          <tbody>
-            {user.orders.map((order) => (
-              <tr key={order.id} className="border-b border-cream-deep">
-                <td className="py-2">
-                  <NextLink href={`/admin/orders/${order.id}`} className="font-mono text-xs hover:underline">
-                    {order.id.slice(-8)}
-                  </NextLink>
-                </td>
-                <td className="py-2">{order.createdAt.toLocaleDateString("he-IL")}</td>
-                <td className="py-2">{formatPrice(Number(order.totalAmount), "he")}</td>
-                <td className="py-2">
-                  <span className={`rounded px-2 py-1 text-xs ${ORDER_STATUS_COLORS[order.status]}`}>
-                    {ORDER_STATUS_LABELS[order.status]}
-                  </span>
-                </td>
+
+        <div className="hidden overflow-x-auto sm:block">
+          <table className="w-full text-start text-sm">
+            <thead>
+              <tr className="border-b border-ink/12 text-ink-soft">
+                <th className="py-2 text-start">מס&apos;</th>
+                <th className="py-2 text-start">תאריך</th>
+                <th className="py-2 text-start">סה&quot;כ</th>
+                <th className="py-2 text-start">סטטוס</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {user.orders.map((order) => (
+                <tr key={order.id} className="border-b border-cream-deep">
+                  <td className="py-2">
+                    <NextLink href={`/admin/orders/${order.id}`} className="font-mono text-xs hover:underline">
+                      {order.id.slice(-8)}
+                    </NextLink>
+                  </td>
+                  <td className="py-2">{order.createdAt.toLocaleDateString("he-IL")}</td>
+                  <td className="py-2">{formatPrice(Number(order.totalAmount), "he")}</td>
+                  <td className="py-2">
+                    <span className={`rounded px-2 py-1 text-xs ${ORDER_STATUS_COLORS[order.status]}`}>
+                      {ORDER_STATUS_LABELS[order.status]}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="flex flex-col gap-2 sm:hidden">
+          {user.orders.map((order) => (
+            <NextLink
+              key={order.id}
+              href={`/admin/orders/${order.id}`}
+              className="flex items-center justify-between rounded border border-ink/12 p-3 text-sm hover:bg-cream"
+            >
+              <div>
+                <p className="font-mono text-xs text-ink-soft">#{order.id.slice(-8)}</p>
+                <p className="mt-1">{order.createdAt.toLocaleDateString("he-IL")}</p>
+              </div>
+              <div className="text-end">
+                <p className="font-medium">{formatPrice(Number(order.totalAmount), "he")}</p>
+                <span className={`mt-1 inline-block rounded px-2 py-1 text-xs ${ORDER_STATUS_COLORS[order.status]}`}>
+                  {ORDER_STATUS_LABELS[order.status]}
+                </span>
+              </div>
+            </NextLink>
+          ))}
+        </div>
+
         {user.orders.length === 0 && <p className="text-ink-soft">אין עדיין הזמנות.</p>}
       </section>
     </div>

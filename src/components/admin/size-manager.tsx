@@ -58,7 +58,7 @@ function MeasurementFieldRow({
         placeholder="מ-"
         value={min ?? ""}
         onChange={(e) => onMinChange(e.target.value === "" ? null : Number(e.target.value))}
-        className="w-20 rounded-sm border border-ink/20 px-2 py-1 focus:border-gold focus:outline-none"
+        className="min-h-11 w-20 rounded-sm border border-ink/20 px-2 py-2 focus:border-gold focus:outline-none"
       />
       <span className="text-ink/30">—</span>
       <input
@@ -67,7 +67,7 @@ function MeasurementFieldRow({
         placeholder="עד"
         value={max ?? ""}
         onChange={(e) => onMaxChange(e.target.value === "" ? null : Number(e.target.value))}
-        className="w-20 rounded-sm border border-ink/20 px-2 py-1 focus:border-gold focus:outline-none"
+        className="min-h-11 w-20 rounded-sm border border-ink/20 px-2 py-2 focus:border-gold focus:outline-none"
       />
       <span className="text-xs text-ink/40">ס״מ</span>
     </div>
