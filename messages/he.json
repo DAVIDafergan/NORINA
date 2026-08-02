@@ -13,7 +13,11 @@
   "home": {
     "title": "NORINA",
     "subtitle": "פריטים נצחיים, עשויים להישאר.",
-    "newArrivals": "הגעות חדשות"
+    "newArrivals": "הגעות חדשות",
+    "heroEyebrow": "NORINA · קולקציית העונה",
+    "heroHeadline": "לבשי את הסיפור שלך",
+    "heroSubheadline": "עיצוב נשי עדין, בדים איכותיים, וגזרה שמחמיאה לכל תנועה.",
+    "heroCta": "לגלות את הקולקציה"
   },
   "category": {
     "empty": "עדיין אין מוצרים בקטגוריה הזו."

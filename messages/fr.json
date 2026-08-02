@@ -13,7 +13,11 @@
   "home": {
     "title": "NORINA",
     "subtitle": "Des pièces intemporelles, faites pour durer.",
-    "newArrivals": "Nouveautés"
+    "newArrivals": "Nouveautés",
+    "heroEyebrow": "NORINA · Collection de saison",
+    "heroHeadline": "Portez votre histoire",
+    "heroSubheadline": "Un design féminin raffiné, des tissus nobles, une coupe qui sublime chaque mouvement.",
+    "heroCta": "Découvrir la collection"
   },
   "category": {
     "empty": "Aucun produit dans cette catégorie pour le moment."
