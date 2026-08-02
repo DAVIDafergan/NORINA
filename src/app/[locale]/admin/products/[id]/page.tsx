@@ -4,14 +4,19 @@ import { getLocalizedText } from "@/lib/i18n-text";
 import { ProductForm } from "@/components/admin/product-form";
 import { ColorManager } from "@/components/admin/color-manager";
 import { DuplicateButton } from "@/components/admin/duplicate-button";
+import { DeleteProductButton } from "@/components/admin/delete-product-button";
+import { ProductWizardSteps } from "@/components/admin/product-wizard-steps";
 import type { LocalizedText } from "@/lib/types";
 
 export default async function EditProductPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ wizard?: string }>;
 }) {
   const { id } = await params;
+  const { wizard } = await searchParams;
 
   const [product, categories, sizes] = await Promise.all([
     prisma.product.findUnique({
@@ -29,11 +34,45 @@ export default async function EditProductPage({
 
   if (!product) notFound();
 
+  const colorsForManager = product.colors.map((color) => ({
+    id: color.id,
+    name: color.name as LocalizedText,
+    hexCode: color.hexCode,
+    orderIndex: color.orderIndex,
+    images: color.images.map((image) => ({ id: image.id, url: image.url, isPrimary: image.isPrimary })),
+    variants: color.variants.map((variant) => ({
+      id: variant.id,
+      sizeId: variant.sizeId,
+      sizeLabel: variant.size.label,
+      stockQuantity: variant.stockQuantity,
+    })),
+  }));
+  const sizesForManager = sizes.map((s) => ({ id: s.id, label: s.label, orderIndex: s.orderIndex }));
+
+  const wizardStep = wizard === "2" || wizard === "3" || wizard === "4" ? (Number(wizard) as 2 | 3 | 4) : null;
+
+  if (wizardStep) {
+    return (
+      <ProductWizardSteps
+        productId={product.id}
+        step={wizardStep}
+        productName={getLocalizedText(product.name, "he")}
+        basePrice={Number(product.basePrice)}
+        isActive={product.isActive}
+        colors={colorsForManager}
+        sizes={sizesForManager}
+      />
+    );
+  }
+
   return (
     <div className="flex flex-col gap-10">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">{getLocalizedText(product.name, "he")}</h1>
-        <DuplicateButton productId={product.id} />
+        <div className="flex items-center gap-4">
+          <DuplicateButton productId={product.id} />
+          <DeleteProductButton productId={product.id} productName={getLocalizedText(product.name, "he")} />
+        </div>
       </div>
 
       <ProductForm
@@ -53,23 +92,7 @@ export default async function EditProductPage({
 
       <div>
         <h2 className="mb-4 text-xl font-semibold">צבעים, תמונות ומידות</h2>
-        <ColorManager
-          productId={product.id}
-          sizes={sizes.map((s) => ({ id: s.id, label: s.label, orderIndex: s.orderIndex }))}
-          colors={product.colors.map((color) => ({
-            id: color.id,
-            name: color.name as LocalizedText,
-            hexCode: color.hexCode,
-            orderIndex: color.orderIndex,
-            images: color.images.map((image) => ({ id: image.id, url: image.url, isPrimary: image.isPrimary })),
-            variants: color.variants.map((variant) => ({
-              id: variant.id,
-              sizeId: variant.sizeId,
-              sizeLabel: variant.size.label,
-              stockQuantity: variant.stockQuantity,
-            })),
-          }))}
-        />
+        <ColorManager productId={product.id} sizes={sizesForManager} colors={colorsForManager} stage="full" />
       </div>
     </div>
   );

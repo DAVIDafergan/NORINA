@@ -2,6 +2,7 @@ import NextLink from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getLocalizedText } from "@/lib/i18n-text";
 import { formatPrice } from "@/lib/format";
+import { QuickStockButton } from "@/components/admin/quick-stock-button";
 
 const LOW_STOCK_THRESHOLD = 3;
 
@@ -20,7 +21,7 @@ export default async function AdminProductsPage({
       ...(status === "active" ? { isActive: true } : {}),
       ...(status === "inactive" ? { isActive: false } : {}),
     },
-    include: { category: true, variants: true },
+    include: { category: true, variants: { include: { size: true, color: true } } },
     orderBy: { createdAt: "desc" },
   });
 
@@ -103,7 +104,19 @@ export default async function AdminProductsPage({
                     {product.isActive ? "פעיל" : "לא פעיל"}
                   </span>
                 </td>
-                <td className={`py-3 ${lowStock ? "text-amber-600" : ""}`}>{totalStock}</td>
+                <td className="py-3">
+                  <QuickStockButton
+                    productName={getLocalizedText(product.name, "he")}
+                    totalStock={totalStock}
+                    lowStock={lowStock}
+                    variants={product.variants.map((v) => ({
+                      id: v.id,
+                      sizeLabel: v.size.label,
+                      colorName: getLocalizedText(v.color.name, "he"),
+                      stockQuantity: v.stockQuantity,
+                    }))}
+                  />
+                </td>
               </tr>
             );
           })}

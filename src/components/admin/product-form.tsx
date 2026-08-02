@@ -24,11 +24,14 @@ interface ProductFormProps {
     basePrice: number;
     isActive: boolean;
   };
+  /** Wizard mode: called with the new product's id instead of navigating away. */
+  onCreated?: (productId: string) => void;
+  submitLabel?: string;
 }
 
 const EMPTY: LocalizedText = { he: "", fr: "", en: "" };
 
-export function ProductForm({ productId, categories, initial }: ProductFormProps) {
+export function ProductForm({ productId, categories, initial, onCreated, submitLabel }: ProductFormProps) {
   const router = useRouter();
   const [name, setName] = useState<LocalizedText>(initial?.name ?? EMPTY);
   const [description, setDescription] = useState<LocalizedText>(initial?.description ?? EMPTY);
@@ -71,7 +74,11 @@ export function ProductForm({ productId, categories, initial }: ProductFormProps
 
     if (!productId) {
       const { id } = await res.json();
-      router.push(`/admin/products/${id}`);
+      if (onCreated) {
+        onCreated(id);
+      } else {
+        router.push(`/admin/products/${id}`);
+      }
     } else {
       router.refresh();
     }
@@ -142,7 +149,7 @@ export function ProductForm({ productId, categories, initial }: ProductFormProps
       {error && <p className="text-sm text-red-600">{error}</p>}
 
       <Button type="submit" disabled={saving} className="w-fit">
-        {saving ? "שומרת..." : productId ? "שמירת שינויים" : "יצירת מוצר"}
+        {saving ? "שומרת..." : submitLabel ?? (productId ? "שמירת שינויים" : "יצירת מוצר")}
       </Button>
     </form>
   );

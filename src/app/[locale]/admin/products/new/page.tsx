@@ -1,19 +1,21 @@
 import { prisma } from "@/lib/prisma";
 import { getLocalizedText } from "@/lib/i18n-text";
-import { ProductForm } from "@/components/admin/product-form";
+import { WizardStepper } from "@/components/admin/wizard-stepper";
+import { NewProductStep } from "@/components/admin/new-product-step";
 
 export default async function NewProductPage() {
   const categories = await prisma.category.findMany({ orderBy: { orderIndex: "asc" } });
 
   return (
-    <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-semibold">מוצר חדש</h1>
-      <p className="max-w-xl rounded-sm border border-line bg-cream-deep/50 px-4 py-3 text-sm text-ink/70">
-        אחרי שמירת הפרטים הבסיסיים כאן, יופיע עמוד עריכת המוצר שבו מוסיפים צבעים, תמונות ומידות עם מלאי.
+    <div className="flex flex-col gap-8">
+      <div>
+        <h1 className="mb-4 text-2xl font-semibold">מוצר חדש</h1>
+        <WizardStepper current={1} />
+      </div>
+      <p className="max-w-xl text-sm text-ink-soft">
+        קודם נשמור את הפרטים הבסיסיים - בשלב הבא נוסיף צבעים ותמונות, ואז מידות ומלאי.
       </p>
-      <ProductForm
-        categories={categories.map((c) => ({ id: c.id, name: getLocalizedText(c.name, "he") }))}
-      />
+      <NewProductStep categories={categories.map((c) => ({ id: c.id, name: getLocalizedText(c.name, "he") }))} />
     </div>
   );
 }
