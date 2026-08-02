@@ -18,6 +18,13 @@
   "category": {
     "empty": "Aucun produit dans cette catégorie pour le moment."
   },
+  "search": {
+    "placeholder": "Rechercher des produits...",
+    "submit": "Rechercher",
+    "title": "Résultats de recherche",
+    "resultsFor": "Résultats pour « {query} »",
+    "empty": "Aucun produit correspondant trouvé."
+  },
   "product": {
     "color": "Couleur",
     "size": "Taille",

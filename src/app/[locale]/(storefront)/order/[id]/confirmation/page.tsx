@@ -25,15 +25,15 @@ export default async function OrderConfirmationPage({
     order.status === "PAID" ? "statusPaid" : order.status === "CANCELLED" ? "statusCancelled" : "statusPending";
 
   return (
-    <div className="mx-auto flex max-w-md flex-col items-center gap-4 px-4 py-24 text-center">
+    <div className="mx-auto flex max-w-md flex-col items-center gap-4 px-4 py-28 text-center animate-fade-up">
       {order.status === "PAID" && <ClearCartOnSuccess />}
-      <h1 className="text-2xl font-semibold">{t("title")}</h1>
-      <p className="text-zinc-500">
+      <h1 className="font-serif text-3xl tracking-wide">{t("title")}</h1>
+      <p className="text-ink-soft">
         {t("orderNumber")}: <span className="font-mono">{order.id}</span>
       </p>
       <p className="text-lg font-medium">{formatPrice(Number(order.totalAmount), loc)}</p>
-      <p className="text-zinc-600">{t(statusKey)}</p>
-      <Link href="/" className="font-medium hover:underline">
+      <p className="text-ink/70">{t(statusKey)}</p>
+      <Link href="/" className="mt-2 text-sm font-medium text-ink transition-colors hover:text-gold">
         {tCart("continueShopping")}
       </Link>
     </div>

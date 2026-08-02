@@ -26,14 +26,14 @@ export function ForgotPasswordForm() {
   }
 
   if (sent) {
-    return <p className="mx-auto max-w-sm text-center text-sm text-zinc-700">{t("success")}</p>;
+    return <p className="text-center text-sm text-ink/75">{t("success")}</p>;
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-sm flex-col gap-6">
+    <div className="flex w-full flex-col gap-6">
       <div>
-        <h1 className="text-xl font-semibold">{t("title")}</h1>
-        <p className="mt-1 text-sm text-zinc-500">{t("description")}</p>
+        <h1 className="font-serif text-2xl tracking-wide">{t("title")}</h1>
+        <p className="mt-2 text-sm text-ink-soft">{t("description")}</p>
       </div>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <TextField

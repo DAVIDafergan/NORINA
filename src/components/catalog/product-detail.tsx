@@ -86,25 +86,35 @@ export function ProductDetail({ product, locale }: { product: ProductDetailData;
   const addToCartLabel = !selectedSizeId ? t("selectSize") : justAdded ? t("addedToCart") : t("addToCart");
   const addToCartDisabled = !selectedVariant || selectedVariant.stockQuantity === 0;
 
+  const infoSections = [
+    { label: t("description"), value: product.description },
+    { label: t("materials"), value: product.materials },
+    { label: t("careInstructions"), value: product.careInstructions },
+    { label: t("additionalInfo"), value: product.additionalInfo },
+  ].filter((section) => section.value);
+
   return (
-    <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 pb-28 md:grid-cols-2 md:pb-12">
-      <div className="grid grid-cols-2 gap-2">
+    <div className="mx-auto grid max-w-6xl gap-12 px-4 py-10 pb-32 md:grid-cols-2 md:gap-14 md:px-6 md:py-16 md:pb-16">
+      <div className="grid animate-fade-up grid-cols-2 gap-3">
         {(selectedColor?.images ?? []).map((image) => (
-          <div key={image.id} className="relative aspect-[3/4] overflow-hidden bg-cream">
+          <div key={image.id} className="relative aspect-[3/4] overflow-hidden bg-cream-deep">
             <Image src={image.url} alt={product.name} fill unoptimized className="object-cover" sizes="50vw" />
           </div>
         ))}
       </div>
 
-      <div className="flex flex-col gap-6">
+      <div className="flex animate-fade-up flex-col gap-7" style={{ animationDelay: "100ms" }}>
         <div>
-          <h1 className="font-serif text-3xl">{product.name}</h1>
-          <p className="mt-1 text-lg text-ink/70">{formatPrice(price, locale)}</p>
+          <h1 className="font-serif text-3xl tracking-wide md:text-4xl">{product.name}</h1>
+          <p className="mt-2 text-lg text-ink-soft">{formatPrice(price, locale)}</p>
         </div>
 
         <div>
-          <p className="mb-2 text-sm font-medium">{t("color")}</p>
-          <div className="flex gap-2">
+          <p className="mb-3 text-xs font-medium uppercase tracking-widest text-ink-soft">
+            {t("color")}
+            {selectedColor && <span className="ms-1.5 normal-case tracking-normal text-ink/70">— {selectedColor.name}</span>}
+          </p>
+          <div className="flex flex-wrap gap-3">
             {product.colors.map((color) => (
               <button
                 key={color.id}
@@ -112,8 +122,10 @@ export function ProductDetail({ product, locale }: { product: ProductDetailData;
                 onClick={() => handleSelectColor(color.id)}
                 title={color.name}
                 aria-pressed={color.id === selectedColorId}
-                className={`h-9 w-9 rounded-full border-2 ${
-                  color.id === selectedColorId ? "border-gold" : "border-transparent"
+                className={`h-9 w-9 shrink-0 rounded-full border transition-all ${
+                  color.id === selectedColorId
+                    ? "border-gold ring-1 ring-gold ring-offset-2 ring-offset-cream"
+                    : "border-ink/15 hover:border-gold/60"
                 }`}
                 style={{ backgroundColor: color.hexCode }}
               />
@@ -122,7 +134,7 @@ export function ProductDetail({ product, locale }: { product: ProductDetailData;
         </div>
 
         <div>
-          <p className="mb-2 text-sm font-medium">{t("size")}</p>
+          <p className="mb-3 text-xs font-medium uppercase tracking-widest text-ink-soft">{t("size")}</p>
           <div className="flex flex-wrap gap-2">
             {sizesForColor.map((variant) => (
               <button
@@ -130,8 +142,10 @@ export function ProductDetail({ product, locale }: { product: ProductDetailData;
                 type="button"
                 disabled={variant.stockQuantity === 0}
                 onClick={() => setSelectedSizeId(variant.sizeId)}
-                className={`min-h-11 min-w-11 rounded border px-3 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-40 ${
-                  variant.sizeId === selectedSizeId ? "border-ink bg-ink text-cream" : "border-ink/20"
+                className={`min-h-11 min-w-11 rounded-sm border px-3.5 py-2 text-sm transition-colors disabled:cursor-not-allowed disabled:opacity-35 ${
+                  variant.sizeId === selectedSizeId
+                    ? "border-ink bg-ink text-cream"
+                    : "border-ink/20 hover:border-ink/50"
                 }`}
               >
                 {variant.sizeLabel}
@@ -139,7 +153,7 @@ export function ProductDetail({ product, locale }: { product: ProductDetailData;
             ))}
           </div>
           {selectedVariant && selectedVariant.stockQuantity > 0 && selectedVariant.stockQuantity <= LOW_STOCK_THRESHOLD && (
-            <p className="mt-2 text-sm text-amber-700">{t("onlyLeft", { count: selectedVariant.stockQuantity })}</p>
+            <p className="mt-3 text-sm text-rose-deep">{t("onlyLeft", { count: selectedVariant.stockQuantity })}</p>
           )}
         </div>
 
@@ -147,37 +161,20 @@ export function ProductDetail({ product, locale }: { product: ProductDetailData;
           {addToCartLabel}
         </Button>
 
-        {product.description && (
-          <div>
-            <p className="mb-1 text-sm font-medium">{t("description")}</p>
-            <p className="whitespace-pre-line text-sm text-ink/70">{product.description}</p>
-          </div>
-        )}
-
-        {product.materials && (
-          <div>
-            <p className="mb-1 text-sm font-medium">{t("materials")}</p>
-            <p className="whitespace-pre-line text-sm text-ink/70">{product.materials}</p>
-          </div>
-        )}
-
-        {product.careInstructions && (
-          <div>
-            <p className="mb-1 text-sm font-medium">{t("careInstructions")}</p>
-            <p className="whitespace-pre-line text-sm text-ink/70">{product.careInstructions}</p>
-          </div>
-        )}
-
-        {product.additionalInfo && (
-          <div>
-            <p className="mb-1 text-sm font-medium">{t("additionalInfo")}</p>
-            <p className="whitespace-pre-line text-sm text-ink/70">{product.additionalInfo}</p>
+        {infoSections.length > 0 && (
+          <div className="flex flex-col divide-y divide-line border-t border-line">
+            {infoSections.map((section) => (
+              <div key={section.label} className="py-4">
+                <p className="mb-1.5 text-xs font-medium uppercase tracking-widest text-ink-soft">{section.label}</p>
+                <p className="whitespace-pre-line text-sm leading-relaxed text-ink/75">{section.value}</p>
+              </div>
+            ))}
           </div>
         )}
       </div>
 
       {/* Sticky add-to-cart bar for mobile (spec section 6: "sticky add to cart") */}
-      <div className="fixed inset-x-0 bottom-0 z-10 flex items-center justify-between gap-4 border-t border-gold/30 bg-cream px-4 py-3 md:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-30 flex items-center justify-between gap-4 border-t border-line bg-cream/95 px-4 py-3 backdrop-blur-sm md:hidden">
         <span className="font-medium">{formatPrice(price, locale)}</span>
         <Button type="button" onClick={handleAddToCart} disabled={addToCartDisabled} className="flex-1">
           {addToCartLabel}

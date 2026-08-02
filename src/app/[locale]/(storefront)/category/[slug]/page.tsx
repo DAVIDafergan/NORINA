@@ -19,14 +19,18 @@ export default async function CategoryPage({
   const t = await getTranslations("category");
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-12">
-      <h1 className="mb-8 text-2xl font-semibold">{getLocalizedText(category.name, loc)}</h1>
+    <div className="mx-auto max-w-6xl px-4 py-14 md:px-6 md:py-20">
+      <h1 className="mb-12 text-center font-serif text-3xl tracking-wide md:text-4xl">
+        {getLocalizedText(category.name, loc)}
+      </h1>
       {category.products.length === 0 ? (
-        <p className="text-zinc-500">{t("empty")}</p>
+        <p className="text-center text-ink-soft">{t("empty")}</p>
       ) : (
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
-          {category.products.map((product) => (
-            <ProductCard key={product.id} product={product} locale={loc} />
+        <div className="grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-4 md:gap-x-8">
+          {category.products.map((product, index) => (
+            <div key={product.id} className="animate-fade-up" style={{ animationDelay: `${index * 60}ms` }}>
+              <ProductCard product={product} locale={loc} />
+            </div>
           ))}
         </div>
       )}

@@ -54,9 +54,9 @@ export function CheckoutForm({
 
   if (hasHydrated && items.length === 0) {
     return (
-      <div className="mx-auto flex max-w-md flex-col items-center gap-4 px-4 py-24 text-center">
-        <p className="text-zinc-500">{t("errors.empty_cart")}</p>
-        <Link href="/" className="font-medium hover:underline">
+      <div className="mx-auto flex max-w-md flex-col items-center gap-4 px-4 py-28 text-center animate-fade-up">
+        <p className="text-ink-soft">{t("errors.empty_cart")}</p>
+        <Link href="/" className="text-sm font-medium text-ink transition-colors hover:text-gold">
           {tCart("continueShopping")}
         </Link>
       </div>
@@ -103,12 +103,12 @@ export function CheckoutForm({
   }
 
   return (
-    <div className="mx-auto grid max-w-4xl gap-10 px-4 py-12 md:grid-cols-[1.5fr_1fr]">
+    <div className="mx-auto grid max-w-4xl gap-10 px-4 py-12 md:grid-cols-[1.5fr_1fr] md:gap-14 md:px-6 md:py-16 animate-fade-up">
       <form onSubmit={handleSubmit} className="flex flex-col gap-8">
-        <h1 className="text-2xl font-semibold">{t("title")}</h1>
+        <h1 className="font-serif text-2xl tracking-wide md:text-3xl">{t("title")}</h1>
 
         <section className="flex flex-col gap-4">
-          <h2 className="text-sm font-medium">{t("contactSection")}</h2>
+          <h2 className="text-xs font-medium uppercase tracking-widest text-ink-soft">{t("contactSection")}</h2>
           <TextField label={t("nameLabel")} required value={contactName} onChange={(e) => setContactName(e.target.value)} />
           <TextField
             label={t("emailLabel")}
@@ -121,14 +121,15 @@ export function CheckoutForm({
         </section>
 
         <section className="flex flex-col gap-4">
-          <h2 className="text-sm font-medium">{t("deliveryType")}</h2>
-          <div className="flex gap-4 text-sm">
+          <h2 className="text-xs font-medium uppercase tracking-widest text-ink-soft">{t("deliveryType")}</h2>
+          <div className="flex gap-6 text-sm">
             <label className="flex items-center gap-2">
               <input
                 type="radio"
                 name="deliveryType"
                 checked={deliveryType === "SHIPPING"}
                 onChange={() => setDeliveryType("SHIPPING")}
+                className="accent-gold"
               />
               {t("shippingOption")}
             </label>
@@ -138,6 +139,7 @@ export function CheckoutForm({
                 name="deliveryType"
                 checked={deliveryType === "PICKUP"}
                 onChange={() => setDeliveryType("PICKUP")}
+                className="accent-gold"
               />
               {t("pickupOption")}
             </label>
@@ -145,19 +147,19 @@ export function CheckoutForm({
 
           {deliveryType === "SHIPPING" ? (
             <div className="flex flex-col gap-4">
-              <h3 className="text-sm font-medium text-zinc-500">{t("addressSection")}</h3>
+              <h3 className="text-xs font-medium uppercase tracking-widest text-ink-soft">{t("addressSection")}</h3>
               <TextField label={t("cityLabel")} required value={city} onChange={(e) => setCity(e.target.value)} />
               <TextField label={t("streetLabel")} required value={street} onChange={(e) => setStreet(e.target.value)} />
               <TextField label={t("zipLabel")} value={zip} onChange={(e) => setZip(e.target.value)} />
             </div>
           ) : (
-            <label className="flex flex-col gap-1 text-sm">
-              <span>{t("pickupLocationLabel")}</span>
+            <label className="flex flex-col gap-1.5 text-sm">
+              <span className="text-ink/70">{t("pickupLocationLabel")}</span>
               <select
                 required
                 value={pickupLocationId}
                 onChange={(e) => setPickupLocationId(e.target.value)}
-                className="rounded border border-zinc-300 px-3 py-2"
+                className="rounded-sm border border-ink/20 bg-transparent px-3.5 py-2.5 focus:border-gold focus:outline-none"
               >
                 <option value="" disabled>
                   {t("selectPickupLocation")}
@@ -181,9 +183,9 @@ export function CheckoutForm({
         </Button>
       </form>
 
-      <aside className="h-fit rounded border border-zinc-200 p-6">
-        <h2 className="mb-4 text-sm font-medium">{t("orderSummary")}</h2>
-        <ul className="flex flex-col gap-2 text-sm text-zinc-600">
+      <aside className="h-fit rounded-sm border border-line bg-cream-deep/40 p-6">
+        <h2 className="mb-4 text-xs font-medium uppercase tracking-widest text-ink-soft">{t("orderSummary")}</h2>
+        <ul className="flex flex-col gap-2 text-sm text-ink/75">
           {items.map((item) => (
             <li key={item.variantId} className="flex justify-between">
               <span>
@@ -193,7 +195,7 @@ export function CheckoutForm({
             </li>
           ))}
         </ul>
-        <div className="mt-4 flex flex-col gap-1 border-t border-zinc-200 pt-4 text-sm">
+        <div className="mt-4 flex flex-col gap-1 border-t border-line pt-4 text-sm">
           <div className="flex justify-between">
             <span>{t("subtotal")}</span>
             <span>{formatPrice(subtotal, locale)}</span>

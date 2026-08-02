@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Assistant, Frank_Ruhl_Libre } from "next/font/google";
+import { Assistant, Frank_Ruhl_Libre, Playfair_Display } from "next/font/google";
 import { routing, localeDirections, type AppLocale } from "@/i18n/routing";
 import { Providers } from "@/components/providers";
 import "../globals.css";
@@ -12,10 +12,20 @@ const bodyFont = Assistant({
   subsets: ["latin", "hebrew"],
 });
 
-const headingFont = Frank_Ruhl_Libre({
-  variable: "--font-heading",
+// Two heading fonts, switched by html[lang] in globals.css: Playfair Display
+// has no Hebrew glyphs at all, so Hebrew keeps Frank Ruhl Libre (an
+// equally editorial, high-contrast serif with full Hebrew coverage) while
+// French/English get genuine Playfair Display.
+const headingFontHe = Frank_Ruhl_Libre({
+  variable: "--font-heading-he",
   subsets: ["latin", "hebrew"],
   weight: ["500", "700"],
+});
+
+const headingFontLatin = Playfair_Display({
+  variable: "--font-heading-latin",
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
 });
 
 export function generateStaticParams() {
@@ -56,7 +66,7 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       dir={dir}
-      className={`${bodyFont.variable} ${headingFont.variable} h-full antialiased`}
+      className={`${bodyFont.variable} ${headingFontHe.variable} ${headingFontLatin.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <NextIntlClientProvider>

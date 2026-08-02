@@ -27,7 +27,7 @@ export function OrderStatusSelect({ orderId, status }: { orderId: string; status
         defaultValue={status}
         onChange={handleChange}
         disabled={saving}
-        className="rounded border border-zinc-300 px-3 py-2"
+        className="rounded border border-ink/20 px-3 py-2"
       >
         {ORDER_STATUS_ORDER.map((s) => (
           <option key={s} value={s}>

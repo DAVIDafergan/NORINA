@@ -22,7 +22,7 @@ export default async function AdminOrdersPage({
       <h1 className="text-2xl font-semibold">הזמנות</h1>
 
       <form className="flex gap-3 text-sm">
-        <select name="status" defaultValue={status ?? ""} className="rounded border border-zinc-300 px-3 py-2">
+        <select name="status" defaultValue={status ?? ""} className="rounded border border-ink/20 px-3 py-2">
           <option value="">כל הסטטוסים</option>
           {ORDER_STATUS_ORDER.map((s) => (
             <option key={s} value={s}>
@@ -30,14 +30,14 @@ export default async function AdminOrdersPage({
             </option>
           ))}
         </select>
-        <button type="submit" className="rounded border border-zinc-300 px-4 py-2 hover:bg-zinc-50">
+        <button type="submit" className="rounded border border-ink/20 px-4 py-2 hover:bg-cream">
           סינון
         </button>
       </form>
 
       <table className="w-full text-start text-sm">
         <thead>
-          <tr className="border-b border-zinc-200 text-zinc-500">
+          <tr className="border-b border-ink/12 text-ink-soft">
             <th className="py-2 text-start">מס&apos; הזמנה</th>
             <th className="py-2 text-start">תאריך</th>
             <th className="py-2 text-start">לקוח</th>
@@ -48,7 +48,7 @@ export default async function AdminOrdersPage({
         </thead>
         <tbody>
           {orders.map((order) => (
-            <tr key={order.id} className="border-b border-zinc-100 hover:bg-zinc-50">
+            <tr key={order.id} className="border-b border-cream-deep hover:bg-cream">
               <td className="py-3">
                 <NextLink href={`/admin/orders/${order.id}`} className="font-mono text-xs hover:underline">
                   {order.id.slice(-8)}
@@ -68,7 +68,7 @@ export default async function AdminOrdersPage({
         </tbody>
       </table>
 
-      {orders.length === 0 && <p className="text-zinc-500">אין הזמנות עדיין.</p>}
+      {orders.length === 0 && <p className="text-ink-soft">אין הזמנות עדיין.</p>}
     </div>
   );
 }

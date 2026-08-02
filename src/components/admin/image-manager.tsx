@@ -95,7 +95,7 @@ export function ImageManager({
           if (e.dataTransfer.files.length > 0) handleFiles(e.dataTransfer.files);
         }}
         className={`flex flex-wrap gap-3 rounded border-2 border-dashed p-3 transition-colors ${
-          isDropTarget ? "border-gold bg-gold/5" : "border-zinc-300"
+          isDropTarget ? "border-gold bg-gold/5" : "border-ink/20"
         }`}
       >
         {images.map((image) => (
@@ -110,7 +110,7 @@ export function ImageManager({
               handleDrop(image.id);
             }}
             className={`group relative h-24 w-20 shrink-0 cursor-move overflow-hidden rounded border-2 ${
-              image.isPrimary ? "border-gold" : "border-zinc-200"
+              image.isPrimary ? "border-gold" : "border-ink/12"
             }`}
           >
             {/* eslint-disable-next-line @next/next/no-img-element -- admin-only, arbitrary/base64 image data */}
@@ -120,7 +120,7 @@ export function ImageManager({
               onClick={() => setPrimary(image.id)}
               title="סימון כתמונה ראשית"
               className={`absolute start-1 top-1 flex h-5 w-5 items-center justify-center rounded-full text-xs ${
-                image.isPrimary ? "bg-gold text-white" : "bg-white/80 text-zinc-400 opacity-0 group-hover:opacity-100"
+                image.isPrimary ? "bg-gold text-white" : "bg-white/80 text-ink/45 opacity-0 group-hover:opacity-100"
               }`}
             >
               ★
@@ -138,7 +138,7 @@ export function ImageManager({
 
         <label
           htmlFor={inputId}
-          className="flex h-24 w-20 shrink-0 cursor-pointer flex-col items-center justify-center gap-1 rounded border border-zinc-300 text-center text-xs text-zinc-500 hover:border-gold hover:text-gold"
+          className="flex h-24 w-20 shrink-0 cursor-pointer flex-col items-center justify-center gap-1 rounded border border-ink/20 text-center text-xs text-ink-soft hover:border-gold hover:text-gold"
         >
           <span className="text-lg leading-none">+</span>
           <span>{loading ? "מעלה..." : "הוספת תמונות"}</span>
@@ -158,7 +158,7 @@ export function ImageManager({
       </div>
       {images.length === 0 && <p className="text-xs text-red-600">חובה להעלות לפחות תמונה אחת לצבע.</p>}
       {images.length > 0 && (
-        <p className="text-xs text-zinc-400">גררי כדי לסדר, לחצי על ★ לסימון תמונה ראשית.</p>
+        <p className="text-xs text-ink/45">גררי כדי לסדר, לחצי על ★ לסימון תמונה ראשית.</p>
       )}
     </div>
   );

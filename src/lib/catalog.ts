@@ -46,6 +46,28 @@ export function getProductBySlug(slug: string) {
   });
 }
 
+export function searchProducts(query: string, take = 24) {
+  const q = query.trim();
+  if (!q) return Promise.resolve([]);
+  return prisma.product.findMany({
+    where: {
+      isActive: true,
+      OR: (["he", "fr", "en"] as const).map((loc) => ({
+        name: { path: [loc], string_contains: q, mode: "insensitive" as const },
+      })),
+    },
+    orderBy: { createdAt: "desc" },
+    take,
+    include: {
+      colors: {
+        orderBy: { orderIndex: "asc" },
+        include: { images: { orderBy: coverImageOrderBy, take: 1 } },
+        take: 1,
+      },
+    },
+  });
+}
+
 export function getNewArrivals(take = 8) {
   return prisma.product.findMany({
     where: { isActive: true },

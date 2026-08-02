@@ -30,17 +30,17 @@ export function SignInForm() {
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-sm flex-col gap-6">
-      <h1 className="text-xl font-semibold">{t("title")}</h1>
+    <div className="flex w-full flex-col gap-6">
+      <h1 className="font-serif text-2xl tracking-wide">{t("title")}</h1>
 
       <Button variant="secondary" onClick={() => signIn("google")} type="button">
         {t("googleButton")}
       </Button>
 
-      <div className="flex items-center gap-3 text-xs text-zinc-400">
-        <div className="h-px flex-1 bg-zinc-200" />
+      <div className="flex items-center gap-3 text-xs text-ink-soft">
+        <div className="h-px flex-1 bg-line" />
         {t("or")}
-        <div className="h-px flex-1 bg-zinc-200" />
+        <div className="h-px flex-1 bg-line" />
       </div>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -65,12 +65,12 @@ export function SignInForm() {
       </form>
 
       <div className="flex justify-between text-sm">
-        <Link href="/forgot-password" className="text-zinc-500 hover:underline">
+        <Link href="/forgot-password" className="text-ink-soft transition-colors hover:text-gold">
           {t("forgotPasswordLink")}
         </Link>
         <span>
           {t("noAccount")}{" "}
-          <Link href="/sign-up" className="font-medium hover:underline">
+          <Link href="/sign-up" className="font-medium text-ink transition-colors hover:text-gold">
             {t("signUpLink")}
           </Link>
         </span>

@@ -23,7 +23,7 @@ export default async function AdminUserDetailPage({
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-xl font-semibold">{user.name ?? user.email}</h1>
-          <p className="text-sm text-zinc-500">{user.email}</p>
+          <p className="text-sm text-ink-soft">{user.email}</p>
         </div>
         <BlockUserButton userId={user.id} isBlocked={user.isBlocked} />
       </div>
@@ -32,7 +32,7 @@ export default async function AdminUserDetailPage({
         <h2 className="mb-3 text-sm font-medium">היסטוריית הזמנות</h2>
         <table className="w-full text-start text-sm">
           <thead>
-            <tr className="border-b border-zinc-200 text-zinc-500">
+            <tr className="border-b border-ink/12 text-ink-soft">
               <th className="py-2 text-start">מס&apos;</th>
               <th className="py-2 text-start">תאריך</th>
               <th className="py-2 text-start">סה&quot;כ</th>
@@ -41,7 +41,7 @@ export default async function AdminUserDetailPage({
           </thead>
           <tbody>
             {user.orders.map((order) => (
-              <tr key={order.id} className="border-b border-zinc-100">
+              <tr key={order.id} className="border-b border-cream-deep">
                 <td className="py-2">
                   <NextLink href={`/admin/orders/${order.id}`} className="font-mono text-xs hover:underline">
                     {order.id.slice(-8)}
@@ -58,7 +58,7 @@ export default async function AdminUserDetailPage({
             ))}
           </tbody>
         </table>
-        {user.orders.length === 0 && <p className="text-zinc-500">אין עדיין הזמנות.</p>}
+        {user.orders.length === 0 && <p className="text-ink-soft">אין עדיין הזמנות.</p>}
       </section>
     </div>
   );

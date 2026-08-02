@@ -49,16 +49,16 @@ function LocationRow({ location, onChanged }: { location: PickupLocationData; on
   }
 
   return (
-    <div className="flex items-center justify-between rounded border border-zinc-200 p-3 text-sm">
+    <div className="flex items-center justify-between rounded border border-ink/12 p-3 text-sm">
       <div>
         <p className="font-medium">{location.cityName.he}</p>
-        <p className="text-zinc-500">{location.address}</p>
+        <p className="text-ink-soft">{location.address}</p>
       </div>
       <div className="flex items-center gap-3">
-        <span className={location.isActive ? "text-green-700" : "text-zinc-400"}>
+        <span className={location.isActive ? "text-green-700" : "text-ink/45"}>
           {location.isActive ? "פעילה" : "כבויה"}
         </span>
-        <button type="button" onClick={toggleActive} className="text-zinc-600 underline hover:text-zinc-900">
+        <button type="button" onClick={toggleActive} className="text-ink/70 underline transition-colors hover:text-gold">
           {location.isActive ? "כיבוי" : "הפעלה"}
         </button>
         <button type="button" onClick={handleDelete} className="text-red-600 underline hover:text-red-800">
@@ -89,7 +89,7 @@ function NewLocationForm({ onCreated }: { onCreated: () => void }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-3 rounded border border-dashed border-zinc-300 p-4">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-3 rounded border border-dashed border-ink/20 p-4">
       <h3 className="text-sm font-medium">הוספת נקודת איסוף</h3>
       <LocaleTabsInput label="עיר" value={cityName} onChange={setCityName} />
       <label className="flex flex-col gap-1 text-sm">
@@ -98,7 +98,7 @@ function NewLocationForm({ onCreated }: { onCreated: () => void }) {
           value={address}
           onChange={(e) => setAddress(e.target.value)}
           required
-          className="rounded border border-zinc-300 px-3 py-2"
+          className="rounded border border-ink/20 px-3 py-2"
         />
       </label>
       <Button type="submit" disabled={saving} className="w-fit">

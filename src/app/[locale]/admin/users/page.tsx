@@ -17,7 +17,7 @@ export default async function AdminUsersPage() {
 
       <table className="w-full text-start text-sm">
         <thead>
-          <tr className="border-b border-zinc-200 text-zinc-500">
+          <tr className="border-b border-ink/12 text-ink-soft">
             <th className="py-2 text-start">שם</th>
             <th className="py-2 text-start">דוא&quot;ל</th>
             <th className="py-2 text-start">הצטרפות</th>
@@ -31,7 +31,7 @@ export default async function AdminUsersPage() {
             const counted = user.orders.filter((o) => COUNTED_STATUSES.includes(o.status));
             const totalSpent = counted.reduce((sum, o) => sum + Number(o.totalAmount), 0);
             return (
-              <tr key={user.id} className="border-b border-zinc-100 hover:bg-zinc-50">
+              <tr key={user.id} className="border-b border-cream-deep hover:bg-cream">
                 <td className="py-3">
                   <NextLink href={`/admin/users/${user.id}`} className="font-medium hover:underline">
                     {user.name ?? "—"}
@@ -50,7 +50,7 @@ export default async function AdminUsersPage() {
         </tbody>
       </table>
 
-      {users.length === 0 && <p className="text-zinc-500">אין משתמשים רשומים עדיין.</p>}
+      {users.length === 0 && <p className="text-ink-soft">אין משתמשים רשומים עדיין.</p>}
     </div>
   );
 }

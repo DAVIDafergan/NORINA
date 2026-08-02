@@ -23,21 +23,21 @@ export function ProductCard({
 
   return (
     <Link href={`/product/${product.slug}`} className="group flex flex-col gap-3">
-      <div className="relative aspect-[3/4] w-full overflow-hidden bg-zinc-100">
+      <div className="relative aspect-[3/4] w-full overflow-hidden bg-cream-deep">
         {image ? (
           <Image
             src={image}
             alt={name}
             fill
             unoptimized
-            className="object-cover transition-transform group-hover:scale-105"
+            className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
             sizes="(min-width: 768px) 25vw, 50vw"
           />
         ) : null}
       </div>
       <div className="flex flex-col gap-1 text-sm">
-        <span className="font-serif text-base">{name}</span>
-        <span className="text-ink/60">{formatPrice(Number(product.basePrice), locale)}</span>
+        <span className="font-serif text-base text-ink transition-colors group-hover:text-gold">{name}</span>
+        <span className="text-ink-soft">{formatPrice(Number(product.basePrice), locale)}</span>
       </div>
     </Link>
   );

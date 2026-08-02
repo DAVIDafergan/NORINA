@@ -21,7 +21,7 @@ export function ResetPasswordForm() {
   const [loading, setLoading] = useState(false);
 
   if (!token || !email) {
-    return <p className="mx-auto max-w-sm text-center text-sm text-red-600">{t("invalidToken")}</p>;
+    return <p className="text-center text-sm text-red-600">{t("invalidToken")}</p>;
   }
 
   async function handleSubmit(event: React.FormEvent) {
@@ -54,9 +54,9 @@ export function ResetPasswordForm() {
 
   if (success) {
     return (
-      <div className="mx-auto flex max-w-sm flex-col items-center gap-4 text-center text-sm">
+      <div className="flex flex-col items-center gap-4 text-center text-sm">
         <p>{t("success")}</p>
-        <Link href="/sign-in" className="font-medium hover:underline">
+        <Link href="/sign-in" className="font-medium text-ink transition-colors hover:text-gold">
           {t("title")}
         </Link>
       </div>
@@ -64,8 +64,8 @@ export function ResetPasswordForm() {
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-sm flex-col gap-6">
-      <h1 className="text-xl font-semibold">{t("title")}</h1>
+    <div className="flex w-full flex-col gap-6">
+      <h1 className="font-serif text-2xl tracking-wide">{t("title")}</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <TextField
           label={t("passwordLabel")}

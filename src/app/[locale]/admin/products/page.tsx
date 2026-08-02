@@ -42,7 +42,7 @@ export default async function AdminProductsPage({
         <h1 className="text-2xl font-semibold">מוצרים</h1>
         <NextLink
           href="/admin/products/new"
-          className="rounded bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-700"
+          className="rounded-sm bg-ink px-4 py-2 text-sm font-medium text-cream transition-colors hover:bg-gold"
         >
           מוצר חדש
         </NextLink>
@@ -54,9 +54,9 @@ export default async function AdminProductsPage({
           name="q"
           defaultValue={q}
           placeholder="חיפוש לפי שם..."
-          className="rounded border border-zinc-300 px-3 py-2"
+          className="rounded border border-ink/20 px-3 py-2"
         />
-        <select name="categoryId" defaultValue={categoryId ?? ""} className="rounded border border-zinc-300 px-3 py-2">
+        <select name="categoryId" defaultValue={categoryId ?? ""} className="rounded border border-ink/20 px-3 py-2">
           <option value="">כל הקטגוריות</option>
           {categories.map((category) => (
             <option key={category.id} value={category.id}>
@@ -64,20 +64,20 @@ export default async function AdminProductsPage({
             </option>
           ))}
         </select>
-        <select name="status" defaultValue={status ?? ""} className="rounded border border-zinc-300 px-3 py-2">
+        <select name="status" defaultValue={status ?? ""} className="rounded border border-ink/20 px-3 py-2">
           <option value="">כל הסטטוסים</option>
           <option value="active">פעיל</option>
           <option value="inactive">לא פעיל</option>
           <option value="lowStock">מלאי נמוך</option>
         </select>
-        <button type="submit" className="rounded border border-zinc-300 px-4 py-2 hover:bg-zinc-50">
+        <button type="submit" className="rounded border border-ink/20 px-4 py-2 hover:bg-cream">
           סינון
         </button>
       </form>
 
       <table className="w-full text-start text-sm">
         <thead>
-          <tr className="border-b border-zinc-200 text-zinc-500">
+          <tr className="border-b border-ink/12 text-ink-soft">
             <th className="py-2 text-start">שם</th>
             <th className="py-2 text-start">קטגוריה</th>
             <th className="py-2 text-start">מחיר</th>
@@ -90,7 +90,7 @@ export default async function AdminProductsPage({
             const totalStock = product.variants.reduce((sum, v) => sum + v.stockQuantity, 0);
             const lowStock = product.variants.some((v) => v.stockQuantity <= LOW_STOCK_THRESHOLD);
             return (
-              <tr key={product.id} className="border-b border-zinc-100 hover:bg-zinc-50">
+              <tr key={product.id} className="border-b border-cream-deep hover:bg-cream">
                 <td className="py-3">
                   <NextLink href={`/admin/products/${product.id}`} className="font-medium hover:underline">
                     {getLocalizedText(product.name, "he")}
@@ -99,7 +99,7 @@ export default async function AdminProductsPage({
                 <td className="py-3">{getLocalizedText(product.category.name, "he")}</td>
                 <td className="py-3">{formatPrice(Number(product.basePrice), "he")}</td>
                 <td className="py-3">
-                  <span className={product.isActive ? "text-green-700" : "text-zinc-400"}>
+                  <span className={product.isActive ? "text-green-700" : "text-ink/45"}>
                     {product.isActive ? "פעיל" : "לא פעיל"}
                   </span>
                 </td>
@@ -110,7 +110,7 @@ export default async function AdminProductsPage({
         </tbody>
       </table>
 
-      {visible.length === 0 && <p className="text-zinc-500">לא נמצאו מוצרים.</p>}
+      {visible.length === 0 && <p className="text-ink-soft">לא נמצאו מוצרים.</p>}
     </div>
   );
 }

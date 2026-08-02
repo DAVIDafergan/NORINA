@@ -12,7 +12,7 @@ export default async function AdminCategoriesPage() {
     <div className="flex flex-col gap-6">
       <div>
         <h1 className="text-2xl font-semibold">קטגוריות</h1>
-        <p className="mt-1 text-sm text-zinc-500">גררי לפי הידית כדי לשנות את סדר ההצגה בחנות.</p>
+        <p className="mt-1 text-sm text-ink-soft">גררי לפי הידית כדי לשנות את סדר ההצגה בחנות.</p>
       </div>
       <CategoryManager
         categories={categories.map((c) => ({

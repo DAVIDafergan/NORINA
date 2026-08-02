@@ -36,7 +36,7 @@ export function LocaleTabsInput({
             type="button"
             onClick={() => setTab(localeTab.code)}
             className={`rounded px-2 py-1 text-xs ${
-              tab === localeTab.code ? "bg-zinc-900 text-white" : "bg-zinc-100 text-zinc-600"
+              tab === localeTab.code ? "bg-ink text-cream" : "bg-cream-deep text-ink/70"
             }`}
           >
             {localeTab.label}
@@ -51,16 +51,16 @@ export function LocaleTabsInput({
           value={value[tab] ?? ""}
           onChange={(e) => onChange({ ...value, [tab]: e.target.value })}
           rows={rows}
-          className="rounded border border-zinc-300 px-3 py-2 text-sm"
+          className="rounded border border-ink/20 px-3 py-2 text-sm"
         />
       ) : (
         <input
           value={value[tab] ?? ""}
           onChange={(e) => onChange({ ...value, [tab]: e.target.value })}
-          className="rounded border border-zinc-300 px-3 py-2 text-sm"
+          className="rounded border border-ink/20 px-3 py-2 text-sm"
         />
       )}
-      {hint && <span className="text-xs text-zinc-400">{hint}</span>}
+      {hint && <span className="text-xs text-ink/45">{hint}</span>}
     </div>
   );
 }

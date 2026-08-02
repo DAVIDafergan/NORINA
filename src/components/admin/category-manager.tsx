@@ -105,7 +105,7 @@ function CategoryCard({
   }
 
   return (
-    <div className="rounded border border-zinc-200 p-4">
+    <div className="rounded border border-ink/12 p-4">
       <div className="flex items-start justify-between gap-4">
         <div className="flex flex-1 items-start gap-3">
           <button
@@ -113,7 +113,7 @@ function CategoryCard({
             draggable
             onDragStart={onDragHandleStart}
             title="גררי כדי לשנות סדר"
-            className="mt-6 cursor-move text-zinc-300 hover:text-zinc-500"
+            className="mt-6 cursor-move text-ink/20 hover:text-ink-soft"
           >
             ⠿
           </button>
@@ -128,11 +128,11 @@ function CategoryCard({
             onClick={handleDelete}
             disabled={category.productCount > 0}
             title={category.productCount > 0 ? `לא ניתן למחוק - ${category.productCount} מוצרים משויכים` : undefined}
-            className="text-sm text-red-600 hover:underline disabled:cursor-not-allowed disabled:text-zinc-300 disabled:no-underline"
+            className="text-sm text-red-600 hover:underline disabled:cursor-not-allowed disabled:text-ink/20 disabled:no-underline"
           >
             מחיקה
           </button>
-          <span className="text-xs text-zinc-400">{category.productCount} מוצרים</span>
+          <span className="text-xs text-ink/45">{category.productCount} מוצרים</span>
         </div>
       </div>
       {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
@@ -179,7 +179,7 @@ function NewCategoryForm({ onCreated }: { onCreated: () => void }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-3 rounded border border-dashed border-zinc-300 p-4">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-3 rounded border border-dashed border-ink/20 p-4">
       <h3 className="text-sm font-medium">קטגוריה חדשה</h3>
       <LocaleTabsInput label="שם הקטגוריה" value={name} onChange={handleNameChange} />
       <TextField

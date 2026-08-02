@@ -111,7 +111,7 @@ export function ProductForm({ productId, categories, initial }: ProductFormProps
         <select
           value={categoryId}
           onChange={(e) => setCategoryId(e.target.value)}
-          className="rounded border border-zinc-300 px-3 py-2"
+          className="rounded border border-ink/20 px-3 py-2"
         >
           {categories.map((category) => (
             <option key={category.id} value={category.id}>
@@ -130,7 +130,7 @@ export function ProductForm({ productId, categories, initial }: ProductFormProps
           required
           value={basePrice}
           onChange={(e) => setBasePrice(e.target.value)}
-          className="rounded border border-zinc-300 px-3 py-2"
+          className="rounded border border-ink/20 px-3 py-2"
         />
       </label>
 

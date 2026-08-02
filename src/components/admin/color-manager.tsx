@@ -65,7 +65,7 @@ export function ColorManager({
 
   return (
     <div className={`flex flex-col gap-8 ${reordering ? "opacity-60" : ""}`}>
-      {colors.length > 1 && <p className="text-xs text-zinc-400">גררי כרטיס צבע לפי הכותרת כדי לשנות את סדר הצבעים בדף המוצר.</p>}
+      {colors.length > 1 && <p className="text-xs text-ink/45">גררי כרטיס צבע לפי הכותרת כדי לשנות את סדר הצבעים בדף המוצר.</p>}
       {colors.map((color) => (
         <div
           key={color.id}
@@ -130,7 +130,7 @@ function ColorCard({
   const variantBySizeId = new Map(color.variants.map((v) => [v.sizeId, v]));
 
   return (
-    <div className="rounded border border-zinc-200 p-4">
+    <div className="rounded border border-ink/12 p-4">
       <div className="flex items-start justify-between gap-4">
         <div className="flex flex-1 items-start gap-3">
           <button
@@ -138,12 +138,12 @@ function ColorCard({
             draggable
             onDragStart={onDragHandleStart}
             title="גררי כדי לשנות סדר"
-            className="mt-6 cursor-move text-zinc-300 hover:text-zinc-500"
+            className="mt-6 cursor-move text-ink/20 hover:text-ink-soft"
           >
             ⠿
           </button>
           <span
-            className="mt-6 h-6 w-6 shrink-0 rounded-full border border-zinc-300"
+            className="mt-6 h-6 w-6 shrink-0 rounded-full border border-ink/20"
             style={{ backgroundColor: hexCode }}
           />
           <LocaleTabsInput label="שם הצבע" value={name} onChange={setName} />
@@ -160,12 +160,12 @@ function ColorCard({
             type="color"
             value={/^#[0-9a-fA-F]{6}$/.test(hexCode) ? hexCode : "#000000"}
             onChange={(e) => setHexCode(e.target.value)}
-            className="h-9 w-9 shrink-0 cursor-pointer rounded border border-zinc-300"
+            className="h-9 w-9 shrink-0 cursor-pointer rounded border border-ink/20"
           />
           <input
             value={hexCode}
             onChange={(e) => setHexCode(e.target.value)}
-            className="w-full rounded border border-zinc-300 px-2 py-1"
+            className="w-full rounded border border-ink/20 px-2 py-1"
           />
         </div>
       </label>
@@ -183,7 +183,7 @@ function ColorCard({
         <h4 className="mb-2 text-sm font-medium">מידות ומלאי</h4>
         <table className="w-full text-sm">
           <thead>
-            <tr className="text-start text-xs text-zinc-400">
+            <tr className="text-start text-xs text-ink/45">
               <th className="w-24 py-1 text-start">מידה</th>
               <th className="py-1 text-start">מלאי</th>
               <th className="py-1" />
@@ -263,7 +263,7 @@ function SizeStockRow({
   }
 
   return (
-    <tr className="border-b border-zinc-100">
+    <tr className="border-b border-cream-deep">
       <td className="w-24 py-2">{size.label}</td>
       <td className="py-2">
         <input
@@ -272,9 +272,9 @@ function SizeStockRow({
           value={stock}
           onChange={(e) => setStock(Number(e.target.value))}
           onBlur={handleBlur}
-          className="w-20 rounded border border-zinc-300 px-2 py-1"
+          className="w-20 rounded border border-ink/20 px-2 py-1"
         />
-        {saving && <span className="ms-2 text-xs text-zinc-400">שומר...</span>}
+        {saving && <span className="ms-2 text-xs text-ink/45">שומר...</span>}
         {!saving && stock === 0 && <span className="ms-2 text-xs text-amber-600">אין מלאי</span>}
       </td>
       <td className="py-2 text-end">
@@ -322,7 +322,7 @@ function NewColorForm({ productId, onCreated }: { productId: string; onCreated: 
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-3 rounded border border-dashed border-zinc-300 p-4">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-3 rounded border border-dashed border-ink/20 p-4">
       <h3 className="text-sm font-medium">הוספת צבע חדש</h3>
       <LocaleTabsInput label="שם הצבע" value={name} onChange={setName} />
       <label className="flex w-40 flex-col gap-1 text-sm">
@@ -332,12 +332,12 @@ function NewColorForm({ productId, onCreated }: { productId: string; onCreated: 
             type="color"
             value={/^#[0-9a-fA-F]{6}$/.test(hexCode) ? hexCode : "#000000"}
             onChange={(e) => setHexCode(e.target.value)}
-            className="h-9 w-9 shrink-0 cursor-pointer rounded border border-zinc-300"
+            className="h-9 w-9 shrink-0 cursor-pointer rounded border border-ink/20"
           />
           <input
             value={hexCode}
             onChange={(e) => setHexCode(e.target.value)}
-            className="w-full rounded border border-zinc-300 px-2 py-1"
+            className="w-full rounded border border-ink/20 px-2 py-1"
           />
         </div>
       </label>

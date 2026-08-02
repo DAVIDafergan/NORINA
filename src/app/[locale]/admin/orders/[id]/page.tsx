@@ -45,20 +45,20 @@ export default async function AdminOrderDetailPage({
         <PrintButton />
       </div>
 
-      <div className="flex items-center justify-between rounded border border-zinc-200 p-4">
+      <div className="flex items-center justify-between rounded border border-ink/12 p-4">
         <OrderStatusSelect orderId={order.id} status={order.status} />
-        <span className="text-sm text-zinc-500">{order.createdAt.toLocaleString("he-IL")}</span>
+        <span className="text-sm text-ink-soft">{order.createdAt.toLocaleString("he-IL")}</span>
       </div>
 
-      <section className="rounded border border-zinc-200 p-4 text-sm">
+      <section className="rounded border border-ink/12 p-4 text-sm">
         <h2 className="mb-2 font-medium">פרטי לקוח</h2>
         <p>{order.contactName}</p>
         <p>{order.contactEmail}</p>
         <p>{order.contactPhone}</p>
-        {order.user && <p className="text-zinc-500">משתמש רשום: {order.user.email}</p>}
+        {order.user && <p className="text-ink-soft">משתמש רשום: {order.user.email}</p>}
       </section>
 
-      <section className="rounded border border-zinc-200 p-4 text-sm">
+      <section className="rounded border border-ink/12 p-4 text-sm">
         <h2 className="mb-2 font-medium">מסירה</h2>
         {order.deliveryType === "SHIPPING" && order.address ? (
           <p>
@@ -69,15 +69,15 @@ export default async function AdminOrderDetailPage({
             נקודת איסוף: {getLocalizedText(order.pickupLocation.cityName, "he")} - {order.pickupLocation.address}
           </p>
         ) : null}
-        {order.notes && <p className="mt-1 text-zinc-500">הערות: {order.notes}</p>}
+        {order.notes && <p className="mt-1 text-ink-soft">הערות: {order.notes}</p>}
       </section>
 
-      <section className="rounded border border-zinc-200 p-4">
+      <section className="rounded border border-ink/12 p-4">
         <h2 className="mb-3 text-sm font-medium">פריטים</h2>
         <ul className="flex flex-col gap-3">
           {order.items.map((item) => (
             <li key={item.id} className="flex gap-3 text-sm">
-              <div className="relative h-16 w-12 shrink-0 overflow-hidden bg-zinc-100">
+              <div className="relative h-16 w-12 shrink-0 overflow-hidden bg-cream-deep">
                 {item.productVariant.color.images[0] && (
                   <Image
                     src={item.productVariant.color.images[0].url}
@@ -91,7 +91,7 @@ export default async function AdminOrderDetailPage({
               </div>
               <div className="flex-1">
                 <p className="font-medium">{getLocalizedText(item.productVariant.product.name, "he")}</p>
-                <p className="text-zinc-500">
+                <p className="text-ink-soft">
                   {getLocalizedText(item.productVariant.color.name, "he")} &middot; {item.productVariant.size.label} &times;{" "}
                   {item.quantity}
                 </p>
@@ -100,7 +100,7 @@ export default async function AdminOrderDetailPage({
             </li>
           ))}
         </ul>
-        <div className="mt-4 flex flex-col gap-1 border-t border-zinc-200 pt-4 text-sm">
+        <div className="mt-4 flex flex-col gap-1 border-t border-ink/12 pt-4 text-sm">
           <div className="flex justify-between">
             <span>משלוח</span>
             <span>{formatPrice(Number(order.shippingCost), "he")}</span>

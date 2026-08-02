@@ -44,7 +44,7 @@ export function ShippingSettingsForm({
           min="0"
           value={flatRate}
           onChange={(e) => setFlatRate(e.target.value)}
-          className="rounded border border-zinc-300 px-3 py-2"
+          className="rounded border border-ink/20 px-3 py-2"
         />
       </label>
       <label className="flex flex-col gap-1 text-sm">
@@ -55,7 +55,7 @@ export function ShippingSettingsForm({
           min="0"
           value={freeAbove}
           onChange={(e) => setFreeAbove(e.target.value)}
-          className="rounded border border-zinc-300 px-3 py-2"
+          className="rounded border border-ink/20 px-3 py-2"
         />
       </label>
       <Button type="submit" disabled={saving} className="w-fit">

@@ -26,7 +26,7 @@ export default async function AdminHomePage() {
       <div>
         <h2 className="mb-4 text-lg font-medium">מוצרים חמים</h2>
         {data.hotProducts.length === 0 ? (
-          <p className="text-zinc-500">אין עדיין מספיק נתוני מכירה.</p>
+          <p className="text-ink-soft">אין עדיין מספיק נתוני מכירה.</p>
         ) : (
           <ul className="flex flex-col gap-2">
             {data.hotProducts.map((product) => (
@@ -34,7 +34,7 @@ export default async function AdminHomePage() {
                 <NextLink href={`/product/${product.slug}`} className="hover:underline" target="_blank">
                   {product.name}
                 </NextLink>
-                <span className="text-zinc-500">{product.quantity} נמכרו</span>
+                <span className="text-ink-soft">{product.quantity} נמכרו</span>
               </li>
             ))}
           </ul>
