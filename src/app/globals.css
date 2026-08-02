@@ -97,3 +97,22 @@ body {
     animation: none;
   }
 }
+
+/* One-time intro animation (src/components/intro/intro-animation.tsx). */
+@keyframes intro-letter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes intro-line {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
