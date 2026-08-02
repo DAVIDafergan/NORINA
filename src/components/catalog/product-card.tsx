@@ -3,13 +3,15 @@ import { Link } from "@/i18n/navigation";
 import { getLocalizedText } from "@/lib/i18n-text";
 import { formatPrice } from "@/lib/format";
 import { PlaceholderImage } from "@/components/ui/placeholder-image";
-import type { Locale } from "@/lib/types";
+import { QuickAddButton } from "@/components/catalog/quick-add-button";
+import type { Locale, LocalizedText } from "@/lib/types";
 
 interface ProductCardProduct {
   slug: string;
   name: unknown;
   basePrice: unknown;
-  colors: { hexCode: string; images: { url: string }[] }[];
+  colors: { id: string; name: unknown; hexCode: string; images: { url: string }[] }[];
+  variants?: { id: string; colorId: string; sizeId: string; stockQuantity: number; size: { label: string; orderIndex: number } }[];
 }
 
 export function ProductCard({
@@ -23,25 +25,50 @@ export function ProductCard({
   const name = getLocalizedText(product.name, locale);
 
   return (
-    <Link href={`/product/${product.slug}`} className="group flex flex-col gap-3">
-      <div className="relative aspect-[3/4] w-full overflow-hidden bg-cream-deep">
+    <div className="group flex flex-col gap-3">
+      <Link href={`/product/${product.slug}`} className="relative block aspect-[3/4] w-full overflow-hidden bg-cream-deep">
         {image ? (
           <Image
             src={image}
             alt={name}
             fill
             unoptimized
+            loading="lazy"
             className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
             sizes="(min-width: 768px) 25vw, 50vw"
           />
         ) : (
           <PlaceholderImage locale={locale} className="absolute inset-0" />
         )}
-      </div>
-      <div className="flex flex-col gap-1 text-sm">
+        {product.variants && (
+          <div className="absolute bottom-3 end-3">
+            <QuickAddButton
+              productSlug={product.slug}
+              productName={name}
+              locale={locale}
+              unitPrice={Number(product.basePrice)}
+              colors={product.colors.map((color) => ({
+                id: color.id,
+                name: color.name as LocalizedText,
+                hexCode: color.hexCode,
+                images: color.images,
+              }))}
+              variants={product.variants.map((variant) => ({
+                variantId: variant.id,
+                colorId: variant.colorId,
+                sizeId: variant.sizeId,
+                sizeLabel: variant.size.label,
+                sizeOrder: variant.size.orderIndex,
+                stockQuantity: variant.stockQuantity,
+              }))}
+            />
+          </div>
+        )}
+      </Link>
+      <Link href={`/product/${product.slug}`} className="flex flex-col gap-1 text-sm">
         <span className="font-serif text-base text-ink transition-colors group-hover:text-gold">{name}</span>
         <span className="text-ink-soft">{formatPrice(Number(product.basePrice), locale)}</span>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 }

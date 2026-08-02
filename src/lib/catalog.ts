@@ -48,6 +48,17 @@ function decodeSlug(slug: string): string {
   }
 }
 
+// Full colors (cover image only, not the whole gallery) + variants - lets
+// product cards on this page offer a quick-add color/size picker without
+// navigating to the product page first.
+const cardQuickAddInclude = {
+  colors: {
+    orderBy: { orderIndex: "asc" as const },
+    include: { images: { orderBy: coverImageOrderBy, take: 1 } },
+  },
+  variants: { include: { size: true } },
+};
+
 export function getCategoryWithProducts(rawSlug: string) {
   const slug = decodeSlug(rawSlug);
   return prisma.category.findUnique({
@@ -55,13 +66,7 @@ export function getCategoryWithProducts(rawSlug: string) {
     include: {
       products: {
         where: { isActive: true },
-        include: {
-          colors: {
-            orderBy: { orderIndex: "asc" },
-            include: { images: { orderBy: coverImageOrderBy, take: 1 } },
-            take: 1,
-          },
-        },
+        include: cardQuickAddInclude,
         orderBy: { createdAt: "desc" },
       },
     },
@@ -97,13 +102,7 @@ export function searchProducts(query: string, take = 24) {
     },
     orderBy: { createdAt: "desc" },
     take,
-    include: {
-      colors: {
-        orderBy: { orderIndex: "asc" },
-        include: { images: { orderBy: coverImageOrderBy, take: 1 } },
-        take: 1,
-      },
-    },
+    include: cardQuickAddInclude,
   });
 }
 
