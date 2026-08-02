@@ -46,6 +46,8 @@
   "product": {
     "color": "Color",
     "size": "Size",
+    "share": "Share",
+    "linkCopied": "Link copied",
     "selectSize": "Select a size",
     "addToCart": "Add to cart",
     "addedToCart": "Added to cart",

@@ -46,6 +46,8 @@
   "product": {
     "color": "Couleur",
     "size": "Taille",
+    "share": "Partager",
+    "linkCopied": "Lien copié",
     "selectSize": "Choisissez une taille",
     "addToCart": "Ajouter au panier",
     "addedToCart": "Ajouté au panier",

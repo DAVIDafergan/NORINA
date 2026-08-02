@@ -4,6 +4,46 @@ import { getProductBySlug } from "@/lib/catalog";
 import { getLocalizedText } from "@/lib/i18n-text";
 import { ProductDetail, type ProductDetailData } from "@/components/catalog/product-detail";
 import type { Locale } from "@/lib/types";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const product = await getProductBySlug(slug);
+  if (!product) return {};
+
+  const loc = locale as Locale;
+  const name = getLocalizedText(product.name, loc);
+  const description = getLocalizedText(product.description, loc);
+  const primaryImage =
+    product.colors[0]?.images.find((image) => image.isPrimary) ?? product.colors[0]?.images[0] ?? null;
+  const imageUrl = primaryImage ? `/api/product-image/${primaryImage.id}` : undefined;
+  const price = Number(product.basePrice).toFixed(2);
+
+  return {
+    title: name,
+    description,
+    openGraph: {
+      title: name,
+      description,
+      images: imageUrl ? [{ url: imageUrl, width: 1200, height: 1500, alt: name }] : undefined,
+    },
+    twitter: {
+      title: name,
+      description,
+      images: imageUrl ? [imageUrl] : undefined,
+    },
+    // og:price isn't a real Open Graph property - product:price:* under
+    // og:type=product is the actual convention Facebook/WhatsApp read.
+    other: {
+      "product:price:amount": price,
+      "product:price:currency": "ILS",
+    },
+  };
+}
 
 export default async function ProductPage({
   params,

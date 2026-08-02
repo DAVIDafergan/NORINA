@@ -4,6 +4,24 @@ import { getCategoryWithProducts } from "@/lib/catalog";
 import { getLocalizedText } from "@/lib/i18n-text";
 import { ProductCard } from "@/components/catalog/product-card";
 import type { Locale } from "@/lib/types";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const category = await getCategoryWithProducts(slug);
+  if (!category) return {};
+
+  const name = getLocalizedText(category.name, locale as Locale);
+  return {
+    title: name,
+    openGraph: { title: name },
+    twitter: { title: name },
+  };
+}
 
 export default async function CategoryPage({
   params,

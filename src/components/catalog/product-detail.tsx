@@ -7,6 +7,7 @@ import { useCartStore } from "@/lib/cart-store";
 import { formatPrice } from "@/lib/format";
 import { Button } from "@/components/ui/button";
 import { SizeGuideModal, type SizeGuideEntry } from "@/components/catalog/size-guide-modal";
+import { ShareButton } from "@/components/ui/share-button";
 import type { Locale } from "@/lib/types";
 
 export interface ProductDetailColor {
@@ -127,9 +128,12 @@ export function ProductDetail({ product, locale }: { product: ProductDetailData;
       </div>
 
       <div className="flex animate-fade-up flex-col gap-7" style={{ animationDelay: "100ms" }}>
-        <div>
-          <h1 className="font-serif text-3xl tracking-wide md:text-4xl">{product.name}</h1>
-          <p className="mt-2 text-lg text-ink-soft">{formatPrice(price, locale)}</p>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h1 className="font-serif text-3xl tracking-wide md:text-4xl">{product.name}</h1>
+            <p className="mt-2 text-lg text-ink-soft">{formatPrice(price, locale)}</p>
+          </div>
+          <ShareButton title={product.name} text={product.description} />
         </div>
 
         <div>

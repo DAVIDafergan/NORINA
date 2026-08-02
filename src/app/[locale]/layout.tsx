@@ -32,6 +32,12 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
+// NEXTAUTH_URL is already the deployed origin (required by next-auth in
+// production) - reused here instead of adding a second "site URL" env var.
+const siteUrl = process.env.NEXTAUTH_URL ?? "http://localhost:3000";
+
+const OG_LOCALES: Record<string, string> = { he: "he_IL", fr: "fr_FR", en: "en_US" };
+
 export async function generateMetadata({
   params,
 }: {
@@ -39,9 +45,19 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "home" });
+  const description = "NORINA - Women's fashion e-commerce";
   return {
-    title: t("title"),
-    description: "NORINA - Women's fashion e-commerce",
+    metadataBase: new URL(siteUrl),
+    title: { template: "%s | NORINA", default: t("title") },
+    description,
+    openGraph: {
+      siteName: "NORINA",
+      type: "website",
+      locale: OG_LOCALES[locale] ?? "en_US",
+    },
+    twitter: {
+      card: "summary_large_image",
+    },
   };
 }
 

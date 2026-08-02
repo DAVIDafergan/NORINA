@@ -46,6 +46,8 @@
   "product": {
     "color": "צבע",
     "size": "מידה",
+    "share": "שיתוף",
+    "linkCopied": "הקישור הועתק",
     "selectSize": "בחרי מידה",
     "addToCart": "הוספה לעגלה",
     "addedToCart": "נוסף לעגלה",
