@@ -1,6 +1,11 @@
 {
   "common": {
-    "siteName": "NORINA"
+    "siteName": "NORINA",
+    "freeShippingAnnouncement": "Free shipping on orders over {amount}",
+    "announcementFallback": "Fast shipping nationwide",
+    "viewAllCategory": "View all",
+    "adminPanel": "Admin panel",
+    "imagePlaceholder": "Image coming soon"
   },
   "nav": {
     "language": "Language",
@@ -15,9 +20,18 @@
     "subtitle": "Timeless pieces, made to last.",
     "newArrivals": "New arrivals",
     "heroEyebrow": "NORINA · Season Collection",
-    "heroHeadline": "Wear your story",
+    "heroHeadline": "The New Collection",
     "heroSubheadline": "Refined feminine design, quality fabric, and a cut that flatters every movement.",
-    "heroCta": "Discover the collection"
+    "heroCta": "Discover the collection",
+    "shopByCategory": "Shop by category",
+    "editorialTitle": "What's new",
+    "editorialCta": "View product",
+    "newsletterTitle": "Join the NORINA Club",
+    "newsletterSubtitle": "New collections and exclusive launches, straight to your inbox.",
+    "newsletterPlaceholder": "Email address",
+    "newsletterButton": "Sign up",
+    "newsletterSuccess": "Thank you! We'll be in touch soon.",
+    "newsletterError": "Something went wrong, please try again."
   },
   "category": {
     "empty": "No products in this category yet."

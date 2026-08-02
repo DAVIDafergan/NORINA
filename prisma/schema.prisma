@@ -311,3 +311,18 @@ model PickupLocation {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+// ---------------------------------------------------------------------------
+// Marketing
+// ---------------------------------------------------------------------------
+
+/// Just capture for now - no admin UI to browse/export the list yet and no
+/// campaign-sending integration (Resend is wired for transactional email
+/// only, see DECISIONS.md). Real data collection now beats a signup form
+/// that pretends to subscribe you to nothing.
+model NewsletterSubscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  locale    String
+  createdAt DateTime @default(now())
+}

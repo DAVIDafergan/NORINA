@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { getLocalizedText } from "@/lib/i18n-text";
 import { formatPrice } from "@/lib/format";
+import { PlaceholderImage } from "@/components/ui/placeholder-image";
 import type { Locale } from "@/lib/types";
 
 interface ProductCardProduct {
@@ -33,7 +34,9 @@ export function ProductCard({
             className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
             sizes="(min-width: 768px) 25vw, 50vw"
           />
-        ) : null}
+        ) : (
+          <PlaceholderImage locale={locale} className="absolute inset-0" />
+        )}
       </div>
       <div className="flex flex-col gap-1 text-sm">
         <span className="font-serif text-base text-ink transition-colors group-hover:text-gold">{name}</span>

@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "@/i18n/navigation";
 import { routing, type AppLocale } from "@/i18n/routing";
 import { ChevronDownIcon } from "@/components/icons";
 
-export function LanguageSwitcher() {
+export function LanguageSwitcher({ variant = "default" }: { variant?: "default" | "inverted" }) {
   const t = useTranslations("nav");
   const locale = useLocale() as AppLocale;
   const pathname = usePathname();
@@ -35,7 +35,9 @@ export function LanguageSwitcher() {
         onClick={() => setOpen((v) => !v)}
         aria-label={t("language")}
         aria-expanded={open}
-        className="flex items-center gap-1 text-xs font-medium uppercase tracking-widest text-ink/70 transition-colors hover:text-gold"
+        className={`flex items-center gap-1 text-xs font-medium uppercase tracking-widest transition-colors hover:text-gold ${
+          variant === "inverted" ? "text-cream/80" : "text-ink/70"
+        }`}
       >
         {locale}
         <ChevronDownIcon className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`} />

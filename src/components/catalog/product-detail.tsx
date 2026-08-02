@@ -118,10 +118,10 @@ export function ProductDetail({ product, locale }: { product: ProductDetailData;
 
   return (
     <div className="mx-auto grid max-w-6xl gap-12 px-4 py-10 pb-32 md:grid-cols-2 md:gap-14 md:px-6 md:py-16 md:pb-16">
-      <div className="grid animate-fade-up grid-cols-2 gap-3">
+      <div className="flex animate-fade-up flex-col gap-3">
         {(selectedColor?.images ?? []).map((image) => (
-          <div key={image.id} className="relative aspect-[3/4] overflow-hidden bg-cream-deep">
-            <Image src={image.url} alt={product.name} fill unoptimized className="object-cover" sizes="50vw" />
+          <div key={image.id} className="relative aspect-[4/5] w-full overflow-hidden bg-cream-deep">
+            <Image src={image.url} alt={product.name} fill unoptimized className="object-cover" sizes="(min-width: 768px) 50vw, 100vw" />
           </div>
         ))}
       </div>

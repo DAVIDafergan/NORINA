@@ -1,6 +1,11 @@
 {
   "common": {
-    "siteName": "NORINA"
+    "siteName": "NORINA",
+    "freeShippingAnnouncement": "Livraison gratuite dès {amount}",
+    "announcementFallback": "Livraison rapide partout dans le pays",
+    "viewAllCategory": "Voir toute la catégorie",
+    "adminPanel": "Panneau d'administration",
+    "imagePlaceholder": "Image à venir"
   },
   "nav": {
     "language": "Langue",
@@ -15,9 +20,18 @@
     "subtitle": "Des pièces intemporelles, faites pour durer.",
     "newArrivals": "Nouveautés",
     "heroEyebrow": "NORINA · Collection de saison",
-    "heroHeadline": "Portez votre histoire",
+    "heroHeadline": "La nouvelle collection",
     "heroSubheadline": "Un design féminin raffiné, des tissus nobles, une coupe qui sublime chaque mouvement.",
-    "heroCta": "Découvrir la collection"
+    "heroCta": "Découvrir la collection",
+    "shopByCategory": "Acheter par catégorie",
+    "editorialTitle": "Nos nouveautés",
+    "editorialCta": "Voir le produit",
+    "newsletterTitle": "Rejoignez le club NORINA",
+    "newsletterSubtitle": "Les nouvelles collections et lancements exclusifs, directement dans votre boîte mail.",
+    "newsletterPlaceholder": "Adresse e-mail",
+    "newsletterButton": "S'inscrire",
+    "newsletterSuccess": "Merci ! Nous vous tiendrons informée.",
+    "newsletterError": "Une erreur est survenue, veuillez réessayer."
   },
   "category": {
     "empty": "Aucun produit dans cette catégorie pour le moment."

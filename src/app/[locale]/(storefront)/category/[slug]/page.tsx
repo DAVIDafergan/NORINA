@@ -20,13 +20,13 @@ export default async function CategoryPage({
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-14 md:px-6 md:py-20">
-      <h1 className="mb-12 text-center font-serif text-3xl tracking-wide md:text-4xl">
+      <h1 className="mb-14 text-center font-serif text-3xl uppercase tracking-[0.1em] md:text-4xl">
         {getLocalizedText(category.name, loc)}
       </h1>
       {category.products.length === 0 ? (
         <p className="text-center text-ink-soft">{t("empty")}</p>
       ) : (
-        <div className="grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-4 md:gap-x-8">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-14 md:grid-cols-3 md:gap-x-10 md:gap-y-16">
           {category.products.map((product, index) => (
             <div key={product.id} className="animate-fade-up" style={{ animationDelay: `${index * 60}ms` }}>
               <ProductCard product={product} locale={loc} />

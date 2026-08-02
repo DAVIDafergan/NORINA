@@ -1,6 +1,11 @@
 {
   "common": {
-    "siteName": "NORINA"
+    "siteName": "NORINA",
+    "freeShippingAnnouncement": "משלוח חינם בהזמנות מעל {amount}",
+    "announcementFallback": "משלוח מהיר לכל הארץ",
+    "viewAllCategory": "לכל הקטגוריה",
+    "adminPanel": "פאנל ניהול",
+    "imagePlaceholder": "תמונה תוחלף"
   },
   "nav": {
     "language": "שפה",
@@ -15,9 +20,18 @@
     "subtitle": "פריטים נצחיים, עשויים להישאר.",
     "newArrivals": "הגעות חדשות",
     "heroEyebrow": "NORINA · קולקציית העונה",
-    "heroHeadline": "לבשי את הסיפור שלך",
+    "heroHeadline": "הקולקציה החדשה",
     "heroSubheadline": "עיצוב נשי עדין, בדים איכותיים, וגזרה שמחמיאה לכל תנועה.",
-    "heroCta": "לגלות את הקולקציה"
+    "heroCta": "לגלות את הקולקציה",
+    "shopByCategory": "קנייה לפי קטגוריה",
+    "editorialTitle": "מה חדש אצלנו",
+    "editorialCta": "לצפייה במוצר",
+    "newsletterTitle": "הצטרפי למועדון NORINA",
+    "newsletterSubtitle": "עדכונים על קולקציות חדשות והשקות מיוחדות, ישירות לתיבה שלך.",
+    "newsletterPlaceholder": "כתובת דוא\"ל",
+    "newsletterButton": "הרשמה",
+    "newsletterSuccess": "תודה! נעדכן אותך בקרוב.",
+    "newsletterError": "משהו השתבש, נסי שוב."
   },
   "category": {
     "empty": "עדיין אין מוצרים בקטגוריה הזו."

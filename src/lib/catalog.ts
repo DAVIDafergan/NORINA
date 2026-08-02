@@ -11,6 +11,30 @@ export function getActiveCategories() {
   });
 }
 
+/** Categories with a few of their own real products - used by the header's
+ * mega menu. There's no subcategory/taxonomy model in the schema (categories
+ * are flat - see DECISIONS.md stage 2), so the panel shows actual products
+ * instead of inventing subcategory names that don't exist anywhere. */
+export function getCategoriesWithPreview(previewCount = 3) {
+  return prisma.category.findMany({
+    orderBy: { orderIndex: "asc" },
+    include: {
+      products: {
+        where: { isActive: true },
+        orderBy: { createdAt: "desc" },
+        take: previewCount,
+        include: {
+          colors: {
+            orderBy: { orderIndex: "asc" },
+            include: { images: { orderBy: coverImageOrderBy, take: 1 } },
+            take: 1,
+          },
+        },
+      },
+    },
+  });
+}
+
 // Next.js route params for [slug] segments arrive percent-encoded as-is in
 // this environment (they are NOT auto-decoded - see AGENTS.md re: breaking
 // changes), so a Hebrew-only product/category name (a very normal admin
