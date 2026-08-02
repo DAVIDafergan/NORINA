@@ -37,8 +37,9 @@ function reorderIds(ids: string[], draggedId: string, targetId: string): string[
 }
 
 /** Which parts of a color card to render - lets the product creation wizard
- * show "colors & images" and "sizes & stock" as separate steps while the
- * full edit page still shows everything together. */
+ * show "colors & images" and "sizes & stock" as separate steps, and the
+ * full edit page render them as two separate sections (sizes/stock up top
+ * for quick access, colors/images further down) instead of one combined card. */
 export type ColorManagerStage = "full" | "images" | "sizes";
 
 export function ColorManager({
@@ -206,13 +207,6 @@ function ColorCard({
       <Button variant="secondary" type="button" onClick={handleSave} disabled={saving || !canSave} className="mt-3">
         {saving ? "שומרת..." : "שמירת צבע"}
       </Button>
-
-      {stage === "full" && (
-        <div className="mt-6">
-          <h4 className="mb-2 text-sm font-medium">מידות ומלאי</h4>
-          <SizeStockPicker colorId={color.id} allSizes={sizes} variants={color.variants} onChanged={onChanged} />
-        </div>
-      )}
     </div>
   );
 }

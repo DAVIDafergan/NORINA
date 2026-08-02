@@ -78,6 +78,17 @@ export default async function EditProductPage({
         }
       />
 
+      <div className="rounded-md border border-line bg-white p-5 shadow-sm md:p-6">
+        <h2 className="mb-4 text-xs font-medium uppercase tracking-widest text-ink-soft">מידות ומלאי</h2>
+        {product.colors.length === 0 ? (
+          <p className="text-sm text-ink-soft">
+            הוסיפי קודם צבע אחד לפחות בקטע &quot;צבעים ותמונות&quot; למטה - אז תוכלי לבחור מידות ולעדכן מלאי כאן.
+          </p>
+        ) : (
+          <ColorManager productId={product.id} sizes={sizesForManager} colors={colorsForManager} stage="sizes" />
+        )}
+      </div>
+
       <ProductForm
         productId={product.id}
         categories={categories.map((c) => ({ id: c.id, name: getLocalizedText(c.name, "he") }))}
@@ -94,7 +105,7 @@ export default async function EditProductPage({
       />
 
       <div>
-        <h2 className="mb-4 text-xs font-medium uppercase tracking-widest text-ink-soft">צבעים, תמונות ומידות</h2>
+        <h2 className="mb-4 text-xs font-medium uppercase tracking-widest text-ink-soft">צבעים ותמונות</h2>
         <ColorManager productId={product.id} sizes={sizesForManager} colors={colorsForManager} stage="full" />
       </div>
     </div>
